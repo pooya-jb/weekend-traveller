@@ -1,0 +1,6 @@
+# Production files
+node_modules/
+dist/
+
+# Sensitive data
+.env
