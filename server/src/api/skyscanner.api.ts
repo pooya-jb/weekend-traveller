@@ -1,8 +1,8 @@
-import * as lib from '../libraries/skyscanner.api.js';
+import * as libApi from '../libraries/skyscanner.api.js';
 
 const baseUrl: string = 'https://partners.api.skyscanner.net/apiservices/v3';
 
-export const getCurrencies = async (): Promise<lib.Currencies | null> => {
+export const getCurrencies = async (): Promise<libApi.Currencies | null> => {
   try {
     //  Request flight data
     const url: string = `${baseUrl}/culture/currencies`;
@@ -11,8 +11,8 @@ export const getCurrencies = async (): Promise<lib.Currencies | null> => {
     });
     //  Process response
     if (!response.ok) throw new Error();
-    const data: lib.Currencies = await response.json();
-    return data as lib.Currencies;
+    const data: libApi.Currencies = await response.json();
+    return data as libApi.Currencies;
   } catch (err) {
     return null;
   }
@@ -20,7 +20,7 @@ export const getCurrencies = async (): Promise<lib.Currencies | null> => {
 
 export const getGeoHierarchy = async (
   locale: string
-): Promise<lib.GeoHierarchy | null> => {
+): Promise<libApi.GeoHierarchy | null> => {
   try {
     if (!locale) throw new Error();
     //  Request flight data
@@ -30,8 +30,8 @@ export const getGeoHierarchy = async (
     });
     //  Process response
     if (!response.ok) throw new Error();
-    const data: lib.GeoHierarchy = await response.json();
-    return data as lib.GeoHierarchy;
+    const data: libApi.GeoHierarchy = await response.json();
+    return data as libApi.GeoHierarchy;
   } catch (err) {
     return null;
   }
@@ -39,7 +39,7 @@ export const getGeoHierarchy = async (
 
 export const getNearestCulture = async (
   ipAddress: string
-): Promise<lib.NearestCulture | null> => {
+): Promise<libApi.NearestCulture | null> => {
   try {
     //  Request flight data
     const url: string = `${baseUrl}/culture/nearestculture?ipAddress=${ipAddress}`;
@@ -48,16 +48,16 @@ export const getNearestCulture = async (
     });
     //  Process response
     if (!response.ok) throw new Error();
-    const data: lib.NearestCulture = await response.json();
-    return data as lib.NearestCulture;
+    const data: libApi.NearestCulture = await response.json();
+    return data as libApi.NearestCulture;
   } catch (err) {
     return null;
   }
 };
 
 export const postFlightsIndicativeRequest = async (
-  requestBody: lib.FlightsIndicativeRequest
-): Promise<lib.FlightsIndicative | null> => {
+  requestBody: libApi.FlightsIndicativeRequest
+): Promise<libApi.FlightsIndicative | null> => {
   try {
     //  Request flight data
     const url: string = `${baseUrl}/flights/indicative/search`;
@@ -71,16 +71,16 @@ export const postFlightsIndicativeRequest = async (
     });
     //  Process response
     if (!response.ok) throw new Error();
-    const data: lib.FlightsIndicative = await response.json();
-    return data as lib.FlightsIndicative;
+    const data: libApi.FlightsIndicative = await response.json();
+    return data as libApi.FlightsIndicative;
   } catch (err) {
     return null;
   }
 };
 
 export const postFlightsLivePricesRequest = async (
-  requestBody: lib.FlightsLivePricesRequest
-): Promise<lib.FlightsLivePrices | null> => {
+  requestBody: libApi.FlightsLivePricesRequest
+): Promise<libApi.FlightsLivePrices | null> => {
   try {
     //  Request flight data
     const url: string = `${baseUrl}/flights/live/search/create`;
@@ -94,8 +94,8 @@ export const postFlightsLivePricesRequest = async (
     });
     //  Process response
     if (!response.ok) throw new Error();
-    const data: lib.FlightsLivePrices = await response.json();
-    return data as lib.FlightsLivePrices;
+    const data: libApi.FlightsLivePrices = await response.json();
+    return data as libApi.FlightsLivePrices;
   } catch (err) {
     return null;
   }

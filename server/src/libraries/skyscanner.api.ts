@@ -54,7 +54,7 @@ export interface FlightsLivePricesRequest {
     ];
     cabinClass: string;
     adults: number;
-    includedCarriersIds: [string];
+    includedCarriersIds: string[];
   };
 }
 
@@ -189,7 +189,7 @@ export interface FlightsIndicative {
     //       {
     //         originPlaceId: string;
     //         destinationPlaceId: string;
-    //         quoteIds: [string];
+    //         quoteIds: string[];
     //       }
     //     ];
     //   };
@@ -201,7 +201,7 @@ export interface FlightsIndicative {
     //           month: number;
     //           day: number;
     //         };
-    //         quoteIds: [string];
+    //         quoteIds: string[];
     //       }
     //     ];
     //     quotesOutboundGroups: [
@@ -211,7 +211,7 @@ export interface FlightsIndicative {
     //           month: number;
     //           day: number;
     //         };
-    //         quoteIds: [string];
+    //         quoteIds: string[];
     //       }
     //     ];
     //   };
@@ -234,7 +234,7 @@ export interface FlightsLivePrices {
                 unit: string;
                 // updateStatus: string;
               };
-              // agentIds: [string];
+              // agentIds: string[];
               items: [
                 {
                   price: {};
@@ -263,11 +263,11 @@ export interface FlightsLivePrices {
               //     brandNames: [];
               //   };
               // };
-              //   brandNames: [string];
+              //   brandNames: string[];
               // };
             }
           ];
-          legIds: [string];
+          legIds: string[];
           // sustainabilityData: {
           //   isEcoContender: boolean;
           //   ecoContenderDelta: number;
@@ -296,9 +296,9 @@ export interface FlightsLivePrices {
           // };
           // durationInMinutes: number;
           // stopCount: number;
-          // marketingCarrierIds: [string];
-          // operatingCarrierIds: [string];
-          segmentIds: [string];
+          // marketingCarrierIds: string[];
+          // operatingCarrierIds: string[];
+          segmentIds: string[];
         };
       };
       segments: {
