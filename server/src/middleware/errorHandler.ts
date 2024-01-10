@@ -9,28 +9,21 @@ class CustomError extends Error {
   }
 }
 
-interface Errors {
-  [key: string]: typeof CustomError;
-}
-export const errors: Errors = {};
-
-export class BadRequest extends CustomError {
+class BadRequest extends CustomError {
   override name: string = 'Bad request';
   override number: number = 400;
   constructor(message: string) {
     super(message);
   }
 }
-
-export class NotFound extends CustomError {
+class NotFound extends CustomError {
   override name: string = 'Not found';
   override number: number = 404;
   constructor(message: string) {
     super(message);
   }
 }
-
-export class InternalServerError extends CustomError {
+class InternalServerError extends CustomError {
   override name: string = 'Internal Server Error';
   override number: number = 500;
   override clientMessage: string = 'Unable to resolve. Please try again later.';
@@ -39,10 +32,14 @@ export class InternalServerError extends CustomError {
   }
 }
 
+interface Errors {
+  [key: string]: typeof CustomError;
+}
+export const errors: Errors = {};
 errors[BadRequest.name] = BadRequest;
 errors[NotFound.name] = NotFound;
 errors[InternalServerError.name] = InternalServerError;
-// next(new errors.BadRequest('Missing request parameter(s)'));
+// call: next(new errors.BadRequest('Missing request parameter(s)'));
 
 export function errorHandler(
   err: CustomError,
@@ -50,7 +47,7 @@ export function errorHandler(
   res: Response,
   __: Function
 ): void {
-  console.error(err.stack);
+  console.error(err.number, err.stack);
   res.status(err.number);
   res.send(err.clientMessage);
 }

@@ -1,4 +1,9 @@
-import express, { Router } from 'express';
-const router: Router = express.Router();
+import express, { Request, Response, Router } from 'express';
 
-export { router };
+import { errors } from './middleware/errorHandler.js';
+
+export const router: Router = express.Router();
+
+router.get('/*', (_: Request, __: Response, next: Function) => {
+  next(new errors.NotFound("Page doesn't exist"));
+});

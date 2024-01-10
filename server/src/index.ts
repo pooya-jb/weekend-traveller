@@ -21,7 +21,8 @@ const app: Application = express();
 
 app
   .use(cors(corsOptions))
-  .use(bodyParser)
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use(bodyParser.json())
   .use(router)
   .use(errorHandler)
   .listen(SERVER_PORT, SERVER_URL, () =>
