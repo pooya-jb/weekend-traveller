@@ -41,13 +41,13 @@ errors[NotFound.name] = NotFound;
 errors[InternalServerError.name] = InternalServerError;
 // call: next(new errors.BadRequest('Missing request parameter(s)'));
 
-export function errorHandler(
+export const errorHandler = (
   err: CustomError,
   _: Request,
   res: Response,
   __: Function
-): void {
+): void => {
   console.error(err.number, err.stack);
   res.status(err.number);
   res.send(err.clientMessage);
-}
+};
