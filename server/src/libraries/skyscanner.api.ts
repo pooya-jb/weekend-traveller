@@ -69,12 +69,7 @@ export interface Currencies {
   currencies: [
     {
       code: string;
-      // symbol: string;
-      // thousandsSeparator: string;
-      // decimalSeparator: string;
-      // symbolOnLeft: boolean;
-      // spaceBetweenAmountAndSymbol: boolean;
-      // decimalDigits: number;
+      // ...
     }
   ];
 }

@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
 
-import { errors } from '../middleware/errorHandler.js';
 import * as model from '../models/flightData.model.js';
 import * as libFd from '../libraries/flightData.model.js';
 
 export const getCurrencies = async (
   _: Request,
-  res: Response,
-  next: Function
+  res: Response
 ): Promise<void> => {
   //  Request data
   const data: libFd.Currencies = await model.getCurrencies();
