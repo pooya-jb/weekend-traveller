@@ -4,7 +4,6 @@ import { errors } from '../middleware/errorHandler.js';
 import * as model from '../models/flightData.model.js';
 import * as libFd from '../libraries/flightData.model.js';
 
-const localeFilter: RegExp = /^[a-z]{2}\-[A-Z]{2}$/;
 const ipFilter: RegExp = /^(\d{1,3}\.){3}\d{1,3}$/;
 
 export const getCurrencies = async (
@@ -18,15 +17,9 @@ export const getCurrencies = async (
   res.json(data);
 };
 
-export const getAirports = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getAirports = async (_: Request, res: Response): Promise<void> => {
   //  Request data
-  const locale: string = req.params.locale;
-  if (!localeFilter.test(locale))
-    throw new errors.BadRequest('Incorrect user input.');
-  const data: Map<string, string> = await model.getAirports(locale);
+  const data: Map<string, string> = await model.getAirports();
   //  Respond
   res.status(200);
   res.json([...data]);

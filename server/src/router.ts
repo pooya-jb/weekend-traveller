@@ -16,7 +16,7 @@ function errorCatcher(fn: Function) {
 }
 
 router.get('/currencies', errorCatcher(flightData.getCurrencies));
-router.get('/airports/:locale', errorCatcher(flightData.getAirports));
+router.get('/airports', errorCatcher(flightData.getAirports));
 
 router.post(
   '/request-locale-info',
