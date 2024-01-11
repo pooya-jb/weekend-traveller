@@ -1,11 +1,5 @@
-import {
-  Sequelize,
-  Options,
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  DataTypes,
-} from 'sequelize';
+import { Options, DataTypes } from 'sequelize';
+import { Sequelize, Model, Column, Table } from 'sequelize-typescript';
 
 const dbInfo: Options = {
   database: process.env.DB_NAME,
@@ -18,31 +12,21 @@ const dbInfo: Options = {
 
 const sequelize: Sequelize = new Sequelize(dbInfo);
 
-export class Currencies extends Model<
-  InferAttributes<Currencies>,
-  InferCreationAttributes<Currencies>
-> {
-  declare code: string;
+@Table({ tableName: 'currencies' })
+export class Currencies extends Model {
+  @Column({ type: DataTypes.STRING })
+  code!: string;
 }
 
-export class Airports extends Model<
-  InferAttributes<Airports>,
-  InferCreationAttributes<Airports>
-> {
-  declare id: string;
-  declare name: string;
+@Table({ tableName: 'airports' })
+export class Airports extends Model {
+  @Column({ type: DataTypes.STRING, primaryKey: true })
+  override id!: string;
+  @Column({ type: DataTypes.STRING })
+  name!: string;
 }
-
-Currencies.init(
-  { code: DataTypes.STRING },
-  { tableName: 'currencies', sequelize }
-);
-
-Airports.init(
-  { id: { type: DataTypes.STRING, primaryKey: true }, name: DataTypes.STRING },
-  { tableName: 'airports', sequelize }
-);
 
 export const initSequelize = async () => {
+  sequelize.addModels([Currencies, Airports]);
   await sequelize.sync();
 };
