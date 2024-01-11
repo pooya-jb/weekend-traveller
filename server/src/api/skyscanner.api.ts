@@ -1,13 +1,14 @@
 import { errors } from '../middleware/errorHandler.js';
 import * as libApi from '../libraries/skyscanner.api.js';
 
-const baseUrl: string = 'https://partners.api.skyscanner.net/apiservices/v3';
+const BASE_URL: string = 'https://partners.api.skyscanner.net/apiservices/v3';
+
 const localeFilter: RegExp = /^[a-z]{2}\-[A-Z]{2}$/;
 const ipFilter: RegExp = /^(\d{1,3}\.){3}\d{1,3}$/;
 
 export const getCurrencies = async (): Promise<libApi.Currencies> => {
   //  Request flight data
-  const url: string = `${baseUrl}/culture/currencies`;
+  const url: string = `${BASE_URL}/culture/currencies`;
   const response = await fetch(url, {
     headers: { 'x-api-key': process.env.SKYSCANNER_API_KEY },
   });
@@ -24,7 +25,7 @@ export const getGeoHierarchy = async (
   if (!localeFilter.test(locale))
     throw new errors.BadRequest('Incorrect user input.');
   //  Request flight data
-  const url: string = `${baseUrl}/geo/hierarchy/flights/${locale}`;
+  const url: string = `${BASE_URL}/geo/hierarchy/flights/${locale}`;
   const response = await fetch(url, {
     headers: { 'x-api-key': process.env.SKYSCANNER_API_KEY },
   });
@@ -41,7 +42,7 @@ export const getNearestCulture = async (
   if (!ipFilter.test(ipAddress))
     throw new errors.BadRequest('Incorrect user input.');
   //  Request flight data
-  const url: string = `${baseUrl}/culture/nearestculture?ipAddress=${ipAddress}`;
+  const url: string = `${BASE_URL}/culture/nearestculture?ipAddress=${ipAddress}`;
   const response = await fetch(url, {
     headers: { 'x-api-key': process.env.SKYSCANNER_API_KEY },
   });
@@ -55,7 +56,7 @@ export const postFlightsIndicativeRequest = async (
   requestBody: libApi.FlightsIndicativeRequest
 ): Promise<libApi.FlightsIndicative> => {
   //  Request flight data
-  const url: string = `${baseUrl}/flights/indicative/search`;
+  const url: string = `${BASE_URL}/flights/indicative/search`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -74,7 +75,7 @@ export const postFlightsLivePricesRequest = async (
   requestBody: libApi.FlightsLivePricesRequest
 ): Promise<libApi.FlightsLivePrices> => {
   //  Request flight data
-  const url: string = `${baseUrl}/flights/live/search/create`;
+  const url: string = `${BASE_URL}/flights/live/search/create`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {

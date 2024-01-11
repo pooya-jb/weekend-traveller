@@ -8,13 +8,26 @@ export const getCurrencies = async (
   res: Response
 ): Promise<void> => {
   //  Request data
-  const data: libFd.Currencies = await model.getCurrencies();
+  const data: string[] = await model.getCurrencies();
   //  Respond
   res.status(200);
   res.json(data);
 };
 
-export const getAirports = async (): Promise<void> => {};
+export const getAirports = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  //  Request data
+  const locale: string = req.params.locale;
+  const data: Map<string, string> = await model.getAirports(locale);
+  //  Respond
+  res.status(200);
+  res.json([...data]);
+};
+
 export const postLocaleInfoRequest = async (): Promise<void> => {};
+
 export const postCheapestFlightsRequest = async (): Promise<void> => {};
+
 export const postFlightInfoRequest = async (): Promise<void> => {};

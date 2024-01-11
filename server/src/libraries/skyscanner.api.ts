@@ -1,5 +1,5 @@
 /**
- * @link https://developers.skyscanner.net/api/
+ * @link https://developers.skyscanner.net/api/geo
  */
 
 export interface FlightsIndicativeRequest {
@@ -83,10 +83,7 @@ export interface GeoHierarchy {
       name: string;
       type: string;
       iata: string;
-      // coordinates: {
-      //   latitude: number;
-      //   longitude: number;
-      // };
+      // ...
     };
   };
 }
