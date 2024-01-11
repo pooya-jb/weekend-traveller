@@ -200,11 +200,9 @@ export interface FlightsLivePrices {
       carriers: {
         [key: string]: {
           name: string;
-          allianceId: string;
           imageUrl: string;
           iata: string;
-          icao: string;
-          displayCode: string;
+          // ...
         };
       };
       // ...
