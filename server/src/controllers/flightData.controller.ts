@@ -26,7 +26,17 @@ export const getAirports = async (
   res.json([...data]);
 };
 
-export const postLocaleInfoRequest = async (): Promise<void> => {};
+export const postLocaleInfoRequest = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  //  Request data
+  const ipAddress: string = req.body?.ipAddress;
+  const data: libFd.LocaleInfo = await model.postLocaleInfoRequest(ipAddress);
+  //  Respond
+  res.status(200);
+  res.json(data);
+};
 
 export const postCheapestFlightsRequest = async (): Promise<void> => {};
 

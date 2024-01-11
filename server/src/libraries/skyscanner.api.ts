@@ -97,17 +97,9 @@ export interface NearestCulture {
   };
   locale: {
     code: string;
-    // name: string;
+    // ...
   };
-  // currency: {
-  //   code: string;
-  //   symbol: string;
-  //   thousandsSeparator: string;
-  //   decimalSeparator: string;
-  //   symbolOnLeft: boolean;
-  //   spaceBetweenAmountAndSymbol: boolean;
-  //   decimalDigits: number;
-  // };
+  // ...
 }
 
 export interface FlightsIndicative {

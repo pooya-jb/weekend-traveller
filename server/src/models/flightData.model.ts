@@ -58,3 +58,20 @@ export const getAirports = async (
     });
   return dataOut;
 };
+
+export const postLocaleInfoRequest = async (
+  ipAddress: string
+): Promise<libFd.LocaleInfo> => {
+  //  Obtain data from API
+  const dataIn: libApi.NearestCulture = await api.getNearestCulture(ipAddress);
+  if (!(dataIn instanceof Object))
+    throw new errors.BadGateway('Data retrieved in unknown format.');
+  //  Process data to internal format
+  const dataProc: libFd.LocaleInfo = {
+    market: dataIn.market.code,
+    location: dataIn.market.name,
+    currencyCode: dataIn.market.currency,
+    locale: dataIn.locale.code,
+  };
+  return dataProc;
+};
