@@ -67,13 +67,17 @@ export class UnknownError extends Error {
   }
 }
 
+export const errorLogger = (err: CustomError) => {
+  console.error(err.number, err.stack);
+};
+
 export const errorHandler = (
   err: CustomError,
   _: Request,
   res: Response,
   __: Function
 ): void => {
-  console.error(err.number, err.stack);
+  errorLogger(err);
   res.status(err.number);
   res.send(err.clientMessage);
 };

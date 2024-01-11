@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import cors, { CorsOptions } from 'cors';
 
 import { initSequelize } from './databases/flightData.database.js';
+import { initCronJobs } from './controllers/cronJobs.controller.js';
 import { router } from './router.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -21,6 +22,8 @@ const corsOptions: CorsOptions = {
 };
 
 const app: Application = express();
+
+initCronJobs();
 
 app
   .use(cors(corsOptions))
