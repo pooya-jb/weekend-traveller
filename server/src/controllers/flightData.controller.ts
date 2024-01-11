@@ -10,8 +10,7 @@ export const getCurrencies = async (
   next: Function
 ): Promise<void> => {
   //  Request data
-  const data: libFd.Currencies | null = await model.getCurrencies();
-  if (data === null) next(new errors.BadGateway('No data received'));
+  const data: libFd.Currencies = await model.getCurrencies();
   //  Respond
   res.status(200);
   res.json(data);

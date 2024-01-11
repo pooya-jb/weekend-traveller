@@ -4,11 +4,10 @@ class CustomError extends Error {
   override name: string = 'Custom error name';
   number: number = 0;
   clientMessage: string = this.message;
-  constructor(error: string | Error) {
-    super(typeof error === 'string' ? error : error.message);
+  constructor(message: string) {
+    super(message);
   }
 }
-
 class BadRequest extends CustomError {
   override name: string = 'Bad request';
   override number: number = 400;
@@ -28,8 +27,8 @@ class InternalServerError extends CustomError {
   override number: number = 500;
   override clientMessage: string =
     'Unable to resolve request. Please try again later.';
-  constructor(error: Error) {
-    super(error);
+  constructor(message: string) {
+    super(message);
   }
 }
 class BadGateway extends CustomError {
@@ -51,6 +50,22 @@ errors[NotFound.name] = NotFound;
 errors[InternalServerError.name] = InternalServerError;
 errors[BadGateway.name] = BadGateway;
 // call: next(new errors.BadRequest('Missing request parameter(s)'));
+
+export class UnknownError extends Error {
+  number: number = 0;
+  clientMessage: string = this.message;
+  constructor(error: Error) {
+    super(error.message);
+    this.stack = <string>error.stack;
+    const errorForCopy: CustomError = Object.assign(
+      new InternalServerError(error.message),
+      error
+    );
+    this.name = errorForCopy.name;
+    this.number = errorForCopy.number;
+    this.clientMessage = errorForCopy.clientMessage;
+  }
+}
 
 export const errorHandler = (
   err: CustomError,
