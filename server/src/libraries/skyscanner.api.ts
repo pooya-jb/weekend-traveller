@@ -111,36 +111,17 @@ export interface FlightsIndicative {
           minPrice: {
             amount: string;
             unit: string;
-            // updateStatus: string;
+            // ...
           };
           isDirect: boolean;
           outboundLeg: {
-            // originPlaceId: string;
             destinationPlaceId: string;
-            // departureDateTime: {
-            //   year: number;
-            //   month: number;
-            //   day: number;
-            //   hour: number;
-            //   minute: number;
-            //   second: number;
-            // };
-            // quoteCreationTimestamp: string;
             marketingCarrierId: string;
+            // ...
           };
           inboundLeg: {
-            // originPlaceId: string;
-            // destinationPlaceId: string;
-            // departureDateTime: {
-            //   year: number;
-            //   month: number;
-            //   day: number;
-            //   hour: number;
-            //   minute: number;
-            //   second: number;
-            // };
-            // quoteCreationTimestamp: string;
             marketingCarrierId: string;
+            // ...
           };
         };
       };
@@ -149,57 +130,12 @@ export interface FlightsIndicative {
           name: string;
           imageUrl: string;
           iata: string;
-          // icao: string;
-          // displayCode: string;
+          // ...
         };
       };
-      places: {
-        [key: string]: {
-          entityId: string;
-          parentId: string;
-          name: string;
-          type: string;
-          iata: string;
-          // coordinates: {
-          //   latitude: number;
-          //   longitude: number;
-          // };
-        };
-      };
+      // ...
     };
-    // groupingOptions: {
-    //   byRoute: {
-    //     quotesGroups: [
-    //       {
-    //         originPlaceId: string;
-    //         destinationPlaceId: string;
-    //         quoteIds: string[];
-    //       }
-    //     ];
-    //   };
-    //   byDate: {
-    //     quotesInboundGroups: [
-    //       {
-    //         monthYearDate: {
-    //           year: number;
-    //           month: number;
-    //           day: number;
-    //         };
-    //         quoteIds: string[];
-    //       }
-    //     ];
-    //     quotesOutboundGroups: [
-    //       {
-    //         monthYearDate: {
-    //           year: number;
-    //           month: number;
-    //           day: number;
-    //         };
-    //         quoteIds: string[];
-    //       }
-    //     ];
-    //   };
-    // };
+    // ...
   };
 }
 

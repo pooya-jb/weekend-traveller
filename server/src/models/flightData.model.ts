@@ -19,7 +19,7 @@ export const getCurrencies = async (): Promise<string[]> => {
   const dataProc: string[] = [];
   for (let currency of dataIn.currencies) dataProc.push(currency.code);
   if (!dataProc.length) throw new errors.BadGateway('No data to process.');
-  //  Generate output
+  //  Format output
   const dataOut: string[] = [...new Set(dataProc)].sort();
   return dataOut;
 };
@@ -48,7 +48,7 @@ export const getAirports = async (
   }
   if (!Array.from(dataProc.keys()).length)
     throw new errors.BadGateway('No data to process.');
-  //  Generate output
+  //  Format output
   const dataOut: Map<string, string> = new Map();
   Array.from(dataProc.keys())
     .sort()
@@ -68,10 +68,93 @@ export const postLocaleInfoRequest = async (
     throw new errors.BadGateway('Data retrieved in unknown format.');
   //  Process data to internal format
   const dataProc: libFd.LocaleInfo = {
-    market: dataIn.market.code,
-    location: dataIn.market.name,
+    marketCode: dataIn.market.code,
+    locationName: dataIn.market.name,
     currencyCode: dataIn.market.currency,
-    locale: dataIn.locale.code,
+    localeCode: dataIn.locale.code,
   };
   return dataProc;
+};
+
+export const postCheapestFlightsRequest = async (
+  requestBody: libFd.CheapestFlightsRequest
+): Promise<libFd.CheapestFlights> => {
+  //  Obtain data for each requested week
+  const dataProc: libFd.CheapestFlights = {};
+  const dataOut: libFd.CheapestFlights = {};
+  for (let addWeeks = 0; addWeeks < requestBody.lookAtWeeks; addWeeks++) {
+    //  Generate date objects
+    const addTime: number = addWeeks * 1000 * 3600 * 24 * 7;
+    const travelDate: Date = new Date(requestBody.travelDate + addTime);
+    const returnDate: Date | null =
+      requestBody.returnDate !== undefined
+        ? new Date(requestBody.returnDate + addTime)
+        : null;
+    //  Process request object to API format
+    const requestBodyApi: libApi.FlightsIndicativeRequest = {
+      query: {
+        currency: requestBody.currencyCode,
+        locale: requestBody.localeCode,
+        market: requestBody.marketCode,
+        queryLegs: [
+          {
+            originPlace: {
+              queryPlace: {
+                entityId: requestBody.originPlaceId,
+              },
+            },
+            destinationPlace: {
+              anywhere: true,
+            },
+            fixedDate: {
+              year: travelDate.getFullYear(),
+              month: travelDate.getMonth() + 1,
+              day: travelDate.getDate(),
+            },
+          },
+        ],
+        cabinClass: 'CABIN_CLASS_ECONOMY',
+      },
+    };
+    //  Generate return part of API format
+    if (returnDate) {
+      requestBodyApi.query.queryLegs.push({
+        originPlace: {
+          anywhere: true,
+        },
+        destinationPlace: {
+          queryPlace: {
+            entityId: requestBody.originPlaceId,
+          },
+        },
+        fixedDate: {
+          year: returnDate.getFullYear(),
+          month: returnDate.getMonth() + 1,
+          day: returnDate.getDate(),
+        },
+      });
+    }
+    //  Obtain data from API
+    const dataIn: libApi.FlightsIndicative =
+      await api.postFlightsIndicativeRequest(requestBodyApi);
+    if (!(dataIn instanceof Object))
+      throw new errors.BadGateway('Data retrieved in unknown format.');
+    //  Process data to internal format
+    const dateKey: string = travelDate.valueOf().toString();
+    dataProc[dateKey] = [];
+    const carriers = dataIn.content.results.carriers;
+    for (let [_, quote] of Object.entries(dataIn.content.results.quotes)) {
+      dataProc[dateKey].push({
+        vendorTherePic:
+          carriers[quote.outboundLeg.marketingCarrierId]?.imageUrl,
+        vendorBackPic: carriers[quote.inboundLeg.marketingCarrierId]?.imageUrl,
+        destinationPlaceId: quote.outboundLeg.destinationPlaceId,
+        hasTransfers: !quote.isDirect,
+        price: parseInt(quote.minPrice.amount),
+      });
+    }
+    //  Format output
+    dataOut[dateKey] = dataProc[dateKey].sort((a, b) => a.price - b.price);
+  }
+  return dataOut;
 };

@@ -3,9 +3,6 @@ import * as libApi from '../libraries/skyscanner.api.js';
 
 const BASE_URL: string = 'https://partners.api.skyscanner.net/apiservices/v3';
 
-const localeFilter: RegExp = /^[a-z]{2}\-[A-Z]{2}$/;
-const ipFilter: RegExp = /^(\d{1,3}\.){3}\d{1,3}$/;
-
 export const getCurrencies = async (): Promise<libApi.Currencies> => {
   //  Request flight data
   const url: string = `${BASE_URL}/culture/currencies`;
@@ -21,9 +18,6 @@ export const getCurrencies = async (): Promise<libApi.Currencies> => {
 export const getGeoHierarchy = async (
   locale: string
 ): Promise<libApi.GeoHierarchy> => {
-  //  Check inputs
-  if (!localeFilter.test(locale))
-    throw new errors.BadRequest('Incorrect user input.');
   //  Request flight data
   const url: string = `${BASE_URL}/geo/hierarchy/flights/${locale}`;
   const response = await fetch(url, {
@@ -38,9 +32,6 @@ export const getGeoHierarchy = async (
 export const getNearestCulture = async (
   ipAddress: string
 ): Promise<libApi.NearestCulture> => {
-  //  Check inputs
-  if (!ipFilter.test(ipAddress))
-    throw new errors.BadRequest('Incorrect user input.');
   //  Request flight data
   const url: string = `${BASE_URL}/culture/nearestculture?ipAddress=${ipAddress}`;
   const response = await fetch(url, {
