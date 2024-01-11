@@ -8,6 +8,16 @@ export interface CheapestFlightsRequest {
   returnDate?: number;
 }
 
+export interface FlightInfoRequest {
+  currencyCode: string;
+  localeCode: string;
+  marketCode: string;
+  originPlaceId: string;
+  destinationPlaceId: string;
+  travelDate: number;
+  returnDate?: number;
+}
+
 export interface LocaleInfo {
   marketCode: string;
   locationName: string;
@@ -25,4 +35,18 @@ export interface CheapFlight {
 
 export interface CheapestFlights {
   [key: string]: CheapFlight[];
+}
+
+export interface FlightSegment {
+  originPlaceId: string;
+  destinationPlaceId: string;
+  departure: number;
+  arrival: number;
+  airlinePic: string;
+}
+
+export interface FlightInfo {
+  segments: FlightSegment[];
+  vendorLink: string;
+  price: number;
 }

@@ -62,4 +62,16 @@ export const postCheapestFlightsRequest = async (
   res.json(data);
 };
 
-export const postFlightInfoRequest = async (): Promise<void> => {};
+export const postFlightInfoRequest = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  //  Request data
+  const requestBody: libFd.FlightInfoRequest = req.body;
+  if (!(requestBody instanceof Object))
+    throw new errors.BadRequest('Incorrect user inputs.');
+  const data: libFd.FlightInfo = await model.postFlightInfoRequest(requestBody);
+  //  Respond
+  res.status(200);
+  res.json(data);
+};

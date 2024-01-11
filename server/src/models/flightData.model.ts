@@ -141,8 +141,8 @@ export const postCheapestFlightsRequest = async (
       throw new errors.BadGateway('Data retrieved in unknown format.');
     //  Process data to internal format
     const dateKey: string = travelDate.valueOf().toString();
-    dataProc[dateKey] = [];
     const carriers = dataIn.content.results.carriers;
+    dataProc[dateKey] = [];
     for (let [_, quote] of Object.entries(dataIn.content.results.quotes)) {
       dataProc[dateKey].push({
         vendorTherePic:
@@ -157,4 +157,109 @@ export const postCheapestFlightsRequest = async (
     dataOut[dateKey] = dataProc[dateKey].sort((a, b) => a.price - b.price);
   }
   return dataOut;
+};
+
+export const postFlightInfoRequest = async (
+  requestBody: libFd.FlightInfoRequest
+): Promise<libFd.FlightInfo> => {
+  //  Generate date objects
+  const travelDate: Date = new Date(requestBody.travelDate);
+  const returnDate: Date | null =
+    requestBody.returnDate !== undefined
+      ? new Date(requestBody.returnDate)
+      : null;
+  //  Process request object to API format
+  const requestBodyApi: libApi.FlightsLivePricesRequest = {
+    query: {
+      currency: requestBody.currencyCode,
+      locale: requestBody.localeCode,
+      market: requestBody.marketCode,
+      queryLegs: [
+        {
+          originPlaceId: {
+            entityId: requestBody.originPlaceId,
+          },
+          destinationPlaceId: {
+            entityId: requestBody.destinationPlaceId,
+          },
+          date: {
+            year: travelDate.getFullYear(),
+            month: travelDate.getMonth() + 1,
+            day: travelDate.getDate(),
+          },
+        },
+      ],
+      cabinClass: 'CABIN_CLASS_ECONOMY',
+      adults: 1,
+    },
+  };
+  //  Generate return part of API format
+  if (returnDate) {
+    requestBodyApi.query.queryLegs.push({
+      originPlaceId: {
+        entityId: requestBody.destinationPlaceId,
+      },
+      destinationPlaceId: {
+        entityId: requestBody.originPlaceId,
+      },
+      date: {
+        year: returnDate.getFullYear(),
+        month: returnDate.getMonth() + 1,
+        day: returnDate.getDate(),
+      },
+    });
+  }
+  //  Obtain data from API
+  const dataIn: libApi.FlightsLivePrices =
+    await api.postFlightsLivePricesRequest(requestBodyApi);
+  if (!(dataIn instanceof Object))
+    throw new errors.BadGateway('Data retrieved in unknown format.');
+  //  Access critical API data routes
+  const cheapestItineraryId: string =
+    dataIn.content.sortingOptions.cheapest[0].itineraryId;
+  const cheapestItinerary =
+    dataIn.content.results.itineraries[cheapestItineraryId];
+  const price: string =
+    cheapestItinerary.pricingOptions[0].items[0].price.amount;
+  const vendorLink: string =
+    cheapestItinerary.pricingOptions[0].items[0].deepLink;
+  const fares = cheapestItinerary.pricingOptions[0].items[0].fares;
+  const segments = dataIn.content.results.segments;
+  const carriers = dataIn.content.results.carriers;
+  //  Process data to internal format
+  const dataProc: libFd.FlightInfo = {
+    segments: [],
+    vendorLink: vendorLink,
+    price: Number(price) / 1000,
+  };
+  for (let fare of fares) {
+    const segmentId: string = fare.segmentId;
+    const segment = segments[segmentId];
+    const departureDateTime: Date = new Date(
+      Date.UTC(
+        segment.departureDateTime.year,
+        segment.departureDateTime.month - 1,
+        segment.departureDateTime.day,
+        segment.departureDateTime.hour,
+        segment.departureDateTime.minute
+      )
+    );
+    const arrivalDateTime: Date = new Date(
+      Date.UTC(
+        segment.arrivalDateTime.year,
+        segment.arrivalDateTime.month - 1,
+        segment.arrivalDateTime.day,
+        segment.arrivalDateTime.hour,
+        segment.arrivalDateTime.minute
+      )
+    );
+    dataProc.segments.push({
+      originPlaceId: segment.originPlaceId,
+      destinationPlaceId: segment.destinationPlaceId,
+      departure: departureDateTime.valueOf(),
+      arrival: arrivalDateTime.valueOf(),
+      airlinePic: carriers[segment.operatingCarrierId].imageUrl,
+    });
+  }
+  return dataProc;
 };

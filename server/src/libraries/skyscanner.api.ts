@@ -54,7 +54,6 @@ export interface FlightsLivePricesRequest {
     ];
     cabinClass: string;
     adults: number;
-    includedCarriersIds: string[];
   };
 }
 
@@ -149,76 +148,27 @@ export interface FlightsLivePrices {
         [key: string]: {
           pricingOptions: [
             {
-              price: {
-                amount: string;
-                unit: string;
-                // updateStatus: string;
-              };
-              // agentIds: string[];
               items: [
                 {
-                  price: {};
-                  agentId: string;
+                  price: {
+                    amount: string;
+                    unit: string;
+                    // ...
+                  };
                   deepLink: string;
-                  fares: [null];
+                  fares: {
+                    segmentId: string;
+                    // ...
+                  }[];
+                  // ...
                 }
               ];
               transferType: string;
               id: string;
-              // pricingOptionFare: {
-              // cabinBaggage: {
-              //   assessment: string;
-              //   pieces: number;
-              //   fee: {};
-              //   weight: string;
-              // };
-              // checkedBaggage: {
-              //   assessment: string;
-              //   pieces: number;
-              //   fee: {};
-              //   weight: string;
-              // };
-              // legDetails: {
-              //   [key: string]: {
-              //     brandNames: [];
-              //   };
-              // };
-              //   brandNames: string[];
-              // };
+              // ...
             }
           ];
-          legIds: string[];
-          // sustainabilityData: {
-          //   isEcoContender: boolean;
-          //   ecoContenderDelta: number;
-          // };
-        };
-      };
-      legs: {
-        [key: string]: {
-          // originPlaceId: string;
-          // destinationPlaceId: string;
-          // departureDateTime: {
-          //   year: number;
-          //   month: number;
-          //   day: number;
-          //   hour: number;
-          //   minute: number;
-          //   second: number;
-          // };
-          // arrivalDateTime: {
-          //   year: number;
-          //   month: number;
-          //   day: number;
-          //   hour: number;
-          //   minute: number;
-          //   second: number;
-          // };
-          // durationInMinutes: number;
-          // stopCount: number;
-          // marketingCarrierIds: string[];
-          // operatingCarrierIds: string[];
-          segmentIds: string[];
+          // ...
         };
       };
       segments: {
@@ -247,19 +197,6 @@ export interface FlightsLivePrices {
           operatingCarrierId: string;
         };
       };
-      places: {
-        [key: string]: {
-          entityId: string;
-          parentId: string;
-          name: string;
-          type: string;
-          iata: string;
-          // coordinates: {
-          //   latitude: number;
-          //   longitude: number;
-          // };
-        };
-      };
       carriers: {
         [key: string]: {
           name: string;
@@ -270,173 +207,17 @@ export interface FlightsLivePrices {
           displayCode: string;
         };
       };
-      // agents: {
-      //   [key: string]: {
-      //     name: string;
-      //     type: string;
-      //     imageUrl: string;
-      //     feedbackCount: number;
-      //     rating: number;
-      //     ratingBreakdown: {
-      //       customerService: number;
-      //       reliablePrices: number;
-      //       clearExtraFees: number;
-      //       easeOfBooking: number;
-      //       other: number;
-      //     };
-      //     isOptimisedForMobile: boolean;
-      //   };
-      // };
-      // alliances: {
-      //   [key: string]: {
-      //     name: string;
-      //   };
-      // };
+      // ...
     };
-    // stats: {
-    //   itineraries: {
-    //     minDuration: number;
-    //     maxDuration: number;
-    //     total: {
-    //       count: number;
-    //       minPrice: {
-    //         amount: string;
-    //         unit: string;
-    //         updateStatus: string;
-    //       };
-    //     };
-    //     stops: {
-    //       direct: {
-    //         total: {
-    //           count: number;
-    //           minPrice: {
-    //             amount: string;
-    //             unit: string;
-    //             updateStatus: string;
-    //           };
-    //         };
-    //         ticketTypes: {
-    //           singleTicket: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //           multiTicketNonNpt: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //           multiTicketNpt: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //         };
-    //       };
-    //       oneStop: {
-    //         total: {
-    //           count: number;
-    //           minPrice: {
-    //             amount: string;
-    //             unit: string;
-    //             updateStatus: string;
-    //           };
-    //         };
-    //         ticketTypes: {
-    //           singleTicket: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //           multiTicketNonNpt: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //           multiTicketNpt: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //         };
-    //       };
-    //       twoPlusStops: {
-    //         total: {
-    //           count: number;
-    //           minPrice: {
-    //             amount: string;
-    //             unit: string;
-    //             updateStatus: string;
-    //           };
-    //         };
-    //         ticketTypes: {
-    //           singleTicket: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //           multiTicketNonNpt: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //           multiTicketNpt: {
-    //             count: number;
-    //             minPrice: {
-    //               amount: string;
-    //               unit: string;
-    //               updateStatus: string;
-    //             };
-    //           };
-    //         };
-    //       };
-    //     };
-    //     hasChangeAirportTransfer: boolean;
-    //   };
-    // };
     sortingOptions: {
-      // best: [
-      //   {
-      //     score: number;
-      //     itineraryId: string;
-      //   }
-      // ];
       cheapest: [
         {
           score: number;
           itineraryId: string;
         }
       ];
-      // fastest: [
-      //   {
-      //     score: number;
-      //     itineraryId: string;
-      //   }
-      // ];
+      // ...
     };
+    // ...
   };
 }
