@@ -26,7 +26,7 @@ const CLIENT_URL: string = process.env.CLIENT_URL;
 const CLIENT_PORT: number = process.env.CLIENT_PORT;
 
 const corsOptions: CorsOptions = {
-  origin: `${CLIENT_URL}:${CLIENT_PORT}`,
+  origin: `http://${CLIENT_URL}:${CLIENT_PORT}`,
   methods: ['GET', 'POST'], // we don't use more
 };
 

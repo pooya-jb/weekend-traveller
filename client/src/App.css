@@ -3,7 +3,6 @@
 #app {
   width: 100vw;
   height: 100vh;
-  background-color: #f7eadf;
   background-image: url('src/assets/beautiful-paradise-island-with-beach-sea.jpg');
   background-position: scroll;
   background-repeat: no-repeat;
@@ -22,14 +21,22 @@
   flex: 1;
   display: flex;
   width: 100%;
-  padding: 2em;
+  padding: 1em 0;
+  position: relative;
+  justify-content: flex-end;
+  min-height: 11em;
+  max-height: 11em;
 }
 #header-logo {
-  flex: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 12em;
+  z-index: 1;
 }
 h1 {
   font-family: Satisfy;
@@ -41,7 +48,13 @@ h1 {
   text-shadow: 3px 3px #35312e;
 }
 #locale-options {
-  width: 12em;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 0.6em;
 }
 
 /* Dashboard */
@@ -54,18 +67,22 @@ h1 {
 
 #flight-options {
   display: flex;
-  gap: 3em;
+  gap: 1em;
 }
 .option-wrapper {
-  padding: 0.5em 1em;
-  margin-bottom: 0.25em;
+  padding: 0.3em 0.5em;
   border-radius: 0.5em;
-  border: 2px solid #fff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
   background: rgba(255, 255, 255, 0.6);
 }
 #header .option-wrapper {
-  border: 2px solid #fff;
+  display: inline;
+  border: 2px solid rgba(255, 255, 255, 0.7);
   background: rgba(245, 221, 212, 0.8);
+  text-align: right;
+}
+.option-dropdown {
+  max-width: 15em;
 }
 
 /* Footer */
@@ -73,6 +90,7 @@ h1 {
 #footer {
   flex: 1;
   width: 100%;
+  max-height: 6em;
 }
 #footer-notes {
   display: flex;

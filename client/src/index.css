@@ -9,9 +9,21 @@ body,
   color: #35312e;
 }
 
-button {
-  background: transparent;
+input,
+button,
+select,
+option {
   border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+input:focus,
+button:focus,
+select:focus {
+  outline: none;
 }
 
 /* Default settings */
@@ -19,13 +31,14 @@ button {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
-}
-
-input,
-button {
-  border: none;
+  background-color: #f7eadf;
 }
 
 label {
-  padding-right: 10px;
+  padding: 0 10px;
+}
+
+select {
+  border-bottom: 2px solid #fff;
+  padding-left: 10px;
 }
