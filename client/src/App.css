@@ -1,42 +1,87 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* App */
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f7eadf;
+  background-image: url('src/assets/beautiful-paradise-island-with-beach-sea.jpg');
+  background-position: scroll;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  display: flex;
+  flex-direction: column;
+}
+#app > * {
+  max-width: 1200px;
+  margin: auto;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/* Header */
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
+#header {
+  flex: 1;
+  display: flex;
+  width: 100%;
   padding: 2em;
 }
+#header-logo {
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 12em;
+}
+h1 {
+  font-family: Satisfy;
+  color: #fff;
+  font-size: 4rem;
+  font-weight: 400;
+  padding: 0 1em;
+  border-bottom: 3px solid #fff;
+  text-shadow: 3px 3px #35312e;
+}
+#locale-options {
+  width: 12em;
+}
 
-.read-the-docs {
-  color: #888;
+/* Dashboard */
+
+#dashboard {
+  flex: auto;
+}
+
+/* Forms */
+
+#flight-options {
+  display: flex;
+  gap: 3em;
+}
+.option-wrapper {
+  padding: 0.5em 1em;
+  margin-bottom: 0.25em;
+  border-radius: 0.5em;
+  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.6);
+}
+#header .option-wrapper {
+  border: 2px solid #fff;
+  background: rgba(245, 221, 212, 0.8);
+}
+
+/* Footer */
+
+#footer {
+  flex: 1;
+  width: 100%;
+}
+#footer-notes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8rem;
+}
+#footer-notes img {
+  height: 2rem;
+  width: auto;
+  opacity: 0.85;
 }
