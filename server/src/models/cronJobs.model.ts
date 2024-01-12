@@ -1,3 +1,5 @@
+import { Optional } from 'sequelize';
+
 import { errors } from '../middleware/errorHandler.js';
 import * as api from '../api/skyscanner.api.js';
 import * as libApi from '../libraries/skyscanner.api.js';
@@ -23,7 +25,7 @@ export const loadCurrencies = async (): Promise<void> => {
   if (!dataProc.length) throw new errors.BadGateway('No data to process.');
   //  Store data in database
   await Currencies.truncate();
-  await Currencies.bulkCreate(<Currencies[]>dataProc);
+  await Currencies.bulkCreate(<Optional<any, string>[]>dataProc);
 };
 
 export const loadAirports = async (): Promise<void> => {
@@ -50,5 +52,5 @@ export const loadAirports = async (): Promise<void> => {
     throw new errors.BadGateway('No data to process.');
   //  Store data in database
   await Airports.truncate();
-  await Airports.bulkCreate(<Airports[]>dataProc);
+  await Airports.bulkCreate(<Optional<any, string>[]>dataProc);
 };

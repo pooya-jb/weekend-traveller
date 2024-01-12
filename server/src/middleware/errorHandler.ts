@@ -81,3 +81,13 @@ export const errorHandler = (
   res.status(err.number);
   res.send(err.clientMessage);
 };
+
+export const errorCatcher = (fn: Function) => {
+  return async (req: Request, res: Response, next: Function) => {
+    try {
+      await fn(req, res, next);
+    } catch (err) {
+      if (!res.headersSent) next(new UnknownError(<Error>err));
+    }
+  };
+};

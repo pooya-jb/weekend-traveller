@@ -128,7 +128,6 @@ export interface FlightsIndicative {
         [key: string]: {
           name: string;
           imageUrl: string;
-          iata: string;
           // ...
         };
       };
@@ -164,7 +163,6 @@ export interface FlightsLivePrices {
                 }
               ];
               transferType: string;
-              id: string;
               // ...
             }
           ];
@@ -191,7 +189,6 @@ export interface FlightsLivePrices {
             minute: number;
             second: number;
           };
-          durationInMinutes: number;
           marketingFlightNumber: string;
           marketingCarrierId: string;
           operatingCarrierId: string;
@@ -201,7 +198,6 @@ export interface FlightsLivePrices {
         [key: string]: {
           name: string;
           imageUrl: string;
-          iata: string;
           // ...
         };
       };
