@@ -30,9 +30,9 @@ const OPTION_ONE_WAY: libFd.Option = { value: '-1', label: 'One way' };
 OPTIONS_TRIP_LENGTH.unshift(OPTION_ONE_WAY);
 
 //  TODO resolve any
-async function loadOptions(_: string, loadedOptions: any) {
+async function loadOptions(search: string, loadedOptions: any) {
   return {
-    options: await getAirportsPartition(100, loadedOptions.length),
+    options: await getAirportsPartition(100, loadedOptions.length, search),
     hasMore: true,
   };
 }
@@ -69,7 +69,7 @@ function FlightOptions({
     };
     if (tripLength.value !== OPTION_ONE_WAY.value) {
       requestBody.returnDate = startDate.valueOf();
-      requestBody.returnDate += 1000 * 3600 * 24 * Number(tripLength);
+      requestBody.returnDate += 1000 * 3600 * 24 * Number(tripLength.value);
     }
     composeRequest(requestBody);
   };

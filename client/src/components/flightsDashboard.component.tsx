@@ -5,6 +5,7 @@ import FlightOptions from './flightOptions.component';
 import FlightsMakeSelection from './flightsMakeSelection.component';
 import * as libFd from '../libraries/flightData.service';
 import { postCheapestFlightsRequest } from '../services/api.service';
+import FlightsLoading from './flightsLoading.component';
 
 function FlightsDashboard() {
   const [cheapFlights, getCheapFlights] = useState<
@@ -15,6 +16,7 @@ function FlightsDashboard() {
 
   useEffect(() => {
     if (requestBody) {
+      getCheapFlights(undefined);
       postCheapestFlightsRequest(requestBody).then(data =>
         getCheapFlights(data)
       );
@@ -30,6 +32,8 @@ function FlightsDashboard() {
             cheapFlights={cheapFlights}
             requestBody={requestBody}
           />
+        ) : !cheapFlights && requestBody ? (
+          <FlightsLoading />
         ) : (
           <FlightsMakeSelection />
         )}

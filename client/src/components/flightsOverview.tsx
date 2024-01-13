@@ -14,7 +14,7 @@ function FlightsOverview({
     <>
       <ul className="day-overview-columns">
         {Object.keys(cheapFlights).map(day => (
-          <li className="flights-day-header">
+          <li key={`header.${day}`} className="flights-day-header">
             <h3>
               {moment(parseInt(day)).format('DD MMM YYYY')}
               {requestBody.returnDate
@@ -26,10 +26,10 @@ function FlightsOverview({
       </ul>
       <ul className="flights-overview-columns">
         {Object.keys(cheapFlights).map(day => (
-          <li className="flights-day-column">
+          <li key={`list.${day}`} className="flights-day-column">
             <ul className="flights-day-list">
               {cheapFlights[day].map(flight => (
-                <li>
+                <li key={`${day}.${flight.destinationPlaceId}.${flight.price}`}>
                   <FlightInfo flightInfo={flight} requestBody={requestBody} />
                 </li>
               ))}

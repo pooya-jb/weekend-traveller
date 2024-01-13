@@ -46,9 +46,14 @@ function FlightInfo({
       <div className="cheap-flight" onClick={getFlightDetail}>
         <div>{destination.label}</div>
         <div className="cheap-flight-info">
-          <img src={flightInfo.vendorTherePic} alt="" />
-          {flightInfo.hasOwnProperty('vendorBackPic') ??
-            ' / ' + <img src={flightInfo.vendorBackPic} alt="" />}
+          <div className="cheap-flight-info-vendors">
+            <img src={flightInfo.vendorTherePic} alt="" />
+            {flightInfo.vendorBackPic ? (
+              <img src={flightInfo.vendorBackPic} alt="" />
+            ) : (
+              ''
+            )}
+          </div>
           <div className="cheap-flight-more-info">
             {flightInfo.hasTransfers && (
               <span className="transfer">Transfer</span>

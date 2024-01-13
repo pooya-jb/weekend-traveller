@@ -7,10 +7,11 @@ const ipRequestUrl = `https://api.ipify.org?format=json`;
 let currencies: libFd.Currencies = [];
 let airports: libFd.Airports;
 let localeInfo: libFd.LocaleInfo;
+let cheapestFlightsCache: { [key: string]: libFd.CheapestFlights } = {};
 
 export const getCurrencies = async (): Promise<libFd.Currencies> => {
   //  TODO error handling
-  if (currencies.length) return currencies; // feed from internal storage
+  if (currencies && currencies.length) return currencies; // feed from internal storage
   const response = await fetch(`${serverUrl}/currencies`);
   if (!response.ok) throw new Error();
   const data: string[] = await response.json();
@@ -30,16 +31,24 @@ export const getAirports = async (): Promise<libFd.Airports> => {
 
 export const getAirportsPartition = async (
   limit: number,
-  offset: number
+  offset: number,
+  search: string
 ): Promise<libFd.Airports> => {
   //  TODO error handling
   if (!airports) await getAirports(); // feed from internal storage
-  return airports.slice(offset, limit + offset);
+  let partition = airports;
+  if (search) {
+    search = search.toLowerCase();
+    partition = partition.filter(airport =>
+      airport.label.toLowerCase().includes(search)
+    );
+  }
+  return partition.slice(offset, limit + offset);
 };
 
 export const postLocaleInfoRequest = async (): Promise<libFd.LocaleInfo> => {
   //  TODO error handling
-  if (localeInfo !== undefined) return localeInfo;
+  if (localeInfo) return localeInfo;
   //  Obtain user's IP
   const responseIp = await fetch(ipRequestUrl);
   if (!responseIp.ok) throw new Error();
@@ -61,13 +70,17 @@ export const postCheapestFlightsRequest = async (
   requestBody: libFd.CheapestFlightsRequest
 ): Promise<libFd.CheapestFlights> => {
   //  TODO error handling
+  const requestJSON: string = JSON.stringify(requestBody);
+  if (cheapestFlightsCache[requestJSON])
+    return cheapestFlightsCache[requestJSON];
   const response = await fetch(`${serverUrl}/request-cheapest-flights`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(requestBody),
+    body: requestJSON,
   });
   if (!response.ok) throw new Error();
   const data: libFd.CheapestFlights = await response.json();
+  cheapestFlightsCache[requestJSON] = data;
   return data;
 };
 
