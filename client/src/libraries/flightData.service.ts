@@ -20,6 +20,8 @@ export interface FlightInfoRequest {
 
 export type Option = { value: string; label: string };
 
+export type Currencies = Option[];
+
 export type Airports = Option[];
 
 export interface LocaleInfo {

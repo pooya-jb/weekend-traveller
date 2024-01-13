@@ -47,15 +47,18 @@ export const getCurrencies = async (): Promise<string[]> => {
  * @throws if DB is empty
  */
 export const getAirports = async (
-  limit: number,
-  offset: number
+  limit: number = 0,
+  offset: number = 0
 ): Promise<Map<string, string>> => {
   //  Obtain data from database
-  const dataProc: Airports[] = await Airports.findAll({
-    limit: limit,
-    offset: offset,
-    order: ['name'],
-  });
+  const dataProc: Airports[] =
+    !limit && !offset
+      ? await Airports.findAll()
+      : await Airports.findAll({
+          limit: limit,
+          offset: offset,
+          order: ['name'],
+        });
   if (!dataProc.length) throw new errors.BadGateway('Missing data in DB.');
   //  Format output
   const dataOut: Map<string, string> = new Map();

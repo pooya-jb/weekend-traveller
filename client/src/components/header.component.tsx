@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react';
-import { getCurrencies, postLocaleInfoRequest } from '../services/api.service';
+import { useContext, useEffect, useState } from 'react';
+import Select from 'react-select';
 
-function Header() {
-  const [currencies, setCurrencies] = useState<string[]>([]);
-  const [userMarket, setUserMarket] = useState<string>('');
-  const [userCurrency, setUserCurrency] = useState<string>('');
+import { LocaleContext } from '../App';
+import * as libFd from '../libraries/flightData.service';
+import { getCurrencies } from '../services/api.service';
+
+function Header({
+  selectedCurrency,
+  selectCurrency,
+}: {
+  selectedCurrency: string;
+  selectCurrency: (currency: string) => void;
+}) {
+  // TODO: autoupdate currency
+  const [currencies, setCurrencies] = useState<libFd.Currencies>([]);
 
   useEffect(() => {
-    getCurrencies().then(response => setCurrencies(response));
-    postLocaleInfoRequest().then(response => {
-      setUserMarket(response.locationName);
-      setUserCurrency(response.currencyCode);
+    getCurrencies().then(response => {
+      setCurrencies(response);
     });
   }, []);
 
@@ -22,25 +29,29 @@ function Header() {
           {/* Market selector # Disabled */}
           <div className="option-wrapper">
             <label className="option-label">Your location:</label>
-            <span className="option-value">{userMarket}</span>
+            <span className="option-value">
+              {useContext(LocaleContext).locationName}
+            </span>
           </div>
           {/* Currency selector */}
           <div className="option-wrapper">
             <label htmlFor="locale-options-currency" className="option-label">
               Currency:
             </label>
-            <select id="locale-options-currency" className="option-dropdown">
-              {currencies.map(currency => (
-                <option
-                  key={currency}
-                  value={currency}
-                  className="option-item"
-                  selected={currency === userCurrency}
-                >
-                  {currency}
-                </option>
-              ))}
-            </select>
+            <Select
+              id="flight-options-currency"
+              className="option-dropdown"
+              classNamePrefix="option-dropdown"
+              defaultValue={
+                // currencies.find(currency => currency.value === selectedCurrency)
+                {
+                  value: selectedCurrency,
+                  label: selectedCurrency,
+                }
+              }
+              onChange={selected => selected && selectCurrency(selected.value)}
+              options={currencies}
+            />
           </div>
         </form>
         {/* Site logo */}

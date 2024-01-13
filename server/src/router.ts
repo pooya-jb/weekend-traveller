@@ -19,8 +19,8 @@ import * as flightData from './controllers/flightData.controller.js';
 export const router: Router = express.Router();
 
 //  GET routes
-router.get('/airports/:limit-:offset', errorCatcher(flightData.getAirports));
 router.get('/currencies', errorCatcher(flightData.getCurrencies));
+router.get('/airports', errorCatcher(flightData.getAirports));
 
 //  POST routes
 router.post(

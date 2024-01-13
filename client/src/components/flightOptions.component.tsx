@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
 
+import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
-import { getAirports } from '../services/api.service';
+import { getAirportsPartition } from '../services/api.service';
 
 import './reactDatePicker.css';
 import './reactSelect.css';
 
 //  TODO put as global constant
 const OPTION_START_DATE_DEF: Date = new Date(Date.now());
+OPTION_START_DATE_DEF.setDate(OPTION_START_DATE_DEF.getDate() + 1);
 
 const OPTIONS_SHOW_WEEKS: libFd.Option[] = [
   { value: '2', label: '2' },
@@ -30,12 +32,16 @@ OPTIONS_TRIP_LENGTH.unshift(OPTION_ONE_WAY);
 //  TODO resolve any
 async function loadOptions(_: string, loadedOptions: any) {
   return {
-    options: await getAirports(100, loadedOptions.length),
+    options: await getAirportsPartition(100, loadedOptions.length),
     hasMore: true,
   };
 }
 
-function FlightOptions() {
+function FlightOptions({
+  composeRequest,
+}: {
+  composeRequest: (requestBody: libFd.CheapestFlightsRequest) => void;
+}) {
   const [pickedAirport, pickAirport] = useState<libFd.Option>();
   const [startDate, setStartDate] = useState<Date | null>(
     OPTION_START_DATE_DEF
@@ -44,9 +50,29 @@ function FlightOptions() {
   const [showWeeks, setShowWeeks] = useState<libFd.Option>(
     OPTION_SHOW_WEEKS_DEF
   );
-  const [airports, setAirports] = useState<libFd.Airports>([
-    { value: '', label: '' },
-  ]);
+
+  const localeInfo: libFd.LocaleInfo = useContext(LocaleContext);
+
+  const searchFlights = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // TODO error handling
+    if (!pickedAirport) return;
+    if (!startDate) return;
+    if (startDate.valueOf() < Date.now()) return;
+    const requestBody: libFd.CheapestFlightsRequest = {
+      currencyCode: localeInfo.currencyCode,
+      localeCode: 'en-US',
+      marketCode: localeInfo.marketCode,
+      originPlaceId: pickedAirport.value,
+      lookAtWeeks: Number(showWeeks.value),
+      travelDate: startDate.valueOf(),
+    };
+    if (tripLength.value !== OPTION_ONE_WAY.value) {
+      requestBody.returnDate = startDate.valueOf();
+      requestBody.returnDate += 1000 * 3600 * 24 * Number(tripLength);
+    }
+    composeRequest(requestBody);
+  };
 
   return (
     <>
@@ -60,7 +86,6 @@ function FlightOptions() {
             id="flight-options-from"
             className="option-dropdown"
             classNamePrefix="option-dropdown"
-            defaultValue={airports[0]}
             onChange={selected => selected && pickAirport(selected)}
             loadOptions={loadOptions}
           />
@@ -121,7 +146,11 @@ function FlightOptions() {
           <label className="option-label">weeks</label>
         </div>
         {/* Search button */}
-        <button id="flight-options-search" className="option-button">
+        <button
+          id="flight-options-search"
+          className="option-button"
+          onClick={e => searchFlights(e)}
+        >
           &#x1F50E;&#xFE0E;
         </button>
       </form>

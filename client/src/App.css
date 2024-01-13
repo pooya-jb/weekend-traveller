@@ -24,8 +24,8 @@
   padding: 1em 0;
   position: relative;
   justify-content: flex-end;
-  min-height: 11em;
-  max-height: 11em;
+  min-height: 9em;
+  max-height: 9em;
 }
 #header-logo {
   position: absolute;
@@ -60,7 +60,91 @@ h1 {
 /* Dashboard */
 
 #dashboard {
+  width: 100%;
   flex: auto;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 0 0 1em;
+  margin: 1em auto 0;
+  /* gap: 0.2em; */
+  display: flex;
+  flex-direction: column;
+}
+.day-overview-columns {
+  position: sticky;
+  top: 0;
+}
+.day-overview {
+  height: auto;
+  padding: 1em 0;
+}
+.day-overview-columns,
+.flights-overview-columns {
+  max-width: 200%;
+  display: flex;
+  gap: 1em;
+}
+.flights-day-header,
+.flights-day-column {
+  min-width: calc(25% - 1em);
+  max-width: calc(25% - 1em);
+}
+.flights-day-header {
+  overflow: hidden;
+  border-bottom: 0.2em solid rgba(238, 211, 204, 0.8);
+}
+.flights-day-header h3 {
+  padding: 0.3em 0.9em 0.1em;
+  height: 120%;
+  border-radius: 0.3em;
+  background: rgba(255, 255, 255, 1);
+  font-size: 1rem;
+}
+.flights-overview {
+  height: 100%;
+  overflow: auto;
+}
+.flights-day-list {
+  display: flex;
+  gap: 0.2em;
+  flex-direction: column;
+}
+.cheap-flight {
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 0.3em;
+  padding: 0.5em 1em;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.cheap-flight-info {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-between;
+}
+.cheap-flight img {
+  height: 1.3rem;
+  margin: 0.1rem;
+}
+.cheap-flight-more-info {
+  display: flex;
+  gap: 0.5em;
+}
+.transfer {
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: red;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0.2em 0.4em;
+  align-self: center;
+}
+.price {
+  align-self: center;
+  font-weight: 700;
 }
 
 /* Forms */
@@ -114,7 +198,7 @@ h1 {
 #footer {
   flex: 1;
   width: 100%;
-  max-height: 6em;
+  padding: 1em 0;
 }
 #footer-notes {
   display: flex;
