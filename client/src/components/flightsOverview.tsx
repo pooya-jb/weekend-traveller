@@ -12,6 +12,7 @@ function FlightsOverview({
 }) {
   return (
     <>
+      {/* Date headers */}
       <ul className="day-overview-columns">
         {Object.keys(cheapFlights).map(day => (
           <li key={`header.${day}`} className="flights-day-header">
@@ -24,6 +25,7 @@ function FlightsOverview({
           </li>
         ))}
       </ul>
+      {/* Flight tiles */}
       <ul className="flights-overview-columns">
         {Object.keys(cheapFlights).map(day => (
           <li key={`list.${day}`} className="flights-day-column">
