@@ -100,6 +100,7 @@ function FlightOptions({
             className="option-calendar"
             selected={startDate}
             onChange={date => setStartDate(date)}
+            minDate={OPTION_START_DATE_DEF}
           />
           <label
             htmlFor="flight-options-start-date"

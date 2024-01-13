@@ -12,7 +12,6 @@ function Header({
   selectedCurrency: string;
   selectCurrency: (currency: string) => void;
 }) {
-  // TODO: autoupdate currency
   const [currencies, setCurrencies] = useState<libFd.Currencies>([]);
 
   useEffect(() => {
@@ -42,7 +41,7 @@ function Header({
               id="flight-options-currency"
               className="option-dropdown"
               classNamePrefix="option-dropdown"
-              defaultValue={
+              value={
                 // currencies.find(currency => currency.value === selectedCurrency)
                 {
                   value: selectedCurrency,
