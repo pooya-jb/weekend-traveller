@@ -3,7 +3,7 @@ import { schedule, ScheduledTask } from 'node-cron';
 import { loadCurrencies, loadAirports } from '../models/cronJobs.model.js';
 import { errorLogger, UnknownError } from '../middleware/errorHandler.js';
 
-const FLIGHT_DATA_SCHEDULE = '* * 12 * * *';
+const FLIGHT_DATA_SCHEDULE = `* * 12 * * *`;
 
 export const initCronJobs = async () => {
   const jobFlightDataUpdate: ScheduledTask = await schedule(

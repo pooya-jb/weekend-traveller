@@ -40,12 +40,22 @@ export const getCurrencies = async (): Promise<string[]> => {
  * Loads map of airports from DB.
  * Map is keyed by entityId from API but sorted by airport name for convenience.
  * This required map usage as object with numeric keys is always sorted by keys.
+ * Supports lazy loading via parameters that specify part of table to load.
+ * @param limit number of rows to load
+ * @param offset offset from start of table for loaded rows
  * @returns map<airport id, airport name>
  * @throws if DB is empty
  */
-export const getAirports = async (): Promise<Map<string, string>> => {
+export const getAirports = async (
+  limit: number,
+  offset: number
+): Promise<Map<string, string>> => {
   //  Obtain data from database
-  const dataProc: Airports[] = await Airports.findAll();
+  const dataProc: Airports[] = await Airports.findAll({
+    limit: limit,
+    offset: offset,
+    order: ['name'],
+  });
   if (!dataProc.length) throw new errors.BadGateway('Missing data in DB.');
   //  Format output
   const dataOut: Map<string, string> = new Map();

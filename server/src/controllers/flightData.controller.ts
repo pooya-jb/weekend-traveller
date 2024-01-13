@@ -17,9 +17,14 @@ export const getCurrencies = async (
   res.json(data);
 };
 
-export const getAirports = async (_: Request, res: Response): Promise<void> => {
+export const getAirports = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   //  Request data
-  const data: Map<string, string> = await model.getAirports();
+  const limit: number = parseInt(req.params.limit);
+  const offset: number = parseInt(req.params.offset);
+  const data: Map<string, string> = await model.getAirports(limit, offset);
   //  Respond
   res.status(200);
   res.json([...data]);

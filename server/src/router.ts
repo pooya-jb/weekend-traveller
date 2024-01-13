@@ -2,7 +2,7 @@
  * @module
  * Default server router.
  * Routes are ordered by request type and alphabetically.
- * POST method is used where request parameters are needed.
+ * POST method is used where potentially sensitive request parameters are used.
  * All routes must always be wrapped in errorCatcher.
  *
  * @author Daniel Maczak
@@ -19,7 +19,7 @@ import * as flightData from './controllers/flightData.controller.js';
 export const router: Router = express.Router();
 
 //  GET routes
-router.get('/airports', errorCatcher(flightData.getAirports));
+router.get('/airports/:limit-:offset', errorCatcher(flightData.getAirports));
 router.get('/currencies', errorCatcher(flightData.getCurrencies));
 
 //  POST routes

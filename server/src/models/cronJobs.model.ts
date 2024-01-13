@@ -7,8 +7,8 @@ import { Airports, Currencies } from '../databases/flightData.database.js';
 
 const PLACE_TYPE_COUNTRY = 'PLACE_TYPE_COUNTRY';
 const PLACE_TYPE_AIRPORTS = [
-  'PLACE_TYPE_ISLAND',
-  'PLACE_TYPE_CITY',
+  // 'PLACE_TYPE_ISLAND',
+  // 'PLACE_TYPE_CITY',
   'PLACE_TYPE_AIRPORT',
 ];
 

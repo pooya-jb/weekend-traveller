@@ -18,6 +18,10 @@ export interface FlightInfoRequest {
   returnDate?: number;
 }
 
+export type Option = { value: string; label: string };
+
+export type Airports = Option[];
+
 export interface LocaleInfo {
   marketCode: string;
   locationName: string;

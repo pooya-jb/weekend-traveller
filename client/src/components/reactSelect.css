@@ -1,0 +1,34 @@
+/* Entire control */
+
+.option-dropdown__control {
+  border: none;
+  min-height: 1.5rem;
+  background: none;
+}
+.option-dropdown__control * {
+  padding: 0;
+  margin: 0;
+  min-height: 1.5rem;
+  background: none;
+}
+
+/* Align arrow and text */
+
+.option-dropdown__value-container {
+  margin-top: -0.2em;
+}
+.option-dropdown__indicators {
+  position: relative;
+  margin-top: 0.2em;
+}
+
+/* Options */
+
+.option-dropdown__menu {
+  min-width: 7em;
+  font-size: 0.9rem;
+}
+.option-dropdown__menu-portal {
+  border-radius: 0.5em;
+  border: 2px solid #fff;
+}
