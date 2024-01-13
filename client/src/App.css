@@ -118,6 +118,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  transition: 0.25s;
 }
 .cheap-flight-info {
   display: flex;
@@ -155,20 +156,22 @@ h1 {
   gap: 1em;
 }
 .option-wrapper,
+.option-wrapper-disabled,
 #flight-options-search {
   display: flex;
   gap: 0.5em;
   padding: 0.3em 0.9em;
   border-radius: 0.5em;
   border: 2px solid rgba(255, 255, 255, 0.8);
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.65);
+  transition: 0.25s;
 }
-#header .option-wrapper {
+#header .option-wrapper,
+.option-wrapper-disabled {
   display: flex;
   padding: 0.3em 0.7em;
   border: 2px solid rgba(255, 255, 255, 0.6);
-  background: rgba(245, 221, 212, 0.8);
-  text-align: right;
+  background: rgba(245, 221, 212, 0.9);
 }
 .option-dropdown,
 .option-calendar {
@@ -243,4 +246,19 @@ h1 {
   height: 2rem;
   width: auto;
   opacity: 0.85;
+}
+
+/* Effects */
+
+.option-wrapper:hover,
+#flight-options-search:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+#flight-options-search:active {
+  background: rgba(255, 255, 255, 1);
+  transition: 0s;
+}
+.cheap-flight:hover {
+  background: rgba(251, 233, 211, 1);
+  transition: 0s;
 }

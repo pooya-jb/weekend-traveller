@@ -26,7 +26,7 @@ function Header({
         {/* Locale form */}
         <form action="submit" id="locale-options" role="locale-options">
           {/* Market selector # Disabled */}
-          <div className="option-wrapper">
+          <div className="option-wrapper-disabled">
             <label className="option-label">Your location:</label>
             <span className="option-value">
               {useContext(LocaleContext).locationName}

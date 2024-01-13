@@ -5,29 +5,11 @@ import { AsyncPaginate } from 'react-select-async-paginate';
 
 import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
+import * as cst from '../services/const.service';
 import { getAirportsPartition } from '../services/api.service';
 
 import './reactDatePicker.css';
 import './reactSelect.css';
-
-//  TODO put as global constant
-const OPTION_START_DATE_DEF: Date = new Date(Date.now());
-OPTION_START_DATE_DEF.setDate(OPTION_START_DATE_DEF.getDate() + 1);
-
-const OPTIONS_SHOW_WEEKS: libFd.Option[] = [
-  { value: '2', label: '2' },
-  { value: '4', label: '4' },
-  { value: '6', label: '6' },
-  { value: '8', label: '8' },
-];
-const OPTION_SHOW_WEEKS_DEF: libFd.Option = OPTIONS_SHOW_WEEKS[1];
-
-const OPTIONS_TRIP_LENGTH: libFd.Option[] = Array.from(
-  { length: 29 }, // return today plus 4 weeks
-  (_, i: number) => ({ value: String(i), label: String(i) })
-);
-const OPTION_ONE_WAY: libFd.Option = { value: '-1', label: 'One way' };
-OPTIONS_TRIP_LENGTH.unshift(OPTION_ONE_WAY);
 
 //  TODO resolve any
 async function loadOptions(search: string, loadedOptions: any) {
@@ -44,11 +26,13 @@ function FlightOptions({
 }) {
   const [pickedAirport, pickAirport] = useState<libFd.Option>();
   const [startDate, setStartDate] = useState<Date | null>(
-    OPTION_START_DATE_DEF
+    cst.OPTION_START_DATE_DEF
   );
-  const [tripLength, setTripLength] = useState<libFd.Option>(OPTION_ONE_WAY);
+  const [tripLength, setTripLength] = useState<libFd.Option>(
+    cst.OPTION_ONE_WAY
+  );
   const [showWeeks, setShowWeeks] = useState<libFd.Option>(
-    OPTION_SHOW_WEEKS_DEF
+    cst.OPTION_SHOW_WEEKS_DEF
   );
 
   const localeInfo: libFd.LocaleInfo = useContext(LocaleContext);
@@ -67,7 +51,7 @@ function FlightOptions({
       lookAtWeeks: Number(showWeeks.value),
       travelDate: startDate.valueOf(),
     };
-    if (tripLength.value !== OPTION_ONE_WAY.value) {
+    if (tripLength.value !== cst.OPTION_ONE_WAY.value) {
       requestBody.returnDate = startDate.valueOf();
       requestBody.returnDate += 1000 * 3600 * 24 * Number(tripLength.value);
     }
@@ -100,7 +84,7 @@ function FlightOptions({
             className="option-calendar"
             selected={startDate}
             onChange={date => setStartDate(date)}
-            minDate={OPTION_START_DATE_DEF}
+            minDate={cst.OPTION_START_DATE_DEF}
           />
           <label
             htmlFor="flight-options-start-date"
@@ -119,11 +103,11 @@ function FlightOptions({
             id="flight-options-return"
             className="option-dropdown"
             classNamePrefix="option-dropdown"
-            defaultValue={OPTION_ONE_WAY}
+            defaultValue={cst.OPTION_ONE_WAY}
             onChange={selected => selected && setTripLength(selected)}
-            options={OPTIONS_TRIP_LENGTH}
+            options={cst.OPTIONS_TRIP_LENGTH}
           />
-          {tripLength.value !== OPTION_ONE_WAY.value ? (
+          {tripLength.value !== cst.OPTION_ONE_WAY.value ? (
             <label className="option-label">
               {tripLength.value === '1' ? 'day' : 'days'}
             </label>
@@ -140,9 +124,9 @@ function FlightOptions({
             id="flight-options-show-x-weeks"
             className="option-dropdown"
             classNamePrefix="option-dropdown"
-            defaultValue={OPTION_SHOW_WEEKS_DEF}
+            defaultValue={cst.OPTION_SHOW_WEEKS_DEF}
             onChange={selected => selected && setShowWeeks(selected)}
-            options={OPTIONS_SHOW_WEEKS}
+            options={cst.OPTIONS_SHOW_WEEKS}
           />
           <label className="option-label">weeks</label>
         </div>

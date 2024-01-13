@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import * as libFd from '../libraries/flightData.service';
 import { getAirports, postFlightInfoRequest } from '../services/api.service';
-import { useEffect, useState } from 'react';
 
 function FlightInfo({
   flightInfo,
@@ -24,8 +25,6 @@ function FlightInfo({
   );
   if (!destination) return;
 
-  // console.log(flightData);
-
   const getFlightDetail = () => {
     const newRequest: libFd.FlightInfoRequest = {
       currencyCode: requestBody.currencyCode,
@@ -46,6 +45,7 @@ function FlightInfo({
       <div className="cheap-flight" onClick={getFlightDetail}>
         <div>{destination.label}</div>
         <div className="cheap-flight-info">
+          {/* Vendors */}
           <div className="cheap-flight-info-vendors">
             <img src={flightInfo.vendorTherePic} alt="" />
             {flightInfo.vendorBackPic ? (
@@ -54,6 +54,7 @@ function FlightInfo({
               ''
             )}
           </div>
+          {/* Transfer / Price */}
           <div className="cheap-flight-more-info">
             {flightInfo.hasTransfers && (
               <span className="transfer">Transfer</span>
