@@ -46,7 +46,7 @@ function Header({
 
   return (
     <>
-      <div id="header" role="header">
+      <header id="header" role="header">
         {/* Locale form */}
         <form action="submit" id="locale-options" role="locale-options">
           {/* Market selector # Disabled */}
@@ -78,7 +78,7 @@ function Header({
         <div id="header-logo" role="logo">
           <h1>Weekend Traveller</h1>
         </div>
-      </div>
+      </header>
     </>
   );
 }

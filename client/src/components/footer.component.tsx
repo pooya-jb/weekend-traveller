@@ -10,7 +10,7 @@
 function Footer() {
   return (
     <>
-      <div id="footer" role="footer">
+      <footer id="footer" role="footer">
         <div id="footer-notes">
           {/* API credit # mandatory */}
           <div className="footer-note">
@@ -28,7 +28,7 @@ function Footer() {
             on Freepik
           </div>
         </div>
-      </div>
+      </footer>
     </>
   );
 }

@@ -171,7 +171,7 @@ export const postCheapestFlightsRequest = async (
  * This cannot be avoided as long as using public API key.
  * @link https://developers.skyscanner.net/docs/getting-started/rate-limits
  * @param requestBody complete request information
- * @returns object of flight details and transfers list
+ * @returns object of flight details
  */
 export const postFlightInfoRequest = async (
   requestBody: libFd.FlightInfoRequest

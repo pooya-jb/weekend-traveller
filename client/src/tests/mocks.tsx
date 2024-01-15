@@ -1,11 +1,16 @@
 import * as libFd from '../libraries/flightData.service';
 
-export const currencies: string[] = ['CAD', 'EUR', 'GBP', 'USD'];
-export const airports: [string, string][] = [
-  ['95673383', 'Berlin Brandenburg (BER), Germany'],
-  ['95565050', 'London Heathrow (LHR), United Kingdom'],
-  ['95565041', 'Paris Charles de Gaulle (CDG), France'],
-  ['95673580', 'Turin (TRN), Italy'],
+export const currencies: libFd.Currencies = [
+  { value: 'CAD', label: 'CAD' },
+  { value: 'EUR', label: 'EUR' },
+  { value: 'GBP', label: 'GBP' },
+  { value: 'USD', label: 'USD' },
+];
+export const airports: libFd.Airports = [
+  { value: '95673383', label: 'Berlin Brandenburg (BER), Germany' },
+  { value: '95565050', label: 'London Heathrow (LHR), United Kingdom' },
+  { value: '95565041', label: 'Paris Charles de Gaulle (CDG), France' },
+  { value: '95673580', label: 'Turin (TRN), Italy' },
 ];
 export const localeInfo: libFd.LocaleInfo = {
   marketCode: 'GB',
