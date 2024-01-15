@@ -37,6 +37,8 @@ function App() {
   //  Data update hooks
   useEffect(() => {
     postLocaleInfoRequest().then(data => {
+      // TODO error message
+      if (!data) return;
       setLocaleInfo({ ...data, localeCode: c.GLOBAL_LOCALE });
       selectCurrency(data.currencyCode); // autoselect currency for user
     });

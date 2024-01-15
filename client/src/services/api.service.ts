@@ -1,3 +1,13 @@
+/**
+ * @module
+ * External flight data delivery from our webserver.
+ * All loaded data is cached to avoid unnecessary duplicated calls.
+ * All functions return null on error; this must be handled in caller.
+ *
+ * @author Daniel Maczak / where not specified otherwise
+ * @version 1.0.0
+ */
+
 //  Internal dependencies
 import * as libFd from '../libraries/flightData.service';
 import * as c from '../services/const.service';
@@ -9,6 +19,11 @@ let localeInfo: libFd.LocaleInfo;
 let cheapestFlightsCache: { [key: string]: libFd.CheapestFlights } = {};
 let flightInfoCache: { [key: string]: libFd.FlightInfo } = {};
 
+/**
+ * Loads list of currency codes.
+ * List is transformed to fit Option format required by react-select.
+ * @returns list of currency codes
+ */
 export const getCurrencies = async (): Promise<libFd.Currencies | null> => {
   try {
     //  Check cache
@@ -25,6 +40,11 @@ export const getCurrencies = async (): Promise<libFd.Currencies | null> => {
   }
 };
 
+/**
+ * Loads list of airport IDs and names.
+ * List is transformed to fit Option format required by react-select.
+ * @returns list of airports
+ */
 export const getAirports = async (): Promise<libFd.Airports | null> => {
   try {
     //  Check cache
@@ -41,6 +61,16 @@ export const getAirports = async (): Promise<libFd.Airports | null> => {
   }
 };
 
+/**
+ * Filters list of airports to limited number of entries.
+ * Is intended for progressive loading of react-select-async-paginate
+ * which solves performance issues when full list was loaded at once.
+ * Applies search criteria if specified; ignores case.
+ * @param limit number of entries to load
+ * @param offset number of entries already loaded
+ * @param search string to search in airport names
+ * @returns filtered list of airports
+ */
 export const getAirportsPartition = async (
   limit: number,
   offset: number,
@@ -63,6 +93,11 @@ export const getAirportsPartition = async (
   }
 };
 
+/**
+ * Loads locale info based on user's IP.
+ * External API is used for IP request.
+ * @returns locale info
+ */
 export const postLocaleInfoRequest =
   async (): Promise<libFd.LocaleInfo | null> => {
     try {
@@ -93,6 +128,11 @@ export const postLocaleInfoRequest =
     }
   };
 
+/**
+ * Loads sorted list of cheapest flights for selected time range.
+ * @param requestBody complete request information
+ * @returns object of cheapest flight arrays per day
+ */
 export const postCheapestFlightsRequest = async (
   requestBody: libFd.CheapestFlightsRequest
 ): Promise<libFd.CheapestFlights | null> => {
@@ -117,6 +157,14 @@ export const postCheapestFlightsRequest = async (
   }
 };
 
+/**
+ * Loads details for single requested flight.
+ * This API is very limited and is sometimes unresponsive.
+ * This cannot be avoided as long as using public API key.
+ * @link https://developers.skyscanner.net/docs/getting-started/rate-limits
+ * @param requestBody complete request information
+ * @returns object of flight details and transfers list
+ */
 export const postFlightInfoRequest = async (
   requestBody: libFd.FlightInfoRequest
 ): Promise<libFd.FlightInfo | null> => {
