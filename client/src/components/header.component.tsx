@@ -1,10 +1,20 @@
+//  External dependencies
 import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 
+//  Internal dependencies
 import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
 import { getCurrencies } from '../services/api.service';
 
+/**
+ * Top part of page. Provides currency selection.
+ * Market selector is listed as disabled:
+ * it was meant as bonus feature where page would show in local language.
+ * This might be possible via translation API call.
+ * @param selectedCurrency auto-selected from Locale info
+ * @param selectCurrency state hook updated when user makes own selection
+ */
 function Header({
   selectedCurrency,
   selectCurrency,
@@ -12,10 +22,19 @@ function Header({
   selectedCurrency: string;
   selectCurrency: (currency: string) => void;
 }) {
-  const [currencies, setCurrencies] = useState<libFd.Currencies>([]);
+  //  State hooks
+  const [currencies, setCurrencies] = useState<libFd.Currencies>();
 
+  //  Data update hooks
   useEffect(() => {
     getCurrencies().then(response => {
+      if (!response) {
+        alert(
+          `We couldn't load the currency list. ` +
+            `The app will not function properly. Please try again later.`
+        );
+        return;
+      }
       setCurrencies(response);
     });
   }, []);
@@ -41,13 +60,10 @@ function Header({
               id="flight-options-currency"
               className="option-dropdown"
               classNamePrefix="option-dropdown"
-              value={
-                // currencies.find(currency => currency.value === selectedCurrency)
-                {
-                  value: selectedCurrency,
-                  label: selectedCurrency,
-                }
-              }
+              value={{
+                value: selectedCurrency,
+                label: selectedCurrency,
+              }}
               onChange={selected => selected && selectCurrency(selected.value)}
               options={currencies}
             />

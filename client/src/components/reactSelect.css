@@ -1,3 +1,10 @@
+/* For: react-select
+   This was a quick fix to customs styles applied to dropdowns.
+   The extension adds custom styles to the end of head via JS,
+   so they appear always after any CSS declaration.
+   There seems to be a way to add custom styling directly in .tsx.
+*/
+
 /* Entire control */
 
 .option-dropdown__control {

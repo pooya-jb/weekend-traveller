@@ -12,12 +12,12 @@ import FlightsDashboard from './components/flightsDashboard.component';
 import Footer from './components/footer.component';
 
 //  Locale info is present in majority of API requests anywhere in app
-//  Using empty string as defaults is more convenient than undefined here
 const defaultLocaleInfo: libFd.LocaleInfo = {
-  marketCode: '',
-  locationName: '',
-  currencyCode: '',
-  localeCode: '',
+  // Fallback values
+  marketCode: 'US',
+  locationName: 'United states',
+  currencyCode: 'USD',
+  localeCode: 'en-US',
 };
 export const LocaleContext: React.Context<libFd.LocaleInfo> =
   React.createContext(defaultLocaleInfo);
@@ -37,8 +37,7 @@ function App() {
   //  Data update hooks
   useEffect(() => {
     postLocaleInfoRequest().then(data => {
-      // TODO error message
-      if (!data) return;
+      if (!data) return; // will use fallback values
       setLocaleInfo({ ...data, localeCode: c.GLOBAL_LOCALE });
       selectCurrency(data.currencyCode); // autoselect currency for user
     });
