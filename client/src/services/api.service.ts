@@ -1,8 +1,5 @@
 import * as libFd from '../libraries/flightData.service';
-
-//  TODO put as global constants
-const serverUrl = `http://localhost:3000`;
-const ipRequestUrl = `https://api.ipify.org?format=json`;
+import * as c from '../services/const.service';
 
 let currencies: libFd.Currencies = [];
 let airports: libFd.Airports;
@@ -12,7 +9,7 @@ let cheapestFlightsCache: { [key: string]: libFd.CheapestFlights } = {};
 export const getCurrencies = async (): Promise<libFd.Currencies> => {
   //  TODO error handling
   if (currencies && currencies.length) return currencies; // feed from internal storage
-  const response = await fetch(`${serverUrl}/currencies`);
+  const response = await fetch(`${c.SERVER_URL}/currencies`);
   if (!response.ok) throw new Error();
   const data: string[] = await response.json();
   currencies = data.map(currency => ({ value: currency, label: currency }));
@@ -22,7 +19,7 @@ export const getCurrencies = async (): Promise<libFd.Currencies> => {
 export const getAirports = async (): Promise<libFd.Airports> => {
   //  TODO error handling
   if (airports && airports.length) return airports; // feed from internal storage
-  const response = await fetch(`${serverUrl}/airports`);
+  const response = await fetch(`${c.SERVER_URL}/airports`);
   if (!response.ok) throw new Error();
   const data: [string, string][] = await response.json();
   airports = data.map(airport => ({ value: airport[0], label: airport[1] }));
@@ -50,12 +47,12 @@ export const postLocaleInfoRequest = async (): Promise<libFd.LocaleInfo> => {
   //  TODO error handling
   if (localeInfo) return localeInfo;
   //  Obtain user's IP
-  const responseIp = await fetch(ipRequestUrl);
+  const responseIp = await fetch(c.IP_REQUEST_URL);
   if (!responseIp.ok) throw new Error();
   const ipInfo = await responseIp.json();
   if (ipInfo?.ip === undefined) throw new Error();
   //  Use the IP to obtain locale info
-  const responseLocale = await fetch(`${serverUrl}/request-locale-info`, {
+  const responseLocale = await fetch(`${c.SERVER_URL}/request-locale-info`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ipAddress: ipInfo.ip }),
@@ -73,7 +70,7 @@ export const postCheapestFlightsRequest = async (
   const requestJSON: string = JSON.stringify(requestBody);
   if (cheapestFlightsCache[requestJSON])
     return cheapestFlightsCache[requestJSON];
-  const response = await fetch(`${serverUrl}/request-cheapest-flights`, {
+  const response = await fetch(`${c.SERVER_URL}/request-cheapest-flights`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: requestJSON,
@@ -88,7 +85,7 @@ export const postFlightInfoRequest = async (
   requestBody: libFd.FlightInfoRequest
 ): Promise<libFd.FlightInfo> => {
   //  TODO error handling
-  const response = await fetch(`${serverUrl}/request-flight-info`, {
+  const response = await fetch(`${c.SERVER_URL}/request-flight-info`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(requestBody),

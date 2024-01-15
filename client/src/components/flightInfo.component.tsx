@@ -6,9 +6,13 @@ import { getAirports, postFlightInfoRequest } from '../services/api.service';
 function FlightInfo({
   flightInfo,
   requestBody,
+  flightDate,
+  returnDate,
 }: {
   flightInfo: libFd.CheapFlight;
   requestBody: libFd.CheapestFlightsRequest;
+  flightDate: number;
+  returnDate: number | undefined;
 }) {
   const [flightData, setFlightData] = useState<libFd.FlightInfo>();
   const [airports, setAirports] = useState<libFd.Airports>();
@@ -32,13 +36,15 @@ function FlightInfo({
       marketCode: requestBody.marketCode,
       originPlaceId: requestBody.originPlaceId,
       destinationPlaceId: flightInfo.destinationPlaceId,
-      travelDate: requestBody.travelDate,
+      travelDate: flightDate,
     };
-    if (requestBody.returnDate) {
-      newRequest.returnDate = requestBody.returnDate;
+    if (returnDate) {
+      newRequest.returnDate = returnDate;
     }
     postFlightInfoRequest(newRequest).then(data => setFlightData(data));
   };
+
+  // console.log(flightData);
 
   return (
     <>

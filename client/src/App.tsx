@@ -3,6 +3,7 @@ import './App.css';
 import React, { useContext, useEffect, useState } from 'react';
 
 import * as libFd from './libraries/flightData.service';
+import * as c from './services/const.service';
 import { postLocaleInfoRequest } from './services/api.service';
 import FlightsDashboard from './components/flightsDashboard.component';
 import Footer from './components/footer.component';
@@ -25,7 +26,7 @@ function App() {
 
   useEffect(() => {
     postLocaleInfoRequest().then(data => {
-      setLocaleInfo(data);
+      setLocaleInfo({ ...data, localeCode: c.GLOBAL_LOCALE });
       selectCurrency(data.currencyCode);
     });
   }, []);
