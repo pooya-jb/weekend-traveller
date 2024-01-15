@@ -1,3 +1,12 @@
+/**
+ * @module
+ * Custom type definitions for API data.
+ * @version 1.0.0
+ */
+
+/**
+ * Request object types
+ */
 export interface CheapestFlightsRequest {
   currencyCode: string;
   localeCode: string;
@@ -7,7 +16,6 @@ export interface CheapestFlightsRequest {
   travelDate: number;
   returnDate?: number;
 }
-
 export interface FlightInfoRequest {
   currencyCode: string;
   localeCode: string;
@@ -18,6 +26,9 @@ export interface FlightInfoRequest {
   returnDate?: number;
 }
 
+/**
+ * User info
+ */
 export interface LocaleInfo {
   marketCode: string;
   locationName: string;
@@ -25,6 +36,9 @@ export interface LocaleInfo {
   localeCode: string;
 }
 
+/**
+ * Flight data types
+ */
 export interface CheapFlight {
   vendorTherePic: string;
   vendorBackPic?: string;
@@ -32,11 +46,9 @@ export interface CheapFlight {
   hasTransfers: boolean;
   price: number;
 }
-
 export interface CheapestFlights {
   [key: string]: CheapFlight[];
 }
-
 export interface FlightSegment {
   originPlaceId: string;
   destinationPlaceId: string;
@@ -44,7 +56,6 @@ export interface FlightSegment {
   arrival: number;
   airlinePic: string;
 }
-
 export interface FlightInfo {
   segments: FlightSegment[];
   vendorLink: string;

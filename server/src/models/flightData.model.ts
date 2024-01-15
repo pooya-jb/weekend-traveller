@@ -28,6 +28,7 @@ export const getCurrencies = async (): Promise<string[]> => {
   //  Obtain data from database
   const dataProc: Currencies[] = await Currencies.findAll();
   if (!dataProc.length) throw new errors.BadGateway('Missing data in DB.');
+
   //  Format output
   const dataOut: string[] = dataProc.map(currency => currency.dataValues.code);
   dataOut.sort();
@@ -58,6 +59,7 @@ export const getAirports = async (
           order: ['name'],
         });
   if (!dataProc.length) throw new errors.BadGateway('Missing data in DB.');
+
   //  Format output
   const dataOut: Map<string, string> = new Map();
   dataProc
@@ -85,6 +87,7 @@ export const postLocaleInfoRequest = async (
     throw new errors.BadGateway('Data retrieved in unknown format.');
   if (!Object.keys(dataIn).length)
     throw new errors.BadGateway('No data received from API.');
+
   //  Process data to internal format
   const dataProc: libFd.LocaleInfo = {
     marketCode: dataIn.market.code,
@@ -109,7 +112,7 @@ const createRequestBodyApiCheapestFlight = (
   travelDate: Date,
   returnDate: Date | null
 ): libApi.FlightsIndicativeRequest => {
-  //  Generate return object
+  //  Generate request object
   const requestBodyApi: libApi.FlightsIndicativeRequest = {
     query: {
       currency: requestBody.currencyCode,
@@ -135,6 +138,7 @@ const createRequestBodyApiCheapestFlight = (
       cabinClass: CABIN_CLASS,
     },
   };
+
   //  Generate return part of API format
   if (returnDate) {
     requestBodyApi.query.queryLegs.push({
@@ -182,9 +186,11 @@ export const postCheapestFlightsRequest = async (
         : null;
     if (returnDate !== null && returnDate < travelDate)
       throw new errors.BadRequest('Incorrect user input.');
+
     //  Process request object to API format
     const requestBodyApi: libApi.FlightsIndicativeRequest =
       createRequestBodyApiCheapestFlight(requestBody, travelDate, returnDate);
+
     //  Obtain data from API
     const dataIn: libApi.FlightsIndicative =
       await api.postFlightsIndicativeRequest(requestBodyApi);
@@ -192,6 +198,7 @@ export const postCheapestFlightsRequest = async (
       throw new errors.BadGateway('Data retrieved in unknown format.');
     if (!Object.keys(dataIn).length)
       throw new errors.BadGateway('No data received from API.');
+
     //  Process data to internal format
     const dateKey: string = travelDate.valueOf().toString();
     const carriers = dataIn.content.results.carriers;
@@ -206,6 +213,21 @@ export const postCheapestFlightsRequest = async (
         price: parseInt(quote.minPrice.amount),
       });
     }
+
+    //  Check data came in correct format
+    if (dataProc[dateKey].length) {
+      if (
+        // vendorTherePic and vendorBackPic are not always provided
+        dataProc[dateKey][0].destinationPlaceId === undefined ||
+        dataProc[dateKey][0].hasTransfers === undefined ||
+        dataProc[dateKey][0].price === undefined
+      ) {
+        throw new errors.BadGateway(
+          'One or more data points missing from received data.'
+        );
+      }
+    }
+
     //  Format output
     dataOut[dateKey] = dataProc[dateKey].sort((a, b) => a.price - b.price);
   }
@@ -226,7 +248,7 @@ const createRequestBodyApiFlightInfo = (
   travelDate: Date,
   returnDate: Date | null
 ): libApi.FlightsLivePricesRequest => {
-  //  Generate return object
+  //  Generate request object
   const requestBodyApi: libApi.FlightsLivePricesRequest = {
     query: {
       currency: requestBody.currencyCode,
@@ -251,6 +273,7 @@ const createRequestBodyApiFlightInfo = (
       adults: 1,
     },
   };
+
   //  Generate return part of API format
   if (returnDate) {
     requestBodyApi.query.queryLegs.push({
@@ -289,9 +312,11 @@ export const postFlightInfoRequest = async (
       : null;
   if (returnDate !== null && returnDate < travelDate)
     throw new errors.BadRequest('Incorrect user input.');
+
   //  Process request object to API format
   const requestBodyApi: libApi.FlightsLivePricesRequest =
     createRequestBodyApiFlightInfo(requestBody, travelDate, returnDate);
+
   //  Obtain data from API
   const dataIn: libApi.FlightsLivePrices =
     await api.postFlightsLivePricesRequest(requestBodyApi);
@@ -299,6 +324,7 @@ export const postFlightInfoRequest = async (
     throw new errors.BadGateway('Data retrieved in unknown format.');
   if (!Object.keys(dataIn).length)
     throw new errors.BadGateway('No data received from API.');
+
   //  Access critical API data routes
   const cheapestItineraryId: string =
     dataIn.content.sortingOptions.cheapest[0].itineraryId;
@@ -311,6 +337,7 @@ export const postFlightInfoRequest = async (
   const fares = cheapestItinerary.pricingOptions[0].items[0].fares;
   const segments = dataIn.content.results.segments;
   const carriers = dataIn.content.results.carriers;
+
   //  Process data to internal format
   const dataProc: libFd.FlightInfo = {
     segments: [],
@@ -345,6 +372,22 @@ export const postFlightInfoRequest = async (
       arrival: arrivalDateTime.valueOf(),
       airlinePic: carriers[segment.operatingCarrierId].imageUrl,
     });
+
+    //  Check data came in correct format
+    if (
+      !dataProc.segments.length ||
+      // airlinePic is not always provided
+      dataProc.segments[0].originPlaceId === undefined ||
+      dataProc.segments[0].destinationPlaceId === undefined ||
+      dataProc.segments[0].departure === undefined ||
+      dataProc.segments[0].arrival === undefined ||
+      dataProc.vendorLink === undefined ||
+      dataProc.price === undefined
+    ) {
+      throw new errors.BadGateway(
+        'One or more data points missing from received data.'
+      );
+    }
   }
   return dataProc;
 };

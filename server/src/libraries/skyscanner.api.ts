@@ -1,7 +1,13 @@
 /**
+ * @module
+ * Hosts definitions for objects sent to / received from skyscanner API.
+ * @version 1.0.0
  * @link https://developers.skyscanner.net/api/geo
  */
 
+/**
+ * Request object types
+ */
 export interface FlightsIndicativeRequest {
   query: {
     currency: string;
@@ -31,7 +37,6 @@ export interface FlightsIndicativeRequest {
     cabinClass: string;
   };
 }
-
 export interface FlightsLivePricesRequest {
   query: {
     currency: string;
@@ -57,12 +62,18 @@ export interface FlightsLivePricesRequest {
   };
 }
 
+/**
+ * Object recieved on error.
+ */
 export interface RequestError {
   code: number;
   message: string;
   details: [];
 }
 
+/**
+ * Static entity lists
+ */
 export interface Currencies {
   status: string;
   currencies: [
@@ -72,7 +83,6 @@ export interface Currencies {
     }
   ];
 }
-
 export interface GeoHierarchy {
   status: string;
   places: {
@@ -87,6 +97,9 @@ export interface GeoHierarchy {
   };
 }
 
+/**
+ * User info
+ */
 export interface NearestCulture {
   status: string;
   market: {
@@ -101,6 +114,9 @@ export interface NearestCulture {
   // ...
 }
 
+/**
+ * Flight data types
+ */
 export interface FlightsIndicative {
   status: string;
   content: {
@@ -136,7 +152,6 @@ export interface FlightsIndicative {
     // ...
   };
 }
-
 export interface FlightsLivePrices {
   sessionToken: string;
   status: string;

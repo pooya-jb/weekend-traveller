@@ -31,12 +31,14 @@ export const loadCurrencies = async (): Promise<void> => {
   const dataIn: libApi.Currencies = await api.getCurrencies();
   if (!(dataIn instanceof Object))
     throw new errors.BadGateway('Data retrieved in unknown format.');
+
   //  Process data to internal format
   const dataProc: { code: string }[] = [];
   for (let currency of dataIn.currencies) {
     dataProc.push({ code: currency.code });
   }
   if (!dataProc.length) throw new errors.BadGateway('No data to process.');
+
   //  Store data in database
   await Currencies.truncate();
   await Currencies.bulkCreate(<Optional<any, string>[]>dataProc);
@@ -54,6 +56,7 @@ export const loadAirports = async (): Promise<void> => {
   const dataIn: libApi.GeoHierarchy = await api.getGeoHierarchy('en-US');
   if (!(dataIn instanceof Object))
     throw new errors.BadGateway('Data retrieved in unknown format.');
+
   //  Process data to internal format
   const dataProc: { id: string; name: string }[] = [];
   for (let [placeId, place] of Object.entries(dataIn.places)) {
@@ -71,6 +74,7 @@ export const loadAirports = async (): Promise<void> => {
   }
   if (!Array.from(dataProc.keys()).length)
     throw new errors.BadGateway('No data to process.');
+
   //  Store data in database
   await Airports.truncate();
   await Airports.bulkCreate(<Optional<any, string>[]>dataProc);

@@ -1,3 +1,12 @@
+/**
+ * @module
+ * Connects to database and exports schemas for static resources.
+ * Database is only used for storing resources which do not change often
+ * and are updated once per day.
+ * @version 1.0.0
+ */
+
+//  External dependencies
 import { Options, DataTypes } from 'sequelize';
 import { Sequelize, Model, Column, Table } from 'sequelize-typescript';
 
@@ -26,6 +35,10 @@ export class Airports extends Model {
   name!: string;
 }
 
+/**
+ * Adds models to sequelize and syncronizes the model.
+ * Must be initialized before webserver and Cron.
+ */
 export const initSequelize = async () => {
   sequelize.addModels([Currencies, Airports]);
   await sequelize.sync();

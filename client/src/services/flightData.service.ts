@@ -26,10 +26,12 @@ export const getCurrencies = async (): Promise<libFd.Currencies | null> => {
   try {
     //  Check cache
     if (currencies && currencies.length) return currencies;
+
     //  Not cached yet, request data
     const response = await fetch(`${c.SERVER_URL}/currencies`);
     if (!response.ok) throw new Error(response.statusText);
     const data: string[] = await response.json();
+
     //  Transform data and update cache
     currencies = data.map(currency => ({ value: currency, label: currency }));
     return currencies;
@@ -47,10 +49,12 @@ export const getAirports = async (): Promise<libFd.Airports | null> => {
   try {
     //  Check cache
     if (airports && airports.length) return airports;
+
     //  Not cached yet, request data
     const response = await fetch(`${c.SERVER_URL}/airports`);
     if (!response.ok) throw new Error(response.statusText);
     const data: [string, string][] = await response.json();
+
     //  Transform data and update cache
     airports = data.map(airport => ({ value: airport[0], label: airport[1] }));
     return airports;
@@ -77,6 +81,7 @@ export const getAirportsPartition = async (
   try {
     //  Trigger cache update if empty
     if (!airports) await getAirports();
+
     //  Filter data
     let partition = airports;
     if (search) {
@@ -101,12 +106,14 @@ export const postLocaleInfoRequest =
     try {
       //  Check cache
       if (localeInfo) return localeInfo;
+
       //  Obtain user's IP
       const responseIp = await fetch(c.IP_REQUEST_URL);
       if (!responseIp.ok) throw new Error(responseIp.statusText);
       const ipInfo = await responseIp.json();
       if (ipInfo?.ip === undefined)
         throw new Error(`Failed to obtain user's IP`);
+
       //  Request data
       const responseLocale = await fetch(
         `${c.SERVER_URL}/request-locale-info`,
@@ -118,6 +125,7 @@ export const postLocaleInfoRequest =
       );
       if (!responseLocale.ok) throw new Error(responseLocale.statusText);
       const dataLocale: libFd.LocaleInfo = await responseLocale.json();
+
       //  Update cache
       localeInfo = dataLocale;
       return dataLocale;
@@ -139,6 +147,7 @@ export const postCheapestFlightsRequest = async (
     const requestJSON: string = JSON.stringify(requestBody);
     if (cheapestFlightsCache[requestJSON])
       return cheapestFlightsCache[requestJSON];
+
     //  Not cached yet, request data
     const response = await fetch(`${c.SERVER_URL}/request-cheapest-flights`, {
       method: 'POST',
@@ -147,6 +156,7 @@ export const postCheapestFlightsRequest = async (
     });
     if (!response.ok) throw new Error(response.statusText);
     const data: libFd.CheapestFlights = await response.json();
+
     //  Update cache
     cheapestFlightsCache[requestJSON] = data;
     return data;
@@ -170,6 +180,7 @@ export const postFlightInfoRequest = async (
     //  Check cache
     const requestJSON: string = JSON.stringify(requestBody);
     if (flightInfoCache[requestJSON]) return flightInfoCache[requestJSON];
+
     //  Not cached yet, request data
     const response = await fetch(`${c.SERVER_URL}/request-flight-info`, {
       method: 'POST',
@@ -178,6 +189,7 @@ export const postFlightInfoRequest = async (
     });
     if (!response.ok) throw new Error(response.statusText);
     const data: libFd.FlightInfo = await response.json();
+
     //  Update cache
     flightInfoCache[requestJSON] = data;
     return data;

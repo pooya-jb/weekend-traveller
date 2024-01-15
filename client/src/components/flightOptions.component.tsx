@@ -84,6 +84,7 @@ function FlightOptions({
     e: React.MouseEvent<HTMLButtonElement>
   ): Promise<void> => {
     e.preventDefault();
+
     //  Check request inputs
     if (!pickedAirport) {
       alert(`Please select an airport.`);
@@ -109,6 +110,7 @@ function FlightOptions({
       alert(`Please select one of valid Show options.`);
       return;
     }
+
     //  Componse request body
     const requestBody: libFd.CheapestFlightsRequest = {
       currencyCode: localeInfo.currencyCode,
