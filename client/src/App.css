@@ -1,3 +1,17 @@
+/* Vars */
+
+body {
+  --color-white-100: rgba(255, 255, 255, 1);
+  --color-white-80: rgba(255, 255, 255, 0.8);
+  --color-white-60: rgba(255, 255, 255, 0.6);
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-30: rgba(255, 255, 255, 0.3);
+  --color-pink-90: rgba(245, 221, 212, 0.9);
+  --color-pink-80: rgba(238, 211, 204, 0.8);
+  --color-brown-100: #35312e;
+  --color-beige-100: rgba(251, 233, 211, 1);
+}
+
 /* App */
 
 #app {
@@ -40,12 +54,12 @@
 }
 h1 {
   font-family: Satisfy;
-  color: #fff;
+  color: var(--color-white-100);
   font-size: 4rem;
   font-weight: 400;
   padding: 0 1em;
-  border-bottom: 3px solid #fff;
-  text-shadow: 3px 3px #35312e;
+  border-bottom: 3px solid var(--color-white-100);
+  text-shadow: 3px 3px var(--color-brown-100);
 }
 #locale-options {
   position: relative;
@@ -66,9 +80,9 @@ h1 {
   overflow-x: auto;
   padding: 0 0 1em;
   margin: 1em auto 0;
-  /* gap: 0.2em; */
   display: flex;
   flex-direction: column;
+  --column-gap: 1em;
 }
 .day-overview-columns {
   position: sticky;
@@ -82,22 +96,22 @@ h1 {
 .flights-overview-columns {
   max-width: 200%;
   display: flex;
-  gap: 1em;
+  gap: var(--column-gap);
 }
 .flights-day-header,
 .flights-day-column {
-  min-width: calc(25% - 1em);
-  max-width: calc(25% - 1em);
+  min-width: calc(25% - var(--column-gap));
+  max-width: calc(25% - var(--column-gap));
 }
 .flights-day-header {
   overflow: hidden;
-  border-bottom: 0.2em solid rgba(238, 211, 204, 0.8);
+  border-bottom: 0.2em solid var(--color-pink-80);
 }
 .flights-day-header h3 {
   padding: 0.3em 0.9em 0.1em;
   height: 120%;
   border-radius: 0.3em;
-  background: rgba(255, 255, 255, 1);
+  background: var(--color-white-100);
   font-size: 1rem;
 }
 .flights-overview {
@@ -114,7 +128,7 @@ h1 {
   font-size: 0.9rem;
   border-radius: 0.3em;
   padding: 0.5em 1em;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--color-white-80);
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -136,11 +150,11 @@ h1 {
 }
 .transfer {
   text-transform: uppercase;
-  border: 1px solid #fff;
+  border: 1px solid var(--color-white-100);
   font-size: 0.5rem;
   font-weight: 700;
   color: red;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--color-white-50);
   padding: 0.2em 0.4em;
   align-self: center;
 }
@@ -162,22 +176,22 @@ h1 {
   gap: 0.5em;
   padding: 0.3em 0.9em;
   border-radius: 0.5em;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  background: rgba(255, 255, 255, 0.65);
+  border: 2px solid var(--color-white-80);
+  background: var(--color-white-60);
   transition: 0.25s;
 }
 #header .option-wrapper,
 .option-wrapper-disabled {
   display: flex;
   padding: 0.3em 0.7em;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  background: rgba(245, 221, 212, 0.9);
+  border: 2px solid var(--color-white-80);
+  background: var(--color-pink-90);
 }
 .option-dropdown,
 .option-calendar {
   height: 1.6em;
   border-radius: 0;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid var(--color-white-100);
 }
 #flight-options-from {
   min-width: 16em;
@@ -189,12 +203,11 @@ h1 {
 }
 #flight-options-search {
   cursor: pointer;
-  /* background: rgba(255, 255, 255, 0.8); */
   font-weight: 600;
 }
 #option-label-calendar {
   padding: 0 3px;
-  border: 2px solid rgb(255, 255, 255, 0.8);
+  border: 2px solid var(--color-white-80);
 }
 
 /* Loading and welcome */
@@ -210,8 +223,8 @@ h1 {
 }
 .welcome-container > * {
   padding: 2em 4em;
-  background: rgba(255, 255, 255, 0.3);
-  border: 20px solid rgba(255, 255, 255, 0.3);
+  background: var(--color-white-30);
+  border: 20px solid var(--color-white-30);
 }
 .welcome-container * {
   line-height: 1.7rem;
@@ -221,7 +234,7 @@ h1 {
   font-size: 2rem;
   padding: 0 0 0.5em;
   margin: 0 0 0.5em;
-  border-bottom: 2px solid #35312e;
+  border-bottom: 2px solid var(--color-brown-100);
 }
 .welcome-container li:before {
   content: '✔';
@@ -272,13 +285,13 @@ h1 {
 
 .option-wrapper:hover,
 #flight-options-search:hover {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--color-white-80);
 }
 #flight-options-search:active {
-  background: rgba(255, 255, 255, 1);
+  background: var(--color-white-100);
   transition: 0s;
 }
 .cheap-flight:hover {
-  background: rgba(251, 233, 211, 1);
+  background: var(--color-beige-100);
   transition: 0s;
 }
