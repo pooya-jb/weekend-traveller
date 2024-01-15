@@ -1,17 +1,31 @@
+/**
+ * @module
+ * Handles data updates for static resources.
+ * This data does not change often enough to validate reload per user.
+ * All processes here are triggered via Cron job and store in database.
+ * @version 1.0.0
+ */
+
+//  External dependencies
 import { Optional } from 'sequelize';
 
+//  Internal dependencies
 import { errors } from '../middleware/errorHandler.js';
 import * as api from '../api/skyscanner.api.js';
 import * as libApi from '../libraries/skyscanner.api.js';
 import { Airports, Currencies } from '../databases/flightData.database.js';
 
+//  API constants (update if API changes)
 const PLACE_TYPE_COUNTRY = 'PLACE_TYPE_COUNTRY';
 const PLACE_TYPE_AIRPORTS = [
-  // 'PLACE_TYPE_ISLAND',
-  // 'PLACE_TYPE_CITY',
+  // 'PLACE_TYPE_ISLAND', // Duplicate for airports
+  // 'PLACE_TYPE_CITY', // Duplicate for airports
   'PLACE_TYPE_AIRPORT',
 ];
 
+/**
+ * Loads list of currency codes.
+ */
 export const loadCurrencies = async (): Promise<void> => {
   //  Obtain data from API
   const dataIn: libApi.Currencies = await api.getCurrencies();
@@ -28,6 +42,13 @@ export const loadCurrencies = async (): Promise<void> => {
   await Currencies.bulkCreate(<Optional<any, string>[]>dataProc);
 };
 
+/**
+ * Loads list of airports with internal entity IDs used in other queries.
+ * API import provides different types of categories which overlap,
+ * e.g. airport vs city, airport vs island.
+ * We only filter airport and for each locate the first parent country entity.
+ * Result is stored with airport entity ID.
+ */
 export const loadAirports = async (): Promise<void> => {
   //  Obtain data from API
   const dataIn: libApi.GeoHierarchy = await api.getGeoHierarchy('en-US');

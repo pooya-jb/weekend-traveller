@@ -14,6 +14,7 @@ import { postCheapestFlightsRequest } from '../services/flightData.service';
 import FlightsLoading from './flightsLoading.component';
 
 /**
+ * @module
  * Section dedicated to searching flights.
  * Can be one of many if purpose of app grows.
  */

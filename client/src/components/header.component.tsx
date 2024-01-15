@@ -12,6 +12,7 @@ import * as libFd from '../libraries/flightData.service';
 import { getCurrencies } from '../services/flightData.service';
 
 /**
+ * @module
  * Top part of page. Shows logo and provides currency selection.
  * Market selector is listed as disabled:
  * it was meant as bonus feature where page would show in local language.

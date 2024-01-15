@@ -24,6 +24,7 @@ const getDateOffset = (
 };
 
 /**
+ * @module
  * Displays flight options in grid based on user's query.
  * @param cheapFlights object of sorted cheapest flights lists per day
  * @param requestBody request generating cheapFlights with additional info

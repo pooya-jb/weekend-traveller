@@ -3,6 +3,7 @@
  */
 
 /**
+ * @module
  * Bottom part of page.
  * Static module crediting contributors.
  */

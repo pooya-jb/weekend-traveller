@@ -3,6 +3,7 @@
  */
 
 /**
+ * @module
  * Animated loading text while app searches for flights.
  */
 function FlightsLoading() {

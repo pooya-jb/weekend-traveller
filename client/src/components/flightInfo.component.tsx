@@ -13,6 +13,7 @@ import {
 } from '../services/flightData.service';
 
 /**
+ * @module
  * Single flight tile with flight info.
  * On click it should query API for flight details.
  * The query code is in place on both ends but this feature

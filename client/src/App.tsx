@@ -28,6 +28,7 @@ export const LocaleContext: React.Context<libFd.LocaleInfo> =
   React.createContext(defaultLocaleInfo);
 
 /**
+ * @module
  * Top-level app component.
  * Keeps accurate locale info at all times.
  */

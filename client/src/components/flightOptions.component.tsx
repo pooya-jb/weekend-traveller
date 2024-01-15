@@ -50,6 +50,7 @@ async function loadOptions(search: string, loadedOptions: any) {
 }
 
 /**
+ * @module
  * Top part of flights dashboard. Shows flight search properties and button.
  * Uses async dropdown for airport selection which never loads full list.
  * Full list has 4000+ airports and was causing frame drops.

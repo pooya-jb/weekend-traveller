@@ -3,6 +3,7 @@
  */
 
 /**
+ * @module
  * Home page before user makes selection.
  * Static module with app usage info.
  */
