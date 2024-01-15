@@ -18,6 +18,9 @@ import { Airports, Currencies } from '../databases/flightData.database.js';
 //  API constants (update if API changes)
 const CABIN_CLASS: string = 'CABIN_CLASS_ECONOMY';
 
+//  Verifies IP address input
+const ipFilter: RegExp = /^(\d{1,3}\.){3}\d{1,3}$/;
+
 /**
  * Loads currency code list from DB.
  * Data is sorted before sending for convenience.
@@ -49,6 +52,10 @@ export const getAirports = async (
   limit: number = 0,
   offset: number = 0
 ): Promise<Map<string, string>> => {
+  //  Check inputs
+  if (limit < 0 || offset < 0)
+    throw new errors.BadRequest('Incorrect user input.');
+
   //  Obtain data from database
   const dataProc: Airports[] =
     !limit && !offset
@@ -81,6 +88,10 @@ export const getAirports = async (
 export const postLocaleInfoRequest = async (
   ipAddress: string
 ): Promise<libFd.LocaleInfo> => {
+  //  Check inputs
+  if (!ipFilter.test(ipAddress))
+    throw new errors.BadRequest('Incorrect user input.');
+
   //  Obtain data from API
   const dataIn: libApi.NearestCulture = await api.getNearestCulture(ipAddress);
   if (!(dataIn instanceof Object))
@@ -112,6 +123,19 @@ const createRequestBodyApiCheapestFlight = (
   travelDate: Date,
   returnDate: Date | null
 ): libApi.FlightsIndicativeRequest => {
+  //  Check inputs
+  if (
+    !requestBody ||
+    !requestBody.currencyCode ||
+    !requestBody.localeCode ||
+    !requestBody.lookAtWeeks ||
+    !requestBody.marketCode ||
+    !requestBody.originPlaceId ||
+    !travelDate
+  ) {
+    throw new errors.BadRequest('Incorrect user input.');
+  }
+
   //  Generate request object
   const requestBodyApi: libApi.FlightsIndicativeRequest = {
     query: {
@@ -173,6 +197,10 @@ const createRequestBodyApiCheapestFlight = (
 export const postCheapestFlightsRequest = async (
   requestBody: libFd.CheapestFlightsRequest
 ): Promise<libFd.CheapestFlights> => {
+  //  Check inputs
+  if (!(requestBody instanceof Object))
+    throw new errors.BadRequest('Incorrect user input.');
+
   //  Obtain data for each requested week
   const dataProc: libFd.CheapestFlights = {};
   const dataOut: libFd.CheapestFlights = {};
@@ -248,6 +276,19 @@ const createRequestBodyApiFlightInfo = (
   travelDate: Date,
   returnDate: Date | null
 ): libApi.FlightsLivePricesRequest => {
+  //  Check inputs
+  if (
+    !requestBody ||
+    !requestBody.currencyCode ||
+    !requestBody.localeCode ||
+    !requestBody.marketCode ||
+    !requestBody.originPlaceId ||
+    !requestBody.destinationPlaceId ||
+    !travelDate
+  ) {
+    throw new errors.BadRequest('Incorrect user input.');
+  }
+
   //  Generate request object
   const requestBodyApi: libApi.FlightsLivePricesRequest = {
     query: {
@@ -304,6 +345,10 @@ const createRequestBodyApiFlightInfo = (
 export const postFlightInfoRequest = async (
   requestBody: libFd.FlightInfoRequest
 ): Promise<libFd.FlightInfo> => {
+  //  Check inputs
+  if (!(requestBody instanceof Object))
+    throw new errors.BadRequest('Incorrect user input.');
+
   //  Generate date objects
   const travelDate: Date = new Date(requestBody.travelDate);
   const returnDate: Date | null =
@@ -372,22 +417,22 @@ export const postFlightInfoRequest = async (
       arrival: arrivalDateTime.valueOf(),
       airlinePic: carriers[segment.operatingCarrierId].imageUrl,
     });
+  }
 
-    //  Check data came in correct format
-    if (
-      !dataProc.segments.length ||
-      // airlinePic is not always provided
-      dataProc.segments[0].originPlaceId === undefined ||
-      dataProc.segments[0].destinationPlaceId === undefined ||
-      dataProc.segments[0].departure === undefined ||
-      dataProc.segments[0].arrival === undefined ||
-      dataProc.vendorLink === undefined ||
-      dataProc.price === undefined
-    ) {
-      throw new errors.BadGateway(
-        'One or more data points missing from received data.'
-      );
-    }
+  //  Check data came in correct format
+  if (
+    !dataProc.segments.length ||
+    // airlinePic is not always provided
+    dataProc.segments[0].originPlaceId === undefined ||
+    dataProc.segments[0].destinationPlaceId === undefined ||
+    dataProc.segments[0].departure === undefined ||
+    dataProc.segments[0].arrival === undefined ||
+    dataProc.vendorLink === undefined ||
+    dataProc.price === undefined
+  ) {
+    throw new errors.BadGateway(
+      'One or more data points missing from received data.'
+    );
   }
   return dataProc;
 };
