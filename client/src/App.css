@@ -99,7 +99,7 @@ h1 {
   gap: var(--column-gap);
 }
 .flights-day-header,
-.flights-day-column {
+.flights-day-list {
   min-width: calc(25% - var(--column-gap));
   max-width: calc(25% - var(--column-gap));
 }

@@ -1,3 +1,10 @@
+/**
+ * @version 1.0.0
+ */
+
+/**
+ * Animated loading text while app searches for flights.
+ */
 function FlightsLoading() {
   return (
     <>

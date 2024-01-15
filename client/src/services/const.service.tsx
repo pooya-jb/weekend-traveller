@@ -3,8 +3,6 @@
  * Global storage for public constants.
  * All objects must be frozen to ensure immutability.
  * Import module as 'c' (for convenience).
- *
- * @author Daniel Maczak / where not specified otherwise
  * @version 1.0.0
  */
 

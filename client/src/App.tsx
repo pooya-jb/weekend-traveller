@@ -1,3 +1,8 @@
+/**
+ * @author Daniel Maczak / where not specified otherwise
+ * @version 1.0.0
+ */
+
 //  External dependencies
 import 'react-datepicker/dist/react-datepicker.css';
 import './App.css';
@@ -6,7 +11,7 @@ import React, { useContext, useEffect, useState } from 'react';
 //  Internal dependencies
 import * as libFd from './libraries/flightData.service';
 import * as c from './services/const.service';
-import { postLocaleInfoRequest } from './services/api.service';
+import { postLocaleInfoRequest } from './services/flightData.service';
 import Header from './components/header.component';
 import FlightsDashboard from './components/flightsDashboard.component';
 import Footer from './components/footer.component';

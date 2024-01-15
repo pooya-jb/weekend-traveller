@@ -4,8 +4,6 @@
  * Routes are ordered by request type and alphabetically.
  * POST method is used where potentially sensitive request parameters are used.
  * All routes must always be wrapped in errorCatcher.
- *
- * @author Daniel Maczak
  * @version 1.0.0
  */
 

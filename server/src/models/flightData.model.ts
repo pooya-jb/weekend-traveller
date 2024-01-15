@@ -5,8 +5,6 @@
  * via mapping data from original form to expected format.
  * This logic was chosen to avoid dependency of front-end on back-end changes.
  * Static resources are loaded from DB, rest from skyscanner API.
- *
- * @author Daniel Maczak
  * @version 1.0.0
  */
 

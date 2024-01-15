@@ -1,3 +1,7 @@
+/**
+ * @version 1.0.0
+ */
+
 //  External dependencies
 import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
@@ -5,10 +9,10 @@ import Select from 'react-select';
 //  Internal dependencies
 import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
-import { getCurrencies } from '../services/api.service';
+import { getCurrencies } from '../services/flightData.service';
 
 /**
- * Top part of page. Provides currency selection.
+ * Top part of page. Shows logo and provides currency selection.
  * Market selector is listed as disabled:
  * it was meant as bonus feature where page would show in local language.
  * This might be possible via translation API call.
@@ -25,7 +29,7 @@ function Header({
   //  State hooks
   const [currencies, setCurrencies] = useState<libFd.Currencies>();
 
-  //  Data update hooks
+  //  Data load hooks
   useEffect(() => {
     getCurrencies().then(response => {
       if (!response) {

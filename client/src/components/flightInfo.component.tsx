@@ -1,8 +1,27 @@
+/**
+ * @version 1.0.0
+ */
+
+//  External dependencies
 import { useEffect, useState } from 'react';
 
+//  Internal dependencies
 import * as libFd from '../libraries/flightData.service';
-import { getAirports, postFlightInfoRequest } from '../services/api.service';
+import {
+  getAirports,
+  postFlightInfoRequest,
+} from '../services/flightData.service';
 
+/**
+ * Single flight tile with flight info.
+ * On click it should query API for flight details.
+ * The query code is in place on both ends but this feature
+ * probably won't make it due to time constraints.
+ * @param flightInfo destination, price etc.
+ * @param requestBody request generating flightInfo with additional info
+ * @param flightDate date of flight
+ * @param returnDate date of return if not selected one way
+ */
 function FlightInfo({
   flightInfo,
   requestBody,
@@ -14,23 +33,28 @@ function FlightInfo({
   flightDate: number;
   returnDate: number | undefined;
 }) {
+  //  State hooks
   const [flightData, setFlightData] = useState<libFd.FlightInfo>();
-  const [airports, setAirports] = useState<libFd.Airports>();
+  const [destination, setDestination] = useState<libFd.Option>();
 
+  //  Data load hooks
   useEffect(() => {
-    getAirports().then(data => {
-      setAirports(data);
+    getAirports().then(airports => {
+      if (!airports) return; // already checked in flight options
+      const foundAirport: libFd.Option | undefined = airports.find(
+        airport => airport.value === flightInfo.destinationPlaceId
+      );
+      if (!foundAirport) return;
+      setDestination(foundAirport);
     });
   }, []);
 
-  if (!airports) return;
-  const destination = airports.find(
-    airport => airport.value === flightInfo.destinationPlaceId
-  );
-  if (!destination) return;
-
+  /**
+   * Composes body of individual flight info request.
+   * Uses input for flight list search so no validation needed.
+   */
   const getFlightDetail = () => {
-    const newRequest: libFd.FlightInfoRequest = {
+    const flightInfoRequest: libFd.FlightInfoRequest = {
       currencyCode: requestBody.currencyCode,
       localeCode: requestBody.localeCode,
       marketCode: requestBody.marketCode,
@@ -39,42 +63,52 @@ function FlightInfo({
       travelDate: flightDate,
     };
     if (returnDate) {
-      newRequest.returnDate = returnDate;
+      flightInfoRequest.returnDate = returnDate;
     }
-    postFlightInfoRequest(newRequest).then(data => setFlightData(data));
+    postFlightInfoRequest(flightInfoRequest).then(data => {
+      if (!data) {
+        alert(`Couldn't load data for this flight. Please try again later.`);
+        return;
+      }
+      setFlightData(data);
+    });
   };
 
   // console.log(flightData);
 
   return (
     <>
-      <div className="cheap-flight" onClick={getFlightDetail}>
-        <div>{destination.label}</div>
-        <div className="cheap-flight-info">
-          {/* Vendors */}
-          <div className="cheap-flight-info-vendors">
-            <img src={flightInfo.vendorTherePic} alt="" />
-            {flightInfo.vendorBackPic ? (
-              <img src={flightInfo.vendorBackPic} alt="" />
-            ) : (
-              ''
-            )}
+      {destination ? (
+        <li className="cheap-flight" onClick={getFlightDetail}>
+          <div>{destination.label}</div>
+          <div className="cheap-flight-info">
+            {/* Vendor pictures */}
+            <div className="cheap-flight-info-vendors">
+              <img src={flightInfo.vendorTherePic} alt="" />
+              {flightInfo.vendorBackPic ? (
+                <img src={flightInfo.vendorBackPic} alt="" />
+              ) : (
+                ''
+              )}
+            </div>
+            {/* Transfer / Price */}
+            <div className="cheap-flight-more-info">
+              {flightInfo.hasTransfers && (
+                <span className="transfer">Transfer</span>
+              )}
+              <span className="price">
+                {flightInfo.price.toLocaleString(requestBody.localeCode, {
+                  style: 'currency',
+                  currency: requestBody.currencyCode,
+                })}
+              </span>
+            </div>
           </div>
-          {/* Transfer / Price */}
-          <div className="cheap-flight-more-info">
-            {flightInfo.hasTransfers && (
-              <span className="transfer">Transfer</span>
-            )}
-            <span className="price">
-              {flightInfo.price.toLocaleString(requestBody.localeCode, {
-                style: 'currency',
-                currency: requestBody.currencyCode,
-              })}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="cheap-flight-detail"></div>
+          <div className="cheap-flight-detail"></div>
+        </li>
+      ) : (
+        ''
+      )}
     </>
   );
 }

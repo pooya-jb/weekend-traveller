@@ -1,46 +1,114 @@
+/**
+ * @version 1.0.0
+ */
+
+//  External dependencies
 import { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
 
+//  Internal dependencies
 import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
 import * as c from '../services/const.service';
-import { getAirportsPartition } from '../services/api.service';
+import { getAirportsPartition } from '../services/flightData.service';
 
+//  CSS overloads
 import './reactDatePicker.css';
 import './reactSelect.css';
 
+/**
+ * Triggers progressive loading of airports dropdown.
+ * Overrides internal function of react-select-async-paginate.
+ * Number of loaded options is capped at 100 for performance reasons.
+ * @param search query from dropdown's searchbar
+ * @param loadedOptions collection of options already loaded
+ * @returns additional airports in requested format
+ */
 //  TODO resolve any
 async function loadOptions(search: string, loadedOptions: any) {
+  const partition = await getAirportsPartition(
+    100,
+    loadedOptions.length,
+    search
+  );
+  if (!partition) {
+    alert(
+      `We couldn't load the airports list. ` +
+        `The app will not function properly. Please try again later.`
+    );
+    return {
+      options: [],
+      hasMore: false,
+    };
+  }
   return {
-    options: await getAirportsPartition(100, loadedOptions.length, search),
+    options: partition,
     hasMore: true,
   };
 }
 
+/**
+ * Top part of flights dashboard. Shows flight search properties and button.
+ * Uses async dropdown for airport selection which never loads full list.
+ * Full list has 4000+ airports and was causing frame drops.
+ * User is expected to utilize search to select airport of their choice.
+ * @param composeRequest hook action to update query request for flights
+ */
 function FlightOptions({
   composeRequest,
 }: {
   composeRequest: (requestBody: libFd.CheapestFlightsRequest) => void;
 }) {
+  //  State hooks
   const [pickedAirport, pickAirport] = useState<libFd.Option>();
-  const [startDate, setStartDate] = useState<Date | null>(
-    c.OPTION_START_DATE_DEF
-  );
   const [tripLength, setTripLength] = useState<libFd.Option>(c.OPTION_ONE_WAY);
   const [showWeeks, setShowWeeks] = useState<libFd.Option>(
     c.OPTION_SHOW_WEEKS_DEF
   );
+  const [startDate, setStartDate] = useState<Date | null>(
+    c.OPTION_START_DATE_DEF
+  );
 
+  //  Context hooks
   const localeInfo: libFd.LocaleInfo = useContext(LocaleContext);
 
-  const searchFlights = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  /**
+   * Composes body of cheapest flights search from controls in this view.
+   * Checks inputs for validity before search.
+   * @param e event to prevent default form submit behavior
+   */
+  const searchFlights = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
     e.preventDefault();
-    // TODO error handling
-    if (!pickedAirport) return;
-    if (!startDate) return;
-    if (startDate.valueOf() < c.OPTION_START_DATE_DEF.valueOf()) return;
+    //  Check request inputs
+    if (!pickedAirport) {
+      alert(`Please select an airport.`);
+      return;
+    }
+    if (!localeInfo.currencyCode) {
+      alert('Please select one of valid Currency options.');
+      return;
+    }
+    if (!startDate || startDate.valueOf() < c.OPTION_START_DATE_DEF.valueOf()) {
+      alert(`Please select a valid future date.`);
+      return;
+    }
+    if (
+      !c.OPTIONS_TRIP_LENGTH.find(option => option.value === tripLength.value)
+    ) {
+      alert(`Please select one of valid Return options.`);
+      return;
+    }
+    if (
+      !c.OPTIONS_SHOW_WEEKS.find(option => option.value === showWeeks.value)
+    ) {
+      alert(`Please select one of valid Show options.`);
+      return;
+    }
+    //  Componse request body
     const requestBody: libFd.CheapestFlightsRequest = {
       currencyCode: localeInfo.currencyCode,
       localeCode: localeInfo.localeCode,
@@ -70,9 +138,10 @@ function FlightOptions({
             classNamePrefix="option-dropdown"
             onChange={selected => selected && pickAirport(selected)}
             loadOptions={loadOptions}
+            required
           />
         </div>
-        {/* Start date selector */}
+        {/* Start date picker */}
         <div className="option-wrapper">
           <label htmlFor="flight-options-from" className="option-label">
             Start date:
@@ -83,6 +152,7 @@ function FlightOptions({
             selected={startDate}
             onChange={date => setStartDate(date)}
             minDate={c.OPTION_START_DATE_DEF}
+            required
           />
           <label
             htmlFor="flight-options-start-date"
@@ -104,6 +174,7 @@ function FlightOptions({
             defaultValue={c.OPTION_ONE_WAY}
             onChange={selected => selected && setTripLength(selected)}
             options={c.OPTIONS_TRIP_LENGTH}
+            required
           />
           {tripLength.value !== c.OPTION_ONE_WAY.value ? (
             <label className="option-label">
@@ -125,6 +196,7 @@ function FlightOptions({
             defaultValue={c.OPTION_SHOW_WEEKS_DEF}
             onChange={selected => selected && setShowWeeks(selected)}
             options={c.OPTIONS_SHOW_WEEKS}
+            required
           />
           <label className="option-label">weeks</label>
         </div>

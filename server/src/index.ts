@@ -2,8 +2,7 @@
  * @module
  * Initializes DB connection and express server with Cron job schedule.
  * Core server properties are defined here.
- *
- * @author Daniel Maczak
+ * @author Daniel Maczak / where not specified otherwise
  * @version 1.0.0
  */
 

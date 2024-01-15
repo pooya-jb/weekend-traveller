@@ -1,8 +1,6 @@
 /**
  * @module
- * Custom type definitions for API data.
- *
- * @author Daniel Maczak / where not specified otherwise
+ * Custom type definitions for API data./**
  * @version 1.0.0
  */
 

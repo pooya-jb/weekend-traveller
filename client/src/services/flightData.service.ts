@@ -3,14 +3,12 @@
  * External flight data delivery from our webserver.
  * All loaded data is cached to avoid unnecessary duplicated calls.
  * All functions return null on error; this must be handled in caller.
- *
- * @author Daniel Maczak / where not specified otherwise
  * @version 1.0.0
  */
 
 //  Internal dependencies
 import * as libFd from '../libraries/flightData.service';
-import * as c from '../services/const.service';
+import * as c from './const.service';
 
 //  Data cache
 let currencies: libFd.Currencies = [];

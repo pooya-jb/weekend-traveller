@@ -1,3 +1,11 @@
+/**
+ * @version 1.0.0
+ */
+
+/**
+ * Bottom part of page.
+ * Static module crediting contributors.
+ */
 function Footer() {
   return (
     <>
