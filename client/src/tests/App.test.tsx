@@ -1,19 +1,24 @@
+/**
+ * @module
+ * Test suite for Weekend Traveller app.
+ * Covers both units and integration.
+ * @version 1.0.0
+ */
+
+//  External dependencies
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { MockInstance, vi } from 'vitest';
 
+//  Internal dependencies
 import App from '../App';
 import * as mocks from './mocks';
 import * as c from '../services/const.service';
 import moment from 'moment';
 
+//  Key code constants
 const KEY_DOWN_ARROW: number = 40;
 
-const getFirstInput = (holdingElement: HTMLElement) => {
-  const inputCollection = holdingElement.getElementsByTagName('input');
-  expect(inputCollection.length).toBeGreaterThanOrEqual(1);
-  return inputCollection[0];
-};
-
+//  Flight data API mocks
 vi.mock('../services/flightData.service', () => {
   return {
     getCurrencies: vi.fn(() => {
@@ -33,6 +38,19 @@ vi.mock('../services/flightData.service', () => {
     }),
   };
 });
+
+/**
+ * Locates first input HTML element within holdingElement.
+ * Is needed to include external components in tests
+ * which don't provide easy access to their internals via usual test approaches.
+ * @param holdingElement within it input(s) will be searched
+ * @returns first input element found
+ */
+const getFirstInput = (holdingElement: HTMLElement) => {
+  const inputCollection = holdingElement.getElementsByTagName('input');
+  expect(inputCollection.length).toBeGreaterThanOrEqual(1);
+  return inputCollection[0];
+};
 
 beforeEach(async () => {
   await act(async () => render(<App />));

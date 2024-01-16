@@ -1,5 +1,13 @@
+/**
+ * @module
+ * Mocks for client tests.
+ * @version 1.0.0
+ */
+
+//  Internal dependencies
 import * as libFd from '../libraries/flightData.service';
 
+//  Flight data mocks
 const tomorrow: number = Date.now() + 1000 * 3600 * 24;
 const weekFromTomorrow: number = tomorrow + 1000 * 3600 * 24 * 7;
 export const currencies: libFd.Currencies = [
