@@ -58,9 +58,7 @@ function Header({
           </div>
           {/* Currency selector */}
           <div className="option-wrapper">
-            <label htmlFor="locale-options-currency" className="option-label">
-              Currency:
-            </label>
+            <label className="option-label">Currency:</label>
             <Select
               id="flight-options-currency"
               className="option-dropdown"

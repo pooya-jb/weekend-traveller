@@ -64,39 +64,6 @@ export const getAirports = async (): Promise<libFd.Airports | null> => {
 };
 
 /**
- * Filters list of airports to limited number of entries.
- * Is intended for progressive loading of react-select-async-paginate
- * which solves performance issues when full list was loaded at once.
- * Applies search criteria if specified; ignores case.
- * @param limit number of entries to load
- * @param offset number of entries already loaded
- * @param search string to search in airport names
- * @returns filtered list of airports
- */
-export const getAirportsPartition = async (
-  limit: number,
-  offset: number,
-  search: string
-): Promise<libFd.Airports | null> => {
-  try {
-    //  Trigger cache update if empty
-    if (!airports) await getAirports();
-
-    //  Filter data
-    let partition = airports;
-    if (search) {
-      search = search.toLowerCase();
-      partition = partition.filter(airport =>
-        airport.label.toLowerCase().includes(search)
-      );
-    }
-    return partition.slice(offset, limit + offset);
-  } catch (err) {
-    return null;
-  }
-};
-
-/**
  * Loads locale info based on user's IP.
  * External API is used for IP request.
  * @returns locale info

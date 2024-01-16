@@ -1,5 +1,7 @@
 import * as libFd from '../libraries/flightData.service';
 
+const tomorrow: number = Date.now() + 1000 * 3600 * 24;
+const weekFromTomorrow: number = tomorrow + 1000 * 3600 * 24 * 7;
 export const currencies: libFd.Currencies = [
   { value: 'CAD', label: 'CAD' },
   { value: 'EUR', label: 'EUR' },
@@ -24,10 +26,10 @@ export const cheapestFlightsRequest: libFd.CheapestFlightsRequest = {
   marketCode: 'GB',
   originPlaceId: '95565050',
   lookAtWeeks: 2,
-  travelDate: 1706042473361,
+  travelDate: tomorrow,
 };
 export const cheapestFlights: libFd.CheapestFlights = {
-  '1706042473361': [
+  [String(tomorrow)]: [
     {
       vendorTherePic: '',
       destinationPlaceId: '95673383',
@@ -47,7 +49,7 @@ export const cheapestFlights: libFd.CheapestFlights = {
       price: 382,
     },
   ],
-  '1706647273361': [
+  [String(weekFromTomorrow)]: [
     {
       vendorTherePic: '',
       destinationPlaceId: '95565041',
@@ -74,15 +76,15 @@ export const flightInfoRequest: libFd.FlightInfoRequest = {
   marketCode: 'GB',
   originPlaceId: '95565050',
   destinationPlaceId: '95673383',
-  travelDate: 1706042473361,
+  travelDate: tomorrow,
 };
 export const flightInfo: libFd.FlightInfo = {
   segments: [
     {
       originPlaceId: '95565050',
       destinationPlaceId: '95673383',
-      departure: 1706053500000,
-      arrival: 1706057700000,
+      departure: tomorrow + 1000 * 3600 * 4,
+      arrival: tomorrow + 1000 * 3600 * 6.5,
       airlinePic: 'http://test-url.png',
     },
   ],

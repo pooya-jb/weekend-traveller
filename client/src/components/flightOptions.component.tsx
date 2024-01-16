@@ -12,11 +12,41 @@ import { AsyncPaginate } from 'react-select-async-paginate';
 import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
 import * as c from '../services/const.service';
-import { getAirportsPartition } from '../services/flightData.service';
+import { getAirports } from '../services/flightData.service';
 
 //  CSS overloads
 import './reactDatePicker.css';
 import './reactSelect.css';
+
+/**
+ * Filters list of airports to limited number of entries.
+ * Is intended for progressive loading of react-select-async-paginate
+ * which solves performance issues when full list was loaded at once.
+ * Applies search criteria if specified; ignores case.
+ * @param limit number of entries to load
+ * @param offset number of entries already loaded
+ * @param search string to search in airport names
+ * @returns filtered list of airports
+ */
+export const getAirportsPartition = async (
+  limit: number,
+  offset: number,
+  search: string
+): Promise<libFd.Airports | null> => {
+  try {
+    let partition = await getAirports();
+    if (!partition) return null;
+    if (search) {
+      search = search.toLowerCase();
+      partition = partition.filter(airport =>
+        airport.label.toLowerCase().includes(search)
+      );
+    }
+    return partition.slice(offset, limit + offset);
+  } catch (err) {
+    return null;
+  }
+};
 
 /**
  * Triggers progressive loading of airports dropdown.
@@ -132,9 +162,7 @@ function FlightOptions({
       <form action="submit" id="flight-options" role="flight-options">
         {/* Origin selector */}
         <div className="option-wrapper">
-          <label htmlFor="flight-options-from" className="option-label">
-            From:
-          </label>
+          <label className="option-label">From:</label>
           <AsyncPaginate
             id="flight-options-from"
             className="option-dropdown"
@@ -146,9 +174,7 @@ function FlightOptions({
         </div>
         {/* Start date picker */}
         <div className="option-wrapper">
-          <label htmlFor="flight-options-from" className="option-label">
-            Start date:
-          </label>
+          <label className="option-label">Start date:</label>
           <DatePicker
             id="flight-options-start-date"
             className="option-calendar"
@@ -167,9 +193,7 @@ function FlightOptions({
         </div>
         {/* Trip length selector */}
         <div className="option-wrapper">
-          <label htmlFor="flight-options-return" className="option-label">
-            Return:
-          </label>
+          <label className="option-label">Return:</label>
           <Select
             id="flight-options-return"
             className="option-dropdown"
@@ -189,9 +213,7 @@ function FlightOptions({
         </div>
         {/* Weeks to show selector */}
         <div className="option-wrapper">
-          <label htmlFor="flight-options-show-x-weeks" className="option-label">
-            Show:
-          </label>
+          <label className="option-label">Show:</label>
           <Select
             id="flight-options-show-x-weeks"
             className="option-dropdown"
