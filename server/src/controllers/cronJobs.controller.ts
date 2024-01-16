@@ -14,7 +14,7 @@ import { loadCurrencies, loadAirports } from '../models/cronJobs.model.js';
 import { errorLogger, UnknownError } from '../middleware/errorHandler.js';
 
 //  Cron job schedules
-const FLIGHT_DATA_SCHEDULE = `* * 12 * * *`;
+const FLIGHT_DATA_SCHEDULE = `0 0 12 * * *`;
 
 /**
  * Defines the crob job and starts the monitoring process.

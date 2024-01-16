@@ -20,30 +20,34 @@ export const localeInfo: libFd.LocaleInfo = {
   currencyCode: 'GBP',
   localeCode: 'en-US',
 };
-export const cheapestFlightsRequest: libFd.CheapestFlightsRequest = {
-  currencyCode: 'GBP',
-  localeCode: 'en-US',
-  marketCode: 'GB',
-  originPlaceId: '95565050',
-  lookAtWeeks: 2,
-  travelDate: tomorrow,
-};
+/**
+ * Imaginary request for following data:
+ *
+ * export const cheapestFlightsRequest: libFd.CheapestFlightsRequest = {
+ *   currencyCode: 'GBP',
+ *   localeCode: 'en-US',
+ *   marketCode: 'GB',
+ *   originPlaceId: '95565050',
+ *   lookAtWeeks: 2,
+ *   travelDate: tomorrow,
+ * };
+ */
 export const cheapestFlights: libFd.CheapestFlights = {
   [String(tomorrow)]: [
     {
-      vendorTherePic: '',
+      vendorTherePic: 'http://test-url1.png',
       destinationPlaceId: '95673383',
       hasTransfers: false,
       price: 320,
     },
     {
-      vendorTherePic: '',
+      vendorTherePic: 'http://test-url2.png',
       destinationPlaceId: '95565041',
       hasTransfers: false,
       price: 365,
     },
     {
-      vendorTherePic: '',
+      vendorTherePic: 'http://test-url3.png',
       destinationPlaceId: '95673580',
       hasTransfers: true,
       price: 382,
@@ -51,33 +55,37 @@ export const cheapestFlights: libFd.CheapestFlights = {
   ],
   [String(weekFromTomorrow)]: [
     {
-      vendorTherePic: '',
+      vendorTherePic: 'http://test-url4.png',
       destinationPlaceId: '95565041',
       hasTransfers: false,
       price: 345,
     },
     {
-      vendorTherePic: '',
+      vendorTherePic: 'http://test-url5.png',
       destinationPlaceId: '95673383',
       hasTransfers: false,
       price: 388,
     },
     {
-      vendorTherePic: '',
+      vendorTherePic: 'http://test-url6.png',
       destinationPlaceId: '95673580',
       hasTransfers: true,
       price: 403,
     },
   ],
 };
-export const flightInfoRequest: libFd.FlightInfoRequest = {
-  currencyCode: 'GBP',
-  localeCode: 'en-US',
-  marketCode: 'GB',
-  originPlaceId: '95565050',
-  destinationPlaceId: '95673383',
-  travelDate: tomorrow,
-};
+/**
+ * Imaginary request for following data:
+ *
+ * export const flightInfoRequest: libFd.FlightInfoRequest = {
+ *   currencyCode: 'GBP',
+ *   localeCode: 'en-US',
+ *   marketCode: 'GB',
+ *   originPlaceId: '95565050',
+ *   destinationPlaceId: '95673383',
+ *   travelDate: tomorrow,
+ * };
+ */
 export const flightInfo: libFd.FlightInfo = {
   segments: [
     {
