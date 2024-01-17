@@ -1,4 +1,4 @@
-## Introduction
+# Weekend Traveller
 
 Project of choice to graduate the Codeworks.me web developer bootcamp. This app was built within one week.
 
@@ -20,7 +20,7 @@ Ideal when planning weekend trips or summar vacation abroad and you are not sure
 2. Loaded results are cached to avoid duplicate API calls
 3. Unit and integration tests
 
-## Installation
+## Getting started
 
 1. Run `npm i` in both `client` and `server` folders.
 2. Create the `.env` file in `server` based on the example.
@@ -32,16 +32,8 @@ Ideal when planning weekend trips or summar vacation abroad and you are not sure
 The application works with Postgres DB via Sequelize so it should be possible to switch to other DBs if supported by Sequelize.
 You can adjust the `server` connection properties in `src/databases/flightData.database.ts`.
 
-### Frameworks
+## Tech stack
 
 Server: Express, Node-Cron, Sequelize (with Postgres)
 
 Client: React (with Vite), Vitest
-
-## Room for improvement
-
-Possible extra features:
-1. The app contains code to search individual flight details in both front- and back-end, but I didn't have time to implement the display.
-2. Back-end should have system for logging processing of requests.
-3. The app could be made responsive.
-4. Error popups in front-end could use a nice custom message box.
