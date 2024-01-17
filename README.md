@@ -24,8 +24,13 @@ Ideal when planning weekend trips or summar vacation abroad and you are not sure
 
 1. Run `npm i` in both `client` and `server` folders.
 2. Create the `.env` file in `server` based on the example.
-3. Update server address in `client` in constants service (`const.service.ts`).
+3. Update server address in `client` in constants service (`src/services/const.service.tsx`).
 4. Start the database service, and run `npm run dev` script in both `client` and `server` folders to see the app live in your browser.
+
+### Dependencies
+
+The application works with Postgres DB via Sequelize so it should be possible to switch to other DBs if supported by Sequelize.
+You can adjust the `server` connection properties in `src/databases/flightData.database.ts`.
 
 ### Frameworks
 
