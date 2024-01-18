@@ -14,7 +14,7 @@ import * as libFd from '../libraries/flightData.service';
  * @constant SERVER_URL address of your webserver
  * @constant IP_REQUEST_URL used for Locale Info request which requires user IP
  */
-export const SERVER_URL: string = `http://localhost:3000`;
+export const SERVER_URL: string = `http://localhost:1234`;
 export const IP_REQUEST_URL: string = `https://api.ipify.org?format=json`;
 
 /**

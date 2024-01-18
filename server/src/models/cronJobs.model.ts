@@ -29,6 +29,7 @@ const PLACE_TYPE_AIRPORTS = [
 export const loadCurrencies = async (): Promise<void> => {
   //  Obtain data from API
   const dataIn: libApi.Currencies = await api.getCurrencies();
+  console.log('sending request to API');
   if (!(dataIn instanceof Object))
     throw new errors.BadGateway('Data retrieved in unknown format.');
 
