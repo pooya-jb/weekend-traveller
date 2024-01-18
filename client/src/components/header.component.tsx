@@ -6,6 +6,8 @@
 import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 
+// new feature : adding the current city to form & and header
+
 //  Internal dependencies
 import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
@@ -32,7 +34,7 @@ function Header({
 
   //  Data load hooks
   useEffect(() => {
-    getCurrencies().then(response => {
+    getCurrencies().then((response) => {
       if (!response) {
         alert(
           `We couldn't load the currency list. ` +
@@ -46,34 +48,36 @@ function Header({
 
   return (
     <>
-      <header id="header" role="header">
+      <header id='header' role='header'>
         {/* Locale form */}
-        <form action="submit" id="locale-options" role="locale-options">
+        <form action='submit' id='locale-options' role='locale-options'>
           {/* Market selector # Disabled */}
-          <div className="option-wrapper-disabled">
-            <label className="option-label">Your location:</label>
-            <span className="option-value">
+          <div className='option-wrapper-disabled'>
+            <label className='option-label'>Your location:</label>
+            <span className='option-value'>
               {useContext(LocaleContext).locationName}
             </span>
           </div>
           {/* Currency selector */}
-          <div className="option-wrapper">
-            <label className="option-label">Currency:</label>
+          <div className='option-wrapper'>
+            <label className='option-label'>Currency:</label>
             <Select
-              id="flight-options-currency"
-              className="option-dropdown"
-              classNamePrefix="option-dropdown"
+              id='flight-options-currency'
+              className='option-dropdown'
+              classNamePrefix='option-dropdown'
               value={{
                 value: selectedCurrency,
                 label: selectedCurrency,
               }}
-              onChange={selected => selected && selectCurrency(selected.value)}
+              onChange={(selected) =>
+                selected && selectCurrency(selected.value)
+              }
               options={currencies}
             />
           </div>
         </form>
         {/* Site logo */}
-        <div id="header-logo" role="logo">
+        <div id='header-logo' role='logo'>
           <h1>Weekend Traveller</h1>
         </div>
       </header>
