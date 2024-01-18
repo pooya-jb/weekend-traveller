@@ -1,0 +1,21 @@
+                                   List of databases
+             Name             | Owner | Encoding | Collate | Ctype | Access privileges 
+------------------------------+-------+----------+---------+-------+-------------------
+ chatdb                       | loic  | UTF8     | C       | C     | 
+ postgres                     | loic  | UTF8     | C       | C     | 
+ rails-watch-list_development | loic  | UTF8     | C       | C     | 
+ rails-watch-list_test        | loic  | UTF8     | C       | C     | 
+ rails_watch_list_development | loic  | UTF8     | C       | C     | 
+ rails_watch_list_test        | loic  | UTF8     | C       | C     | 
+ rent_a_plus_one_development  | loic  | UTF8     | C       | C     | 
+ rent_a_plus_one_test         | loic  | UTF8     | C       | C     | 
+ teamup_development           | loic  | UTF8     | C       | C     | 
+ teamup_test                  | loic  | UTF8     | C       | C     | 
+ template0                    | loic  | UTF8     | C       | C     | =c/loic          +
+                              |       |          |         |       | loic=CTc/loic
+ template1                    | loic  | UTF8     | C       | C     | =c/loic          +
+                              |       |          |         |       | loic=CTc/loic
+ topic_practice               | loic  | UTF8     | C       | C     | 
+ topics                       | loic  | UTF8     | C       | C     | 
+(14 rows)
+
