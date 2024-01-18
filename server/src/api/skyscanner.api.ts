@@ -25,6 +25,7 @@ export const getCurrencies = async (): Promise<libApi.Currencies> => {
   if (!response.ok)
     throw new errors.BadGateway(`API server responded ${response.status}.`);
   const data: libApi.Currencies = await response.json();
+  console.log(data);
   return data;
 };
 
