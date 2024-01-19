@@ -56,7 +56,7 @@ function FlightInfo({
    * Composes body of individual flight info request.
    * Uses input for flight list search so no validation needed.
    */
-  const getFlightDetail = () => {
+  const getFlightDetails = () => {
     const flightInfoRequest: libFd.FlightInfoRequest = {
       currencyCode: requestBody.currencyCode,
       localeCode: requestBody.localeCode,
@@ -75,6 +75,7 @@ function FlightInfo({
       }
       setFlightData(data);
       setIsModalOpen(true);
+      console.log(flightInfo);
     });
   };
 
@@ -82,7 +83,7 @@ function FlightInfo({
   return (
     <>
       {destination ? (
-        <li className="cheap-flight" onClick={getFlightDetail}>
+        <li className="cheap-flight" onClick={getFlightDetails}>
           <div>{destination.label}</div>
           <div className="cheap-flight-info">
             {/* Vendor pictures */}
@@ -114,7 +115,7 @@ function FlightInfo({
       )}
 
       {isModalOpen && (
-        <Modal flightData={flightData} />
+        <Modal flightData={flightData} setIsModalOpen={setIsModalOpen} />
       )}
     </>
   );
