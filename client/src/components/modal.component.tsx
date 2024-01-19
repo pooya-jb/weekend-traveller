@@ -1,9 +1,21 @@
-import * as libFd from '../libraries/flightData.service';
-import { IoCloseSharp } from "react-icons/io5";
-import * as weatherDataService from '../services/weatherData.service';
+// External dependencies
 import { useState } from 'react';
+import { IoCloseSharp } from "react-icons/io5";
 
-export default function Modal ({ flightData, setIsModalOpen, destination }: libFd.FlightData ) {
+// Internal dependencies
+import * as libFd from '../libraries/flightData.service';
+import * as weatherDataService from '../services/weatherData.service';
+
+export default function Modal ({
+  flightData,
+  setIsModalOpen,
+  destination
+}: {
+  flightData: libFd.FlightData,
+  setIsModalOpen: (value: boolean) => void,
+  destination: libFd.Option
+} ) {
+  // State hooks
   const [weather, setWeather] = useState([]);
 
   async function handleClose () {
@@ -36,9 +48,8 @@ export default function Modal ({ flightData, setIsModalOpen, destination }: libF
     }
   }
 
-  function convertUnixTimestamp(timestamp: string) {
+  function convertUnixTimestamp(timestamp: number) {
     const date = new Date(timestamp);
-
     const options = {
       weekday: 'long',
       month: 'short',
@@ -48,9 +59,7 @@ export default function Modal ({ flightData, setIsModalOpen, destination }: libF
       minute: '2-digit',
       timeZone: 'UTC',
     };
-
     const readableDate = date.toLocaleDateString('en-US', options);
-
     return readableDate;
   }
 

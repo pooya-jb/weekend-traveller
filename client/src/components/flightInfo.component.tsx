@@ -75,7 +75,6 @@ function FlightInfo({
       }
       setFlightData(data);
       setIsModalOpen(true);
-      console.log(destination);
     });
   };
 
