@@ -11,6 +11,7 @@ import {
   getAirports,
   postFlightInfoRequest,
 } from '../services/flightData.service';
+import Modal from './modal.component';
 
 /**
  * @module
@@ -35,8 +36,9 @@ function FlightInfo({
   returnDate: number | undefined;
 }) {
   //  State hooks
-  const [flightData, setFlightData] = useState<libFd.FlightInfo>();
+  const [flightData, setFlightData] = useState<libFd.FlightInfo>({segments: Array(2), vendorLink: 'https://agw.skyscnr.com/v1/redirect?pageUrl=https%…QkxJI4f%2525252BkMMp&impactMediaPartnerId=2850210', price: 57.21});
   const [destination, setDestination] = useState<libFd.Option>();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   //  Data load hooks
   useEffect(() => {
@@ -54,7 +56,7 @@ function FlightInfo({
    * Composes body of individual flight info request.
    * Uses input for flight list search so no validation needed.
    */
-  const getFlightDetail = () => {
+  const getFlightDetails = () => {
     const flightInfoRequest: libFd.FlightInfoRequest = {
       currencyCode: requestBody.currencyCode,
       localeCode: requestBody.localeCode,
@@ -72,15 +74,15 @@ function FlightInfo({
         return;
       }
       setFlightData(data);
+      setIsModalOpen(true);
     });
   };
 
-  // console.log(flightData);
 
   return (
     <>
       {destination ? (
-        <li className="cheap-flight" onClick={getFlightDetail}>
+        <li className="cheap-flight" onClick={getFlightDetails}>
           <div>{destination.label}</div>
           <div className="cheap-flight-info">
             {/* Vendor pictures */}
@@ -109,6 +111,10 @@ function FlightInfo({
         </li>
       ) : (
         ''
+      )}
+
+      {isModalOpen && (
+        <Modal flightData={flightData} setIsModalOpen={setIsModalOpen} destination={destination} />
       )}
     </>
   );
