@@ -295,3 +295,8 @@ h1 {
   background: var(--color-beige-100);
   transition: 0s;
 }
+
+.geolocation {
+  background-color: white;
+  cursor: pointer;
+}
