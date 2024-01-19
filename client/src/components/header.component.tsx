@@ -88,6 +88,8 @@ function Header({
       setCurrencies(response);
     });
   }, []);
+  const localeInfo = useContext(LocaleContext);
+  console.log(localeInfo);
 
   return (
     <>

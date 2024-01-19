@@ -65,7 +65,7 @@ export const getCityAirport = async (
     const airport: Airports | null = await Airports.findOne({
       where: {
         name: {
-          [Op.iLike]: `%${cityName}`,
+          [Op.iLike]: `%${cityName}%`,
         },
       },
     });

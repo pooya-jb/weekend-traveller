@@ -3,7 +3,7 @@
  */
 
 //  External dependencies
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
@@ -94,13 +94,43 @@ function FlightOptions({
 }) {
   //  State hooks
 
-  // {
-  //   value: '95673383',
-  //   label: 'Berlin Brandenburg (BER), Germany',
-  // }
   const [pickedAirport, pickAirport] = useState<libFd.Option>();
+  // const [foundAirport, setFoundAirport] = useState<libFd.Option>();
+  //  Context hooks
+  const localeInfo: libFd.LocaleInfo = useContext(LocaleContext);
+  console.log(localeInfo);
+  const defaultAsyncPaginateValue = pickedAirport;
 
-  const defaultValue = pickedAirport;
+  useEffect(() => {
+    console.log(localeInfo.city);
+    const findAirport = async () => {
+      try {
+        const res = await fetch(`${c.SERVER_URL}/city-airport`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            cityName: localeInfo.city,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+        console.log({
+          value: data.id,
+          label: data.name,
+        });
+        pickAirport({
+          value: data.id,
+          label: data.name,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    findAirport();
+  }, [localeInfo]);
+
   const [tripLength, setTripLength] = useState<libFd.Option>(c.OPTION_ONE_WAY);
   const [showWeeks, setShowWeeks] = useState<libFd.Option>(
     c.OPTION_SHOW_WEEKS_DEF
@@ -108,9 +138,6 @@ function FlightOptions({
   const [startDate, setStartDate] = useState<Date | null>(
     c.OPTION_START_DATE_DEF
   );
-
-  //  Context hooks
-  const localeInfo: libFd.LocaleInfo = useContext(LocaleContext);
 
   /**
    * Composes body of cheapest flights search from controls in this view.
@@ -163,6 +190,7 @@ function FlightOptions({
     }
     composeRequest(requestBody);
   };
+  console.log(defaultAsyncPaginateValue);
 
   return (
     <>
@@ -176,7 +204,7 @@ function FlightOptions({
             classNamePrefix='option-dropdown'
             onChange={(selected) => selected && pickAirport(selected)}
             loadOptions={loadOptions}
-            defaultValue={defaultValue || null}
+            value={pickedAirport}
             required
           />
         </div>
