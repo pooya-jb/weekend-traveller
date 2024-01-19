@@ -75,7 +75,7 @@ function FlightInfo({
       }
       setFlightData(data);
       setIsModalOpen(true);
-      console.log(flightInfo);
+      console.log(destination);
     });
   };
 
@@ -115,7 +115,7 @@ function FlightInfo({
       )}
 
       {isModalOpen && (
-        <Modal flightData={flightData} setIsModalOpen={setIsModalOpen} />
+        <Modal flightData={flightData} setIsModalOpen={setIsModalOpen} destination={destination} />
       )}
     </>
   );

@@ -1,16 +1,40 @@
 import * as libFd from '../libraries/flightData.service';
 import { IoCloseSharp } from "react-icons/io5";
-import * as weatherData from '../services/weatherData.service';
+import * as weatherDataService from '../services/weatherData.service';
 import { useState } from 'react';
 
-export default function Modal ({ flightData, setIsModalOpen }: libFd.FlightData ) {
-  const [weatherData, setWeatherData] = useState([]);
+export default function Modal ({ flightData, setIsModalOpen, destination }: libFd.FlightData ) {
+  const [weather, setWeather] = useState([]);
 
-  function handleClose () {
+  async function handleClose () {
     setIsModalOpen(false);
+    getWeatherData(destination.label)
   }
 
-  function getWeatherData ()
+  async function getWeatherData (destination: string) {
+    // get city name without any other info
+    const cleanedDest = destination.match(/^(\S+)/);
+    let lat: number | undefined;
+    let long: number | undefined;
+    try {
+      if (cleanedDest !== null) {
+        // get lat & long from city name
+        const latLongResponse = await weatherDataService.getLatLong(cleanedDest[0]);
+        lat = latLongResponse.results[0].latitude;
+        long = latLongResponse.results[0].longitude;
+      }
+      try {
+        // get weather by using lat & long
+        const weatherResponse = await weatherDataService.getWeather(lat, long);
+        console.log(weatherResponse)
+        setWeather(weatherResponse)
+      } catch (error) {
+        console.error(error)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   function convertUnixTimestamp(timestamp: string) {
     const date = new Date(timestamp);
