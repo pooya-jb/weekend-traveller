@@ -36,11 +36,13 @@ export type Airports = Option[];
 /**
  * User info
  */
+//add city to LocalInfo
 export interface LocaleInfo {
   marketCode: string;
   locationName: string;
   currencyCode: string;
   localeCode: string;
+  city: string;
 }
 
 /**

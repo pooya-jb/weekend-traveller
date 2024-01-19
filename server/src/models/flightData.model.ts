@@ -14,6 +14,7 @@ import * as api from '../api/skyscanner.api.js';
 import * as libApi from '../libraries/skyscanner.api.js';
 import * as libFd from '../libraries/flightData.model.js';
 import { Airports, Currencies } from '../databases/flightData.database.js';
+import { Op } from 'sequelize';
 
 //  API constants (update if API changes)
 const CABIN_CLASS: string = 'CABIN_CLASS_ECONOMY';
@@ -33,7 +34,9 @@ export const getCurrencies = async (): Promise<string[]> => {
   if (!dataProc.length) throw new errors.BadGateway('Missing data in DB.');
 
   //  Format output
-  const dataOut: string[] = dataProc.map(currency => currency.dataValues.code);
+  const dataOut: string[] = dataProc.map(
+    (currency) => currency.dataValues.code
+  );
   dataOut.sort();
   return dataOut;
 };
@@ -48,6 +51,36 @@ export const getCurrencies = async (): Promise<string[]> => {
  * @returns map<airport id, airport name>
  * @throws if DB is empty
  */
+
+// get a single Aiport if he current city from user is available
+
+export const getCityAirport = async (
+  cityName: string
+): Promise<Airports | null> => {
+  if (!cityName) {
+    throw new errors.BadRequest('City name is required!');
+  }
+
+  try {
+    const airport: Airports | null = await Airports.findOne({
+      where: {
+        name: {
+          [Op.iLike]: `%${cityName}`,
+        },
+      },
+    });
+
+    if (!airport) {
+      return null;
+    }
+
+    return airport;
+  } catch (error) {
+    console.error('Error fetching city airport:', error);
+    throw new errors.InternalSrverError('Error fetching city airport');
+  }
+};
+
 export const getAirports = async (
   limit: number = 0,
   offset: number = 0

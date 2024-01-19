@@ -94,6 +94,7 @@ function Header({
       <button className='geolocation' onClick={locationClickHandler}>
         GeoLocation
       </button>
+
       <header id='header' role='header'>
         {/* Locale form */}
         <form action='submit' id='locale-options' role='locale-options'>
@@ -103,6 +104,7 @@ function Header({
             <span className='option-value'>
               {useContext(LocaleContext).locationName}
             </span>
+            <p>- {useContext(LocaleContext).city}</p>
           </div>
           {/* Currency selector */}
           <div className='option-wrapper'>

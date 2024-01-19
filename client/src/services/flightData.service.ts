@@ -101,10 +101,10 @@ export const postLocaleInfoRequest =
       );
       if (!responseLocale.ok) throw new Error(responseLocale.statusText);
       const dataLocale: libFd.LocaleInfo = await responseLocale.json();
-
+      console.log(dataLocale);
       //  Update cache
       localeInfo = dataLocale;
-      return dataLocale;
+      return { ...dataLocale, city: localeData.city };
     } catch (err) {
       return null;
     }

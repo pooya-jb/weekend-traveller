@@ -17,12 +17,14 @@ import FlightsDashboard from './components/flightsDashboard.component';
 import Footer from './components/footer.component';
 
 //  Locale info is present in majority of API requests anywhere in app
+// add New York as default city to pass the type check
 const defaultLocaleInfo: libFd.LocaleInfo = {
   // Fallback values
   marketCode: 'US',
   locationName: 'United states',
   currencyCode: 'USD',
   localeCode: 'en-US',
+  city: 'New York',
 };
 export const LocaleContext: React.Context<libFd.LocaleInfo> =
   React.createContext(defaultLocaleInfo);
@@ -42,7 +44,7 @@ function App() {
 
   //  Data update hooks
   useEffect(() => {
-    postLocaleInfoRequest().then(data => {
+    postLocaleInfoRequest().then((data) => {
       if (!data) return; // will use fallback values
       setLocaleInfo({ ...data, localeCode: c.GLOBAL_LOCALE });
       selectCurrency(data.currencyCode); // autoselect currency for user
@@ -55,7 +57,7 @@ function App() {
   return (
     <>
       <LocaleContext.Provider value={localeInfo}>
-        <div id="app">
+        <div id='app'>
           <Header
             selectedCurrency={selectedCurrency}
             selectCurrency={selectCurrency}
