@@ -6,10 +6,20 @@
 import { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 
+// new feature : adding the current city to form & and header
+
+// if (navigator.geolocation) {
+//   navigator.geolocation.getCurrentPosition(
+//     (position) => console.log(position),
+//     (error) => console.log(error)
+//   );
+// }
+
 //  Internal dependencies
 import { LocaleContext } from '../App';
 import * as libFd from '../libraries/flightData.service';
 import { getCurrencies } from '../services/flightData.service';
+import { error } from 'console';
 
 /**
  * @module
@@ -29,10 +39,45 @@ function Header({
 }) {
   //  State hooks
   const [currencies, setCurrencies] = useState<libFd.Currencies>();
+  const locationClickHandler = () => {
+    console.log('Location clicked!');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position);
+          const api_url = 'https://api.opencagedata.com/geocode/v1/json';
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const query = latitude + ',' + longitude;
+          const request_url =
+            api_url +
+            '?' +
+            'key=' +
+            'cd70480a70474d74bcc5394f063c2246' +
+            '&q=' +
+            encodeURIComponent(query) +
+            '&pretty=1' +
+            '&no_annotations=1';
+          console.log(request_url);
+          fetch(request_url, {
+            method: 'GET',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              console.log(data.results[0].formatted);
+            });
+        },
 
+        (error) => console.log(error)
+      );
+    } else {
+      console.log('Geolocation is not supported by this browser!');
+    }
+  };
   //  Data load hooks
   useEffect(() => {
-    getCurrencies().then(response => {
+    getCurrencies().then((response) => {
       if (!response) {
         alert(
           `We couldn't load the currency list. ` +
@@ -43,37 +88,46 @@ function Header({
       setCurrencies(response);
     });
   }, []);
+  const localeInfo = useContext(LocaleContext);
+  console.log(localeInfo);
 
   return (
     <>
-      <header id="header" role="header">
+      <button className='geolocation' onClick={locationClickHandler}>
+        GeoLocation
+      </button>
+
+      <header id='header' role='header'>
         {/* Locale form */}
-        <form action="submit" id="locale-options" role="locale-options">
+        <form action='submit' id='locale-options' role='locale-options'>
           {/* Market selector # Disabled */}
-          <div className="option-wrapper-disabled">
-            <label className="option-label">Your location:</label>
-            <span className="option-value">
+          <div className='option-wrapper-disabled'>
+            <label className='option-label'>Your location:</label>
+            <span className='option-value'>
               {useContext(LocaleContext).locationName}
             </span>
+            <p>- {useContext(LocaleContext).city}</p>
           </div>
           {/* Currency selector */}
-          <div className="option-wrapper">
-            <label className="option-label">Currency:</label>
+          <div className='option-wrapper'>
+            <label className='option-label'>Currency:</label>
             <Select
-              id="flight-options-currency"
-              className="option-dropdown"
-              classNamePrefix="option-dropdown"
+              id='flight-options-currency'
+              className='option-dropdown'
+              classNamePrefix='option-dropdown'
               value={{
                 value: selectedCurrency,
                 label: selectedCurrency,
               }}
-              onChange={selected => selected && selectCurrency(selected.value)}
+              onChange={(selected) =>
+                selected && selectCurrency(selected.value)
+              }
               options={currencies}
             />
           </div>
         </form>
         {/* Site logo */}
-        <div id="header-logo" role="logo">
+        <div id='header-logo' role='logo'>
           <h1>Weekend Traveller</h1>
         </div>
       </header>

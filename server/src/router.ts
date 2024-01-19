@@ -19,7 +19,7 @@ export const router: Router = express.Router();
 //  GET routes
 router.get('/currencies', errorCatcher(flightData.getCurrencies));
 router.get('/airports', errorCatcher(flightData.getAirports));
-
+router.post('/city-airport', errorCatcher(flightData.getCityAirport));
 //  POST routes
 router.post(
   '/request-cheapest-flights',

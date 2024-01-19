@@ -7,6 +7,7 @@
  */
 
 //  Internal dependencies
+import { as } from 'vitest/dist/reporters-trlZlObr.js';
 import * as libFd from '../libraries/flightData.service';
 import * as c from './const.service';
 
@@ -33,7 +34,7 @@ export const getCurrencies = async (): Promise<libFd.Currencies | null> => {
     const data: string[] = await response.json();
 
     //  Transform data and update cache
-    currencies = data.map(currency => ({ value: currency, label: currency }));
+    currencies = data.map((currency) => ({ value: currency, label: currency }));
     return currencies;
   } catch (err) {
     return null;
@@ -56,7 +57,10 @@ export const getAirports = async (): Promise<libFd.Airports | null> => {
     const data: [string, string][] = await response.json();
 
     //  Transform data and update cache
-    airports = data.map(airport => ({ value: airport[0], label: airport[1] }));
+    airports = data.map((airport) => ({
+      value: airport[0],
+      label: airport[1],
+    }));
     return airports;
   } catch (err) {
     return null;
@@ -80,6 +84,11 @@ export const postLocaleInfoRequest =
       const ipInfo = await responseIp.json();
       if (ipInfo?.ip === undefined)
         throw new Error(`Failed to obtain user's IP`);
+      console.log(ipInfo);
+      // getting the user locale data based on the IP address
+      const localeRes = await fetch(`http://ip-api.com/json/${ipInfo.ip}`);
+      const localeData = await localeRes.json();
+      console.log(localeData, localeData.city);
 
       //  Request data
       const responseLocale = await fetch(
@@ -92,10 +101,10 @@ export const postLocaleInfoRequest =
       );
       if (!responseLocale.ok) throw new Error(responseLocale.statusText);
       const dataLocale: libFd.LocaleInfo = await responseLocale.json();
-
+      console.log(dataLocale);
       //  Update cache
       localeInfo = dataLocale;
-      return dataLocale;
+      return { ...dataLocale, city: localeData.city };
     } catch (err) {
       return null;
     }

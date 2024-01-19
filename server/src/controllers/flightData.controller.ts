@@ -24,10 +24,21 @@ export const getCurrencies = async (
   res.json(data);
 };
 
+export const getCityAirport = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const data = await model.getCityAirport(req.body.cityName);
+  res.status(200);
+  res.json(data);
+  console.log(data);
+};
+
 export const getAirports = async (_: Request, res: Response): Promise<void> => {
   const data: Map<string, string> = await model.getAirports();
   res.status(200);
   res.json([...data]);
+  console.log(data);
 };
 
 export const postLocaleInfoRequest = async (
