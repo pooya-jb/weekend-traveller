@@ -23,6 +23,7 @@ body {
   background-size: 100% auto;
   display: flex;
   flex-direction: column;
+  gap: 1.6rem;
 }
 #app > * {
   max-width: 1200px;
@@ -40,6 +41,7 @@ body {
   justify-content: flex-end;
   min-height: 9em;
   max-height: 9em;
+  gap: 1rem;
 }
 #header-logo {
   position: absolute;
@@ -350,6 +352,15 @@ h1 {
 }
 
 .geolocation {
-  background-color: white;
+  display: flex;
+  padding: 0.3em 0.7em;
+  border: 2px solid var(--color-white-80);
+  border-radius: 0.5rem;
+  background: var(--color-pink-90);
   cursor: pointer;
+}
+
+.geolocation-icon {
+  color: rgb(46, 46, 46);
+  font-size: 1rem;
 }

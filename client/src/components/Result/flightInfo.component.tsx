@@ -6,11 +6,11 @@
 import { useEffect, useState } from 'react';
 
 //  Internal dependencies
-import * as libFd from '../libraries/flightData.service';
+import * as libFd from '../../libraries/flightData.service';
 import {
   getAirports,
   postFlightInfoRequest,
-} from '../services/flightData.service';
+} from '../../services/flightData.service';
 import Modal from './modal.component';
 
 /**
@@ -36,16 +36,21 @@ function FlightInfo({
   returnDate: number | undefined;
 }) {
   //  State hooks
-  const [flightData, setFlightData] = useState<libFd.FlightInfo>({segments: Array(2), vendorLink: 'https://agw.skyscnr.com/v1/redirect?pageUrl=https%…QkxJI4f%2525252BkMMp&impactMediaPartnerId=2850210', price: 57.21});
+  const [flightData, setFlightData] = useState<libFd.FlightInfo>({
+    segments: Array(2),
+    vendorLink:
+      'https://agw.skyscnr.com/v1/redirect?pageUrl=https%…QkxJI4f%2525252BkMMp&impactMediaPartnerId=2850210',
+    price: 57.21,
+  });
   const [destination, setDestination] = useState<libFd.Option>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   //  Data load hooks
   useEffect(() => {
-    getAirports().then(airports => {
+    getAirports().then((airports) => {
       if (!airports) return; // already checked in flight options
       const foundAirport: libFd.Option | undefined = airports.find(
-        airport => airport.value === flightInfo.destinationPlaceId
+        (airport) => airport.value === flightInfo.destinationPlaceId
       );
       if (!foundAirport) return;
       setDestination(foundAirport);
@@ -68,7 +73,7 @@ function FlightInfo({
     if (returnDate) {
       flightInfoRequest.returnDate = returnDate;
     }
-    postFlightInfoRequest(flightInfoRequest).then(data => {
+    postFlightInfoRequest(flightInfoRequest).then((data) => {
       if (!data) {
         alert(`Couldn't load data for this flight. Please try again later.`);
         return;
@@ -78,28 +83,27 @@ function FlightInfo({
     });
   };
 
-
   return (
     <>
       {destination ? (
-        <li className="cheap-flight" onClick={getFlightDetails}>
+        <li className='cheap-flight' onClick={getFlightDetails}>
           <div>{destination.label}</div>
-          <div className="cheap-flight-info">
+          <div className='cheap-flight-info'>
             {/* Vendor pictures */}
-            <div className="cheap-flight-info-vendors">
-              <img src={flightInfo.vendorTherePic} alt="" />
+            <div className='cheap-flight-info-vendors'>
+              <img src={flightInfo.vendorTherePic} alt='' />
               {flightInfo.vendorBackPic ? (
-                <img src={flightInfo.vendorBackPic} alt="" />
+                <img src={flightInfo.vendorBackPic} alt='' />
               ) : (
                 ''
               )}
             </div>
             {/* Transfer / Price */}
-            <div className="cheap-flight-more-info">
+            <div className='cheap-flight-more-info'>
               {flightInfo.hasTransfers && (
-                <span className="transfer">Transfer</span>
+                <span className='transfer'>Transfer</span>
               )}
-              <span className="price">
+              <span className='price'>
                 {flightInfo.price.toLocaleString(requestBody.localeCode, {
                   style: 'currency',
                   currency: requestBody.currencyCode,
@@ -107,14 +111,18 @@ function FlightInfo({
               </span>
             </div>
           </div>
-          <div className="cheap-flight-detail"></div>
+          <div className='cheap-flight-detail'></div>
         </li>
       ) : (
         ''
       )}
 
       {isModalOpen && (
-        <Modal flightData={flightData} setIsModalOpen={setIsModalOpen} destination={destination} />
+        <Modal
+          flightData={flightData}
+          setIsModalOpen={setIsModalOpen}
+          destination={destination}
+        />
       )}
     </>
   );

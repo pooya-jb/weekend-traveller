@@ -16,9 +16,11 @@ import Select from 'react-select';
 // }
 
 //  Internal dependencies
-import { LocaleContext } from '../App';
-import * as libFd from '../libraries/flightData.service';
-import { getCurrencies } from '../services/flightData.service';
+import { LocaleContext } from '../../App';
+import * as libFd from '../../libraries/flightData.service';
+import { getCurrencies } from '../../services/flightData.service';
+import { MdMyLocation } from 'react-icons/md';
+import classes from './header.module.css';
 import { error } from 'console';
 
 /**
@@ -93,11 +95,7 @@ function Header({
 
   return (
     <>
-      <button className='geolocation' onClick={locationClickHandler}>
-        GeoLocation
-      </button>
-
-      <header id='header' role='header'>
+      <header className={classes.header} id='header' role='header'>
         {/* Locale form */}
         <form action='submit' id='locale-options' role='locale-options'>
           {/* Market selector # Disabled */}
@@ -125,6 +123,13 @@ function Header({
               options={currencies}
             />
           </div>
+          <button
+            className='geolocation'
+            onClick={locationClickHandler}
+            type='button'
+          >
+            <MdMyLocation className='geolocation-icon' />
+          </button>
         </form>
         {/* Site logo */}
         <div id='header-logo' role='logo'>
