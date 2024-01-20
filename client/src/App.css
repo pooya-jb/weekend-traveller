@@ -78,13 +78,14 @@ h1 {
 #dashboard {
   width: 100%;
   flex: auto;
-  overflow-y: auto;
-  overflow-x: auto;
+  /* overflow-y: auto;
+  overflow-x: auto; */
   padding: 0 0 1em;
   margin: 1em auto 0;
   display: flex;
   flex-direction: column;
   --column-gap: 1em;
+  max-height: 100%;
 }
 .day-overview-columns {
   position: sticky;
@@ -104,6 +105,8 @@ h1 {
 .flights-day-list {
   min-width: calc(25% - var(--column-gap));
   max-width: calc(25% - var(--column-gap));
+  overflow: scroll;
+  max-height: 20rem;
 }
 .flights-day-header {
   overflow: hidden;
@@ -118,7 +121,6 @@ h1 {
 }
 .flights-overview {
   height: 100%;
-  overflow: auto;
 }
 .flights-day-list {
   display: flex;
