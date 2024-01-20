@@ -64,7 +64,7 @@ function FlightsOverview({
       {/* Flight tiles */}
       <ul className='flights-overview-columns'>
         {Object.keys(cheapFlights).map((dayKey, i) => (
-          <ul key={`list.${dayKey} ${i}`} className='flights-day-list'>
+          <ul key={`list.${dayKey}.${i}`} className='flights-day-list'>
             <div key={dayKey} className='date'>
               <li key={`header.${dayKey}`} className='flights-day-header'>
                 <h3>
@@ -77,18 +77,16 @@ function FlightsOverview({
                 </h3>
               </li>
             </div>
-            {cheapFlights[dayKey].map((flight) => (
-              <div className='div'>
-                <FlightInfo
-                  key={`${dayKey}.${flight.destinationPlaceId}.${flight.price}`}
-                  flightInfo={flight}
-                  requestBody={requestBody}
-                  flightDate={getTravelDate(i)}
-                  returnDate={
-                    requestBody.returnDate ? getReturnDate(i) : undefined
-                  }
-                />
-              </div>
+            {cheapFlights[dayKey].map((flight, index) => (
+              <FlightInfo
+                key={`${dayKey}.${flight.destinationPlaceId}.${flight.price}.${index}`}
+                flightInfo={flight}
+                requestBody={requestBody}
+                flightDate={getTravelDate(i)}
+                returnDate={
+                  requestBody.returnDate ? getReturnDate(i) : undefined
+                }
+              />
             ))}
           </ul>
         ))}

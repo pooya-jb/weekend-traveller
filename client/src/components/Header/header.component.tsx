@@ -105,9 +105,9 @@ function Header({
           <div className='option-wrapper-disabled'>
             <label className='option-label'>Your location:</label>
             <span className='option-value'>
-              {useContext(LocaleContext).locationName}
+              {useContext(LocaleContext).locationName}-{' '}
+              {useContext(LocaleContext).city}
             </span>
-            <p>- {useContext(LocaleContext).city}</p>
           </div>
           {/* Currency selector */}
           <div className='option-wrapper'>
