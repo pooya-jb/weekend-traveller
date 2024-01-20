@@ -18,7 +18,9 @@ option {
   font-size: inherit;
   font-weight: inherit;
 }
-
+/* html {
+  font-size: 62.5%;
+} */
 *,
 *:focus,
 *:focus-visible,
@@ -54,4 +56,10 @@ li {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 720px) {
+  html {
+    font-size: 80%;
+  }
 }

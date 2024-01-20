@@ -38,7 +38,7 @@ export const getAirports = async (_: Request, res: Response): Promise<void> => {
   const data: Map<string, string> = await model.getAirports();
   res.status(200);
   res.json([...data]);
-  console.log(data);
+  // console.log(data);
 };
 
 export const postLocaleInfoRequest = async (

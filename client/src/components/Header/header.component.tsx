@@ -94,8 +94,11 @@ function Header({
   console.log(localeInfo);
 
   return (
-    <>
-      <header className={classes.header} id='header' role='header'>
+    <div className={classes.header}>
+      <header id='header' role='header'>
+        <div id={classes.logo} role='logo'>
+          <h1>Weekend Traveller</h1>
+        </div>
         {/* Locale form */}
         <form action='submit' id='locale-options' role='locale-options'>
           {/* Market selector # Disabled */}
@@ -132,11 +135,8 @@ function Header({
           </button>
         </form>
         {/* Site logo */}
-        <div id='header-logo' role='logo'>
-          <h1>Weekend Traveller</h1>
-        </div>
       </header>
-    </>
+    </div>
   );
 }
 

@@ -45,13 +45,14 @@ function FlightsOverview({
   return (
     <>
       {/* Date headers */}
+      {/*  
       <ul className='day-overview-columns'>
         {Object.keys(cheapFlights).map((dayKey, i) => (
           <li key={`header.${dayKey}`} className='flights-day-header'>
             <h3>
-              {/* Show flight date */}
+             
               {moment(getTravelDate(i)).format('DD MMM YYYY')}
-              {/* Show return date if not one way */}
+             
               {requestBody.returnDate
                 ? ' / ' + moment(getReturnDate(i)).format('DD MMM YYYY')
                 : ''}
@@ -59,20 +60,35 @@ function FlightsOverview({
           </li>
         ))}
       </ul>
+       */}
       {/* Flight tiles */}
       <ul className='flights-overview-columns'>
         {Object.keys(cheapFlights).map((dayKey, i) => (
-          <ul key={`list.${dayKey}`} className='flights-day-list'>
+          <ul key={`list.${dayKey} ${i}`} className='flights-day-list'>
+            <div key={dayKey} className='date'>
+              <li key={`header.${dayKey}`} className='flights-day-header'>
+                <h3>
+                  {/* Show flight date */}
+                  {moment(getTravelDate(i)).format('DD MMM YYYY')}
+                  {/* Show return date if not one way */}
+                  {requestBody.returnDate
+                    ? ' / ' + moment(getReturnDate(i)).format('DD MMM YYYY')
+                    : ''}
+                </h3>
+              </li>
+            </div>
             {cheapFlights[dayKey].map((flight) => (
-              <FlightInfo
-                key={`${dayKey}.${flight.destinationPlaceId}.${flight.price}`}
-                flightInfo={flight}
-                requestBody={requestBody}
-                flightDate={getTravelDate(i)}
-                returnDate={
-                  requestBody.returnDate ? getReturnDate(i) : undefined
-                }
-              />
+              <div className='div'>
+                <FlightInfo
+                  key={`${dayKey}.${flight.destinationPlaceId}.${flight.price}`}
+                  flightInfo={flight}
+                  requestBody={requestBody}
+                  flightDate={getTravelDate(i)}
+                  returnDate={
+                    requestBody.returnDate ? getReturnDate(i) : undefined
+                  }
+                />
+              </div>
             ))}
           </ul>
         ))}

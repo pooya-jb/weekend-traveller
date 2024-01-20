@@ -38,12 +38,12 @@ body {
   width: 100%;
   padding: 1em 0;
   position: relative;
-  justify-content: flex-end;
+  justify-content: space-between;
   min-height: 9em;
   max-height: 9em;
   gap: 1rem;
 }
-#header-logo {
+/* #header-logo {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -53,15 +53,15 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 1;
-}
+} */
 h1 {
   font-family: Satisfy;
   color: var(--color-white-100);
-  font-size: 4rem;
+  font-size: 3.4rem;
   font-weight: 400;
   padding: 0 1em;
   border-bottom: 3px solid var(--color-white-100);
-  text-shadow: 3px 3px var(--color-brown-100);
+  text-shadow: 4px 6px var(--color-brown-100);
 }
 #locale-options {
   position: relative;
@@ -100,13 +100,21 @@ h1 {
   max-width: 200%;
   display: flex;
   gap: var(--column-gap);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .flights-day-header,
 .flights-day-list {
-  min-width: calc(25% - var(--column-gap));
+  min-width: 18rem;
   max-width: calc(25% - var(--column-gap));
   overflow: scroll;
   max-height: 20rem;
+  position: relative;
+}
+
+.date {
+  position: sticky;
+  top: 0;
 }
 .flights-day-header {
   overflow: hidden;
