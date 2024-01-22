@@ -6,7 +6,7 @@
 import moment from 'moment';
 
 //  Internal dependencies
-import * as libFd from '../libraries/flightData.service';
+import * as libFd from '../../libraries/flightData.service';
 import FlightInfo from './flightInfo.component';
 
 /**
@@ -45,13 +45,14 @@ function FlightsOverview({
   return (
     <>
       {/* Date headers */}
-      <ul className="day-overview-columns">
+      {/*  
+      <ul className='day-overview-columns'>
         {Object.keys(cheapFlights).map((dayKey, i) => (
-          <li key={`header.${dayKey}`} className="flights-day-header">
+          <li key={`header.${dayKey}`} className='flights-day-header'>
             <h3>
-              {/* Show flight date */}
+             
               {moment(getTravelDate(i)).format('DD MMM YYYY')}
-              {/* Show return date if not one way */}
+             
               {requestBody.returnDate
                 ? ' / ' + moment(getReturnDate(i)).format('DD MMM YYYY')
                 : ''}
@@ -59,13 +60,26 @@ function FlightsOverview({
           </li>
         ))}
       </ul>
+       */}
       {/* Flight tiles */}
-      <ul className="flights-overview-columns">
+      <ul className='flights-overview-columns'>
         {Object.keys(cheapFlights).map((dayKey, i) => (
-          <ul key={`list.${dayKey}`} className="flights-day-list">
-            {cheapFlights[dayKey].map(flight => (
+          <ul key={`list.${dayKey}.${i}`} className='flights-day-list'>
+            <div key={dayKey} className='date'>
+              <li key={`header.${dayKey}`} className='flights-day-header'>
+                <h3>
+                  {/* Show flight date */}
+                  {moment(getTravelDate(i)).format('DD MMM YYYY')}
+                  {/* Show return date if not one way */}
+                  {requestBody.returnDate
+                    ? ' / ' + moment(getReturnDate(i)).format('DD MMM YYYY')
+                    : ''}
+                </h3>
+              </li>
+            </div>
+            {cheapFlights[dayKey].map((flight, index) => (
               <FlightInfo
-                key={`${dayKey}.${flight.destinationPlaceId}.${flight.price}`}
+                key={`${dayKey}.${flight.destinationPlaceId}.${flight.price}.${index}`}
                 flightInfo={flight}
                 requestBody={requestBody}
                 flightDate={getTravelDate(i)}

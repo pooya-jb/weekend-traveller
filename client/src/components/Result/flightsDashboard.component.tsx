@@ -7,10 +7,10 @@ import { useEffect, useState } from 'react';
 
 //  Internal dependencies
 import FlightsOverview from './flightsOverview';
-import FlightOptions from './flightOptions.component';
+import FlightOptions from '../Search/flightSearch.component';
 import FlightsMakeSelection from './flightsMakeSelection.component';
-import * as libFd from '../libraries/flightData.service';
-import { postCheapestFlightsRequest } from '../services/flightData.service';
+import * as libFd from '../../libraries/flightData.service';
+import { postCheapestFlightsRequest } from '../../services/flightData.service';
 import FlightsLoading from './flightsLoading.component';
 
 /**
@@ -30,7 +30,7 @@ function FlightsDashboard() {
   useEffect(() => {
     if (requestBody) {
       getCheapFlights(undefined); // trigger loading page
-      postCheapestFlightsRequest(requestBody).then(data => {
+      postCheapestFlightsRequest(requestBody).then((data) => {
         if (!data) {
           alert(
             `We couldn't load the flight information. ` +
@@ -47,7 +47,7 @@ function FlightsDashboard() {
   return (
     <>
       <FlightOptions composeRequest={composeRequest} />
-      <main id="dashboard" role="main">
+      <main id='dashboard' role='main'>
         {cheapFlights && requestBody ? (
           // Request made and fulfilled
           <FlightsOverview

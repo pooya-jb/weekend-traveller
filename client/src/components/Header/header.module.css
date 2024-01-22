@@ -1,0 +1,10 @@
+.header {
+  padding: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 1rem;
+  }
+}

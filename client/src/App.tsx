@@ -12,9 +12,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import * as libFd from './libraries/flightData.service';
 import * as c from './services/const.service';
 import { postLocaleInfoRequest } from './services/flightData.service';
-import Header from './components/header.component';
-import FlightsDashboard from './components/flightsDashboard.component';
-import Footer from './components/footer.component';
+import Header from './components/Header/header.component';
+import FlightsDashboard from './components/Result/flightsDashboard.component';
+import Footer from './components/Footer/footer.component';
 
 //  Locale info is present in majority of API requests anywhere in app
 // add New York as default city to pass the type check

@@ -1,0 +1,24 @@
+.search {
+  background: #05203c;
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 0.2rem;
+  width: 100%;
+}
+
+.searchForm {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.input {
+  background-color: white;
+  border-radius: 0.3rem;
+  width: max-content;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

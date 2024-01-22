@@ -16,9 +16,11 @@ import Select from 'react-select';
 // }
 
 //  Internal dependencies
-import { LocaleContext } from '../App';
-import * as libFd from '../libraries/flightData.service';
-import { getCurrencies } from '../services/flightData.service';
+import { LocaleContext } from '../../App';
+import * as libFd from '../../libraries/flightData.service';
+import { getCurrencies } from '../../services/flightData.service';
+import { MdMyLocation } from 'react-icons/md';
+import classes from './header.module.css';
 import { error } from 'console';
 
 /**
@@ -92,21 +94,20 @@ function Header({
   console.log(localeInfo);
 
   return (
-    <>
-      <button className='geolocation' onClick={locationClickHandler}>
-        GeoLocation
-      </button>
-
+    <div className={classes.header}>
       <header id='header' role='header'>
+        <div id={classes.logo} role='logo'>
+          <h1>Weekend Traveller</h1>
+        </div>
         {/* Locale form */}
         <form action='submit' id='locale-options' role='locale-options'>
           {/* Market selector # Disabled */}
           <div className='option-wrapper-disabled'>
             <label className='option-label'>Your location:</label>
             <span className='option-value'>
-              {useContext(LocaleContext).locationName}
+              {useContext(LocaleContext).locationName}-{' '}
+              {useContext(LocaleContext).city}
             </span>
-            <p>- {useContext(LocaleContext).city}</p>
           </div>
           {/* Currency selector */}
           <div className='option-wrapper'>
@@ -125,13 +126,17 @@ function Header({
               options={currencies}
             />
           </div>
+          <button
+            className='geolocation'
+            onClick={locationClickHandler}
+            type='button'
+          >
+            <MdMyLocation className='geolocation-icon' />
+          </button>
         </form>
         {/* Site logo */}
-        <div id='header-logo' role='logo'>
-          <h1>Weekend Traveller</h1>
-        </div>
       </header>
-    </>
+    </div>
   );
 }
 
