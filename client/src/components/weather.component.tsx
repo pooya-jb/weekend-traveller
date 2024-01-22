@@ -9,34 +9,44 @@ export default function Weather ({
   arrivalTimestamp: number,
   departureTimestamp: number
 }) {
-  const [dailyWeather, setDailyWeather] = useState<number[]>([]);
+  const [arrivalWeather, setArrivalWeather] = useState<number>();
+  let currentDate: Date = '';
 
   useEffect(() => {
-    const departureDate = new Date(departureTimestamp);
-    const departureYear = departureDate.getFullYear();
-    const departureMonth = departureDate.getMonth() + 1;
-    const departureDay = departureDate.getDate();
+    const arrivalDate = new Date(arrivalTimestamp);
+    const arrivalYear = arrivalDate.getFullYear();
+    const arrivalMonth = arrivalDate.getMonth();
+    const arrivalDay = arrivalDate.getDate();
 
-    const dailyWeatherData: number[] = [];
+    // for (let i = 0; i < 7; i++) {
+    //   const currentDate = new Date(arrivalYear, arrivalMonth, arrivalDay + i);
+    //   const dateString = currentDate.toISOString().split('T')[0] + 'T12:00';
 
-    for (let i = 0; i < 7; i++) {
-      const currentDate = new Date(departureYear, departureMonth - 1, departureDay + i);
-      const dateString = currentDate.toISOString().split('T')[0] + 'T12:00';
+    //   const weatherIndex = weather.hourly.time.indexOf(dateString);
+    //   const temperature = weather.hourly.temperature_2m[weatherIndex];
 
-      const weatherIndex = weather.hourly.time.indexOf(dateString);
-      const temperature = weather.hourly.temperature_2m[weatherIndex];
-
-      dailyWeatherData.push(temperature);
-    }
-    // for monday: why is setDailyWeather all undefined
-    setDailyWeather(dailyWeatherData);
+    //   dailyWeatherData.push(temperature);
+    // }
+    currentDate = new Date(arrivalYear, arrivalMonth, arrivalDay + 1);
+    const dateString = currentDate.toISOString().split('T')[0] + 'T12:00';
+    const weatherIndex = weather.hourly.time.indexOf(dateString);
+    const temperature = weather.hourly.temperature_2m[weatherIndex];
+    setArrivalWeather(temperature);
+    console.log({currentDate});
+    console.log({dateString});
+    console.log({weatherIndex});
+    console.log({temperature});
   }, [weather, departureTimestamp]);
 
 
   return (
-    <>
-    <h1>{arrivalTimestamp}</h1>
-    <h1>{departureTimestamp}</h1>
-    </>
+    <div className='weather'>
+      {arrivalWeather && (
+        <>
+          <h4>Weather for your trip: </h4>
+          {arrivalWeather}°C
+        </>
+      )}
+    </div>
   )
 }
