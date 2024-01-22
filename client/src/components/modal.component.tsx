@@ -45,7 +45,6 @@ export default function Modal ({
         // get weather by using lat & long
         const weatherResponse = await weatherDataService.getWeather(lat, long);
         setWeather(weatherResponse)
-        console.log('weather response', weatherResponse)
       } catch (error) {
         console.error(error)
       }

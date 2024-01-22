@@ -1,5 +1,5 @@
 import * as libWd from '../libraries/weatherData.service';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Weather ({
   weather,
@@ -9,20 +9,29 @@ export default function Weather ({
   arrivalTimestamp: number,
   departureTimestamp: number
 }) {
-  const [firstWeather, setFirstWeather] = useState<number>();
-  const departureDate = new Date(departureTimestamp);
-  const departureYear = departureDate.getFullYear();
-  const departureMonth = departureDate.getMonth() + 1;
-  const departureDay = departureDate.getDate();
+  const [dailyWeather, setDailyWeather] = useState<number[]>([]);
 
-  const weekStartDate = new Date(departureYear, departureMonth - 1, departureDay + 1);
-  const weekEndDate = new Date(departureYear, departureMonth - 1, departureDay + 7);
-  // create string in format of weather api response
-  const weekStartDateString = weekStartDate.toISOString().split('T')[0] + 'T12:00';
-  const weekEndDateString = weekEndDate.toISOString().split('T')[0] + 'T12:00';
+  useEffect(() => {
+    const departureDate = new Date(departureTimestamp);
+    const departureYear = departureDate.getFullYear();
+    const departureMonth = departureDate.getMonth() + 1;
+    const departureDay = departureDate.getDate();
 
-  const firstWeatherIndex = weather.hourly.time.indexOf(weekStartDateString);
-  // setFirstWeather(weather.hourly.temperature_2m[firstWeatherIndex]);
+    const dailyWeatherData: number[] = [];
+
+    for (let i = 0; i < 7; i++) {
+      const currentDate = new Date(departureYear, departureMonth - 1, departureDay + i);
+      const dateString = currentDate.toISOString().split('T')[0] + 'T12:00';
+
+      const weatherIndex = weather.hourly.time.indexOf(dateString);
+      const temperature = weather.hourly.temperature_2m[weatherIndex];
+
+      dailyWeatherData.push(temperature);
+    }
+    // for monday: why is setDailyWeather all undefined
+    setDailyWeather(dailyWeatherData);
+  }, [weather, departureTimestamp]);
+
 
   return (
     <>
