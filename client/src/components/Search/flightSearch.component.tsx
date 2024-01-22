@@ -9,14 +9,15 @@ import Select from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
 
 //  Internal dependencies
-import { LocaleContext } from '../App';
-import * as libFd from '../libraries/flightData.service';
-import * as c from '../services/const.service';
-import { getAirports } from '../services/flightData.service';
+import { LocaleContext } from '../../App';
+import * as libFd from '../../libraries/flightData.service';
+import * as c from '../../services/const.service';
+import { getAirports } from '../../services/flightData.service';
 
 //  CSS overloads
 import './reactDatePicker.css';
 import './reactSelect.css';
+import classes from './flightSearch.module.css';
 
 /**
  * Filters list of airports to limited number of entries.
@@ -193,10 +194,15 @@ function FlightOptions({
   console.log(defaultAsyncPaginateValue);
 
   return (
-    <>
-      <form action='submit' id='flight-options' role='flight-options'>
+    <div className={classes.search}>
+      <form
+        action='submit'
+        id='flight-options'
+        role='flight-options'
+        className={classes.searchForm}
+      >
         {/* Origin selector */}
-        <div className='option-wrapper'>
+        <div className={classes.input}>
           <label className='option-label'>From:</label>
           <AsyncPaginate
             id='flight-options-from'
@@ -209,7 +215,7 @@ function FlightOptions({
           />
         </div>
         {/* Start date picker */}
-        <div className='option-wrapper'>
+        <div className={classes.input}>
           <label className='option-label'>Start date:</label>
           <DatePicker
             id='flight-options-start-date'
@@ -228,7 +234,7 @@ function FlightOptions({
           </label>
         </div>
         {/* Trip length selector */}
-        <div className='option-wrapper'>
+        <div className={classes.input}>
           <label className='option-label'>Return:</label>
           <Select
             id='flight-options-return'
@@ -248,7 +254,7 @@ function FlightOptions({
           )}
         </div>
         {/* Weeks to show selector */}
-        <div className='option-wrapper'>
+        <div className={classes.input}>
           <label className='option-label'>Show:</label>
           <Select
             id='flight-options-show-x-weeks'
@@ -270,7 +276,7 @@ function FlightOptions({
           &#x1F50E;&#xFE0E;
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

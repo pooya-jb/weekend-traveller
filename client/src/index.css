@@ -6,7 +6,6 @@ body,
   padding: 0;
   box-sizing: border-box;
   line-height: 1.5;
-  color: #35312e;
 }
 
 input,
@@ -19,7 +18,9 @@ option {
   font-size: inherit;
   font-weight: inherit;
 }
-
+/* html {
+  font-size: 62.5%;
+} */
 *,
 *:focus,
 *:focus-visible,
@@ -44,7 +45,7 @@ li {
   list-style-type: none;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: auto;
 }
 ::-webkit-scrollbar-track {
@@ -55,4 +56,10 @@ li {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.8);
+} */
+
+@media (max-width: 720px) {
+  html {
+    font-size: 85%;
+  }
 }

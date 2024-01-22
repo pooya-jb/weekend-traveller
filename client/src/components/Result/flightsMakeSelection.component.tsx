@@ -10,7 +10,7 @@
 function FlightsMakeSelection() {
   return (
     <>
-      <div className="welcome-container">
+      <div className='welcome-container'>
         <div>
           <h2>Welcome to Weekend Traveller</h2>
           <p>Please proceed to select:</p>
