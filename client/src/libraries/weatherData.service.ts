@@ -8,7 +8,7 @@
  * Request object types
  */
 
-export interface LatLongResults {
+interface LatLongResults {
   admin1: string,
   admin1_id: number,
   admin2: string,
@@ -29,4 +29,28 @@ export interface LatLongResults {
 export interface WeatherDataLatLong {
   generationtime_ms: number,
   results: LatLongResults[]
+}
+
+interface HourlyUnits {
+  time: string,
+  temperature_2m: string,
+  precipitation_probability: string
+}
+
+interface Hourly {
+  time: string[],
+  temperature_2m: number[],
+  precipitation_probability: (number | null)[]
+}
+
+export interface WeatherResponse {
+  latitude: number,
+  longitude: number,
+  generationtime_ms: number,
+  utc_offset_seconds: number,
+  timezone: string,
+  timezone_abbreviation: string,
+  elevation: number,
+  hourly_units: HourlyUnits,
+  hourly: Hourly
 }

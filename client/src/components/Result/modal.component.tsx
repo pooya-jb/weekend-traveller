@@ -1,10 +1,12 @@
 // External dependencies
-import { useState } from 'react';
-import { IoCloseSharp } from 'react-icons/io5';
+import { useState, useEffect } from 'react';
+import { IoCloseSharp } from "react-icons/io5";
 
 // Internal dependencies
 import * as libFd from '../../libraries/flightData.service';
+import * as libWd from '../../libraries/weatherData.service';
 import * as weatherDataService from '../../services/weatherData.service';
+import Weather from '../weather.component';
 
 export default function Modal({
   flightData,
@@ -16,11 +18,15 @@ export default function Modal({
   destination: libFd.Option;
 }) {
   // State hooks
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState<libWd.WeatherResponse | null>();
+
+  // Use Effect
+  useEffect(() => {
+    getWeatherData(destination.label)
+  }, [])
 
   async function handleClose() {
     setIsModalOpen(false);
-    getWeatherData(destination.label);
   }
 
   async function getWeatherData(destination: string) {
@@ -40,8 +46,7 @@ export default function Modal({
       try {
         // get weather by using lat & long
         const weatherResponse = await weatherDataService.getWeather(lat, long);
-        console.log(weatherResponse);
-        setWeather(weatherResponse);
+        setWeather(weatherResponse)
       } catch (error) {
         console.error(error);
       }
@@ -65,20 +70,25 @@ export default function Modal({
     return readableDate;
   }
 
+  const arrivalTimestamp: number = flightData.segments[0].arrival;
+  let departureTimestamp: number | null = 0;
+  if (flightData.segments[1]) {
+    departureTimestamp = flightData.segments[0].departure;
+  }
+
   return (
     <div className='modal-overlay'>
       <div className='flight-data-modal'>
         <h2>Your Flight Details:</h2>
         <hr />
-        <IoCloseSharp id='close-modal' onClick={handleClose} />
-        <h3>{convertUnixTimestamp(flightData.segments[0].arrival)}</h3>
-        {flightData.segments[1] && (
-          <h3>{convertUnixTimestamp(flightData.segments[1].departure)}</h3>
-        )}
+        <IoCloseSharp id="close-modal" onClick={handleClose} />
+        <h3>{convertUnixTimestamp(arrivalTimestamp)}</h3>
+        {flightData.segments[1] && <h3>{convertUnixTimestamp(departureTimestamp)}</h3>}
         <h3>{flightData.segments[0].destinationPlaceId}</h3>
         <h3>{flightData.segments[0].originPlaceId}</h3>
         <div className='weather'>
-          <h4>Weather for your trip: </h4>
+          {weather &&
+            <Weather weather={weather} arrivalTimestamp={arrivalTimestamp} departureTimestamp={departureTimestamp} />}
         </div>
         <h3 id='flight-price'>Total price: {flightData.price}</h3>
         <a
