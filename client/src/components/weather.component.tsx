@@ -10,7 +10,7 @@ export default function Weather ({
   departureTimestamp: number
 }) {
   const [arrivalWeather, setArrivalWeather] = useState<number>();
-  let currentDate: Date = '';
+  let currentDate: Date = new Date();
 
   useEffect(() => {
     const arrivalDate = new Date(arrivalTimestamp);
