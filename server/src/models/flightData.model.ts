@@ -9,11 +9,11 @@
  */
 
 //  Internal dependencies
-import { errors } from '../middleware/errorHandler.js';
-import * as api from '../api/skyscanner.api.js';
-import * as libApi from '../libraries/skyscanner.api.js';
-import * as libFd from '../libraries/flightData.model.js';
-import { Airports, Currencies } from '../databases/flightData.database.js';
+import { errors } from '../middleware/errorHandler';
+import * as api from '../api/skyscanner.api';
+import * as libApi from '../libraries/skyscanner.api';
+import * as libFd from '../libraries/flightData.model';
+import { Airports, Currencies } from '../databases/flightData.database';
 import { Op } from 'sequelize';
 
 //  API constants (update if API changes)
@@ -52,8 +52,7 @@ export const getCurrencies = async (): Promise<string[]> => {
  * @throws if DB is empty
  */
 
-// get a single Aiport if he current city from user is available
-
+// get a single Aiport if the current city from user is available
 export const getCityAirport = async (
   cityName: string
 ): Promise<Airports | null> => {

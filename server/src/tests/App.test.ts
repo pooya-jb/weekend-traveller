@@ -1,23 +1,22 @@
 import express from 'express';
-// import { router } from '../router.js';
+import { router } from '../router';
 import supertest from 'supertest';
-import * as fD from '../models/flightData.model.js';
+// import * as fD from '../models/flightData.model.js';
 
-import { Options, DataTypes } from 'sequelize';
-import { Sequelize, Model, Column, Table } from 'sequelize-typescript';
-
+import { Options } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
+import { Currencies } from '../databases/flightData.database';
 
 describe('Integration tests', () => {
-  const app = express();
-  app.use(express.json());
   // app.use(router);
+  const app = express();
+  app.use(express.json()).use(router);
   const request = supertest(app);
 
   let sequelize: Sequelize;
   let dbInfo: Options;
 
   beforeAll(async () => {
-
     dbInfo = {
       database: 'weekend_traveller',
       username: process.env.DB_USER,
@@ -31,32 +30,42 @@ describe('Integration tests', () => {
 
     const initSequelize = async () => {
       await sequelize.sync();
-    }
+    };
 
     initSequelize();
   });
 
-  it('checks that currency table exist', async (): Promise<void> =>{
+  it('checks that currency table exist', async (): Promise<void> => {
     try {
       const result = await sequelize.query(
-        `SELECT table_name FROM information_schema.tables WHERE table_name = 'currencies';`,
+        `SELECT table_name FROM information_schema.tables WHERE table_name = 'currencies';`
       );
-      expect(result.length).toBeGreaterThan(0)
+      expect(result.length).toBeGreaterThan(0);
     } catch (error) {
       console.error('Error checking table existence:', error);
       throw error;
     }
   });
 
-  it('checks that airports table exist', async (): Promise<void> =>{
+  it('checks that airports table exist', async (): Promise<void> => {
     try {
       const result = await sequelize.query(
-        `SELECT table_name FROM information_schema.tables WHERE table_name = 'airports';`,
+        `SELECT table_name FROM information_schema.tables WHERE table_name = 'airports';`
       );
-      expect(result.length).toBeGreaterThan(0)
+      expect(result.length).toBeGreaterThan(0);
     } catch (error) {
       console.error('Error checking table existence:', error);
       throw error;
+    }
+  });
+
+  it('checks currencies table has data', async (): Promise<void> => {
+    try {
+      const res = await request.get('/currencies');
+      const currencies = await Currencies.findAll();
+      expect(res).toBe(currencies);
+    } catch (error) {
+      console.error(error);
     }
   });
 });
