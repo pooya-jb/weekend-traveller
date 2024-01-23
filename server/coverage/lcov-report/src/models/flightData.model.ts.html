@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.54% </span>
+                <span class="strong">29.32% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/133</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/72</span>
+                <span class='fraction'>39/133</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">11.11% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>2/18</span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>8/72</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.39% </span>
+                <span class="strong">38.88% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>7/18</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">25.61% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/121</span>
+                <span class='fraction'>31/121</span>
             </div>
         
             
@@ -566,14 +566,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">152x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -618,32 +618,32 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">45347x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4243x</span>
+<span class="cline-any cline-yes">4243x</span>
+<span class="cline-any cline-yes">4243x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1036,14 +1036,14 @@ const ipFilter: RegExp = /^(\d{1,3}\.){3}\d{1,3}$/;
 export const getCurrencies = async (): Promise&lt;string[]&gt; =&gt; {
   //  Obtain data from database
   const dataProc: Currencies[] = await Currencies.findAll();
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (!dataProc.length) <span class="cstat-no" title="statement not covered" >throw new errors.BadGateway('Missing data in DB.');</span></span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!dataProc.length) <span class="cstat-no" title="statement not covered" >throw new errors.BadGateway('Missing data in DB.');</span>
 &nbsp;
   //  Format output
-  const dataOut: string[] = <span class="cstat-no" title="statement not covered" >dataProc.map(</span>
-<span class="fstat-no" title="function not covered" >    (c</span>urrency) =&gt; <span class="cstat-no" title="statement not covered" >currency.dataValues.code</span>
+  const dataOut: string[] = dataProc.map(
+    (currency) =&gt; currency.dataValues.code
   );
-<span class="cstat-no" title="statement not covered" >  dataOut.sort();</span>
-<span class="cstat-no" title="statement not covered" >  return dataOut;</span>
+  dataOut.sort();
+  return dataOut;
 };
 &nbsp;
 /**
@@ -1085,35 +1085,35 @@ export const getCityAirport = <span class="fstat-no" title="function not covered
   }
 };
 &nbsp;
-export const getAirports = <span class="fstat-no" title="function not covered" >async (</span>
-  limit: number = <span class="branch-0 cbranch-no" title="branch not covered" >0,</span>
-  offset: number = <span class="branch-0 cbranch-no" title="branch not covered" >0</span>
-): Promise&lt;Map&lt;string, string&gt;&gt; =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+export const getAirports = async (
+  limit: number = 0,
+  offset: number = 0
+): Promise&lt;Map&lt;string, string&gt;&gt; =&gt; {
   //  Check inputs
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (limit &lt; 0 || offset &lt; 0)</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (limit &lt; 0 || offset &lt; 0)
 <span class="cstat-no" title="statement not covered" >    throw new errors.BadRequest('Incorrect user input.');</span>
 &nbsp;
   //  Obtain data from database
   const dataProc: Airports[] =
-<span class="cstat-no" title="statement not covered" >    !limit &amp;&amp; !offset</span>
+    !limit &amp;&amp; !offset
       ? await Airports.findAll()
-      : await Airports.findAll({
+      : <span class="branch-1 cbranch-no" title="branch not covered" >await Airports.findAll({</span>
           limit: limit,
           offset: offset,
           order: ['name'],
         });
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (!dataProc.length) <span class="cstat-no" title="statement not covered" >throw new errors.BadGateway('Missing data in DB.');</span></span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!dataProc.length) <span class="cstat-no" title="statement not covered" >throw new errors.BadGateway('Missing data in DB.');</span>
 &nbsp;
   //  Format output
-  const dataOut: Map&lt;string, string&gt; = <span class="cstat-no" title="statement not covered" >new Map();</span>
-<span class="cstat-no" title="statement not covered" >  dataProc</span>
-    .sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; <span class="cstat-no" title="statement not covered" >a.dataValues.name.localeCompare(b.dataValues.name))</span>
-    .forEach(<span class="fstat-no" title="function not covered" >(a</span>irport: Airports) =&gt; {
-      const placeId: string = <span class="cstat-no" title="statement not covered" >airport.dataValues.id;</span>
-      const place: string = <span class="cstat-no" title="statement not covered" >airport.dataValues.name;</span>
-<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (!dataOut.has(placeId)) <span class="cstat-no" title="statement not covered" >dataOut.set(placeId, place);</span></span>
+  const dataOut: Map&lt;string, string&gt; = new Map();
+  dataProc
+    .sort((a, b) =&gt; a.dataValues.name.localeCompare(b.dataValues.name))
+    .forEach((airport: Airports) =&gt; {
+      const placeId: string = airport.dataValues.id;
+      const place: string = airport.dataValues.name;
+      if (!dataOut.has(placeId)) dataOut.set(placeId, place);
     });
-<span class="cstat-no" title="statement not covered" >  return dataOut;</span>
+  return dataOut;
 };
 &nbsp;
 /**
@@ -1480,7 +1480,7 @@ export const postFlightInfoRequest = <span class="fstat-no" title="function not 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-23T15:00:22.825Z
+                at 2024-01-23T17:23:27.592Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
