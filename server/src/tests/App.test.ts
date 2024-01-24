@@ -33,61 +33,57 @@ describe('Integration tests', () => {
       await sequelize.sync();
     };
 
-
     initSequelize();
   });
 
   it('checks that currency table exist', async (): Promise<void> => {
-    try {
-      const result = await sequelize.query(
-        `SELECT table_name FROM information_schema.tables WHERE table_name = 'currencies';`
-      );
-      expect(result.length).toBeGreaterThan(0);
-    } catch (error) {
-      console.error('Error checking table existence:', error);
-      throw error;
-    }
+    const result = await sequelize.query(
+      `SELECT table_name FROM information_schema.tables WHERE table_name = 'currencies';`
+    );
+    expect(result.length).toBeGreaterThan(0);
   });
 
   it('checks that airports table exist', async (): Promise<void> => {
-    try {
-      const result = await sequelize.query(
-        `SELECT table_name FROM information_schema.tables WHERE table_name = 'airports';`
-      );
-      expect(result.length).toBeGreaterThan(0);
-    } catch (error) {
-      console.error('Error checking table existence:', error);
-      throw error;
-    }
+    const result = await sequelize.query(
+      `SELECT table_name FROM information_schema.tables WHERE table_name = 'airports';`
+    );
+    expect(result.length).toBeGreaterThan(0);
   });
 
   it('checks currencies table has data', async (): Promise<void> => {
-    try {
-      const res = await request.get('/currencies');
-      // const currencies = await Currencies.findAll();
-      expect(res.text.length).toBeGreaterThan(150);
-    } catch (error) {
-      console.error(error);
-    }
+    const res = await request.get('/currencies');
+    // const currencies = await Currencies.findAll();
+    expect(res.text.length).toBeGreaterThan(150);
   });
 
   it('checks airports table has data', async (): Promise<void> => {
-    try {
-      const res = await request.get('/airports');
-      // const airports = await Airports.findAll();
-      expect(res.text.length).toBeGreaterThan(4000);
-    } catch (error) {
-      console.error(error);
-    }
+    const res = await request.get('/airports');
+    // const airports = await Airports.findAll();
+    expect(res.text.length).toBeGreaterThan(4000);
   });
 
-  // it ('checks that it returns an airport', async (): Promise<void> => {
-  //   try {
-  //     const res = await request.post('/city-airport')
-  //     .send({cityName: 'Berlin'});
-  //     console.log('res', res)
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // })
+  it('checks that it returns an airport', async (): Promise<void> => {
+    const res = await request
+      .post('/city-airport')
+      .send({ cityName: 'Berlin' });
+    console.log('😻', JSON.parse(res.text));
+    const airport = JSON.parse(res.text).name;
+    console.log(airport);
+    expect(airport).toBe('Berlin Brandenburg (BER), Germany');
+  });
+  it('checks that it returns the cheapest flights', async (): Promise<void> => {
+    try {
+      const res = await request.post('/request-cheapest-flights').send({
+        currencyCode: 'EUR',
+        localeCode: 'en-US',
+        marketCode: 'DE',
+        originPlaceId: '95673383',
+        lookAtWeeks: 4,
+        travelDate: 1706119305527,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log('😿', error);
+    }
+  });
 });

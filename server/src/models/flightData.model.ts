@@ -76,7 +76,7 @@ export const getCityAirport = async (
     return airport;
   } catch (error) {
     console.error('Error fetching city airport:', error);
-    throw new errors.InternalSrverError('Error fetching city airport');
+    throw new errors.InternalServerError('Error fetching city airport');
   }
 };
 

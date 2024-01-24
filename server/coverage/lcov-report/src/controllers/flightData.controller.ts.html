@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">51.21% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/41</span>
+                <span class='fraction'>30/42</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>8/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.17% </span>
+                <span class="strong">65.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/34</span>
+                <span class='fraction'>23/35</span>
             </div>
         
             
@@ -137,7 +137,8 @@
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,11 +167,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -193,9 +194,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -237,14 +239,14 @@ export const getCurrencies = async (
   res.json(data);
 };
 &nbsp;
-export const getCityAirport = <span class="fstat-no" title="function not covered" >async (</span>
+export const getCityAirport = async (
   req: Request,
   res: Response
-): Promise&lt;void&gt; =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-  const data = <span class="cstat-no" title="statement not covered" >await model.getCityAirport(req.body.cityName);</span>
-<span class="cstat-no" title="statement not covered" >  res.status(200);</span>
-<span class="cstat-no" title="statement not covered" >  res.json(data);</span>
-<span class="cstat-no" title="statement not covered" >  console.log(data);</span>
+): Promise&lt;void&gt; =&gt; {
+  const data = await model.getCityAirport(req.body.cityName);
+  res.status(200);
+  res.json(data);
+  console.log(data);
 };
 &nbsp;
 export const getAirports = async (_: Request, res: Response): Promise&lt;void&gt; =&gt; {
@@ -264,12 +266,13 @@ export const postLocaleInfoRequest = <span class="fstat-no" title="function not 
 <span class="cstat-no" title="statement not covered" >  res.json(data);</span>
 };
 &nbsp;
-export const postCheapestFlightsRequest = <span class="fstat-no" title="function not covered" >async (</span>
+export const postCheapestFlightsRequest = async (
   req: Request,
   res: Response
-): Promise&lt;void&gt; =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-  const requestBody: libFd.CheapestFlightsRequest = <span class="cstat-no" title="statement not covered" >req.body;</span>
-  const data: libFd.CheapestFlights = <span class="cstat-no" title="statement not covered" >await model.postCheapestFlightsRequest(</span>
+): Promise&lt;void&gt; =&gt; {
+  const requestBody: libFd.CheapestFlightsRequest = req.body;
+  console.log(requestBody);
+  const data: libFd.CheapestFlights = await model.postCheapestFlightsRequest(
     requestBody
   );
 <span class="cstat-no" title="statement not covered" >  res.status(200);</span>
@@ -292,7 +295,7 @@ export const postFlightInfoRequest = <span class="fstat-no" title="function not 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-23T17:23:27.592Z
+                at 2024-01-23T18:30:49.855Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

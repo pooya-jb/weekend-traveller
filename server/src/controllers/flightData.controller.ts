@@ -56,6 +56,7 @@ export const postCheapestFlightsRequest = async (
   res: Response
 ): Promise<void> => {
   const requestBody: libFd.CheapestFlightsRequest = req.body;
+  console.log(requestBody);
   const data: libFd.CheapestFlights = await model.postCheapestFlightsRequest(
     requestBody
   );
