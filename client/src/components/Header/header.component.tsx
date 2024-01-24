@@ -96,6 +96,7 @@ function Header({
   return (
     <div className={classes.header}>
       <header id='header' role='header'>
+        {/* Site logo */}
         <div id={classes.logo} role='logo'>
           <h1>Weekend Traveller</h1>
         </div>
@@ -134,7 +135,6 @@ function Header({
             <MdMyLocation className='geolocation-icon' />
           </button>
         </form>
-        {/* Site logo */}
       </header>
     </div>
   );
