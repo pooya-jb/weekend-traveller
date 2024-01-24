@@ -1,0 +1,9 @@
+# Production files
+node_modules/
+dist/
+
+# Internal dev docs
+todo.txt
+
+# Sensitive data
+.env

@@ -42,4 +42,5 @@ export class Airports extends Model {
 export const initSequelize = async () => {
   sequelize.addModels([Currencies, Airports]);
   await sequelize.sync();
+  console.log('database connected')
 };

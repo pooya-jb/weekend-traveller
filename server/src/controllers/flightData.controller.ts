@@ -12,8 +12,8 @@
 import { Request, Response } from 'express';
 
 //  Internal dependencies
-import * as model from '../models/flightData.model.js';
-import * as libFd from '../libraries/flightData.model.js';
+import * as model from '../models/flightData.model';
+import * as libFd from '../libraries/flightData.model';
 
 export const getCurrencies = async (
   _: Request,
@@ -56,6 +56,7 @@ export const postCheapestFlightsRequest = async (
   res: Response
 ): Promise<void> => {
   const requestBody: libFd.CheapestFlightsRequest = req.body;
+  console.log(requestBody);
   const data: libFd.CheapestFlights = await model.postCheapestFlightsRequest(
     requestBody
   );
