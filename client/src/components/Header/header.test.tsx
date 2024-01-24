@@ -39,23 +39,23 @@ describe('Header component', () => {
     expect(location).toHaveTextContent(mocks.localeInfo.locationName);
   });
 
-  // it('should render currency dropdown with local currency of user', async () => {
-  //   expect(currencyLabel).toBeInTheDocument();
-  //   expect(currency).toBeInTheDocument();
-  //   expect(currency).toHaveTextContent(mocks.localeInfo.currencyCode);
-  // });
+  it('should render currency dropdown with local currency of user', async () => {
+    expect(currencyLabel).toBeInTheDocument();
+    expect(currency).toBeInTheDocument();
+    expect(currency).toHaveTextContent(mocks.localeInfo.currencyCode);
+  });
 
-  // it('should render all currency options on interaction', async () => {
-  //   await fireEvent.keyDown(currency, { keyCode: KEY_DOWN_ARROW });
-  //   mocks.currencies.forEach(currencyIt =>
-  //     expect(currency).toHaveTextContent(currencyIt.label)
-  //   );
-  // });
+  it('should render all currency options on interaction', async () => {
+    await fireEvent.keyDown(currency, { keyCode: KEY_DOWN_ARROW });
+    mocks.currencies.forEach((currencyIt) =>
+      expect(currency).toHaveTextContent(currencyIt.label)
+    );
+  });
 
-  // it('should show selected currency in dropdown on click', async () => {
-  //   await fireEvent.keyDown(currency, { keyCode: KEY_DOWN_ARROW });
-  //   const option0 = screen.getByText(mocks.currencies[0].label); // CAD
-  //   await fireEvent.click(option0);
-  //   expect(currency?.textContent).toEqual(mocks.currencies[0].label);
-  // });
+  it('should show selected currency in dropdown on click', async () => {
+    await fireEvent.keyDown(currency, { keyCode: KEY_DOWN_ARROW });
+    const option0 = screen.getByText(mocks.currencies[0].label); // CAD
+    await fireEvent.click(option0);
+    expect(currency?.textContent).toEqual(mocks.currencies[0].label);
+  });
 });

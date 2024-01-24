@@ -156,7 +156,7 @@ describe('Flight options component', () => {
 
   it('should render all airport options on interaction', async () => {
     await act(() => fireEvent.keyDown(airports, { keyCode: KEY_DOWN_ARROW }));
-    mocks.airports.forEach(airport =>
+    mocks.airports.forEach((airport) =>
       expect(airports).toHaveTextContent(airport.label)
     );
   });
@@ -227,7 +227,7 @@ describe('Flight options component', () => {
 
   it('should render all trip length options on interaction', async () => {
     await act(() => fireEvent.keyDown(tripLength, { keyCode: KEY_DOWN_ARROW }));
-    c.OPTIONS_TRIP_LENGTH.forEach(option =>
+    c.OPTIONS_TRIP_LENGTH.forEach((option) =>
       expect(tripLength).toHaveTextContent(option.label)
     );
   });
@@ -259,7 +259,7 @@ describe('Flight options component', () => {
 
   it('should render all show options on interaction', async () => {
     await act(() => fireEvent.keyDown(showWeeks, { keyCode: KEY_DOWN_ARROW }));
-    c.OPTIONS_SHOW_WEEKS.forEach(option =>
+    c.OPTIONS_SHOW_WEEKS.forEach((option) =>
       expect(showWeeks).toHaveTextContent(option.label)
     );
   });
@@ -324,7 +324,7 @@ describe('Flight overview component', () => {
         //  Compose flight info
         const destination =
           mocks.airports.find(
-            airport => flight.destinationPlaceId === airport.value
+            (airport) => flight.destinationPlaceId === airport.value
           )?.label ?? 'not found';
         const transfer = flight.hasTransfers ? 'Transfer' : '';
         const price = flight.price.toLocaleString(mocks.localeInfo.localeCode, {
