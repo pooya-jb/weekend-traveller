@@ -1,5 +1,5 @@
 /**
- * @author Daniel Maczak / where not specified otherwise
+ * @author Daniel Maczak, Pooya Jafariberenji, and Loic Khodarkovsky / where not specified otherwise
  * @version 1.0.0
  */
 

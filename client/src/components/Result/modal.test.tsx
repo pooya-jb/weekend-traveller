@@ -1,11 +1,9 @@
 //  External dependencies
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import { MockInstance, vi } from 'vitest';
+import { act, render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 //  Internal dependencies
 import * as mocks from '../../tests/mocks';
-import * as c from '../../services/const.service';
-import moment from 'moment';
 import Modal from './modal.component';
 
 beforeEach(async () => {
@@ -23,12 +21,12 @@ beforeEach(async () => {
 describe('Modal Component', () => {
   let header: HTMLElement;
   let price: string | undefined;
-  let buyBtn: string | null;
+  let buyBtn: HTMLElement;
 
   beforeEach(() => {
     header = screen.getByRole('heading', { level: 2 });
     price = document.getElementById('flight-price')?.innerHTML;
-    buyBtn = screen.getByText('Buy now!').getAttribute('href');
+    buyBtn = screen.getByText('Buy now!');
   });
 
   it('renders header', async () => {
@@ -40,6 +38,6 @@ describe('Modal Component', () => {
   });
 
   it('checks that buy button has correct link!', async () => {
-    expect(buyBtn).toBe(mocks.flightData.vendorLink);
+    expect(buyBtn.getAttribute('href')).toBe(mocks.flightData.vendorLink);
   });
 });

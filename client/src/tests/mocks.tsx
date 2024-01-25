@@ -27,19 +27,20 @@ export const localeInfo: libFd.LocaleInfo = {
   locationName: 'United states- New York',
   currencyCode: 'USD',
   localeCode: 'en-US',
+  city: 'New York'
 };
-/**
- * Imaginary request for following data:
- *
- * export const cheapestFlightsRequest: libFd.CheapestFlightsRequest = {
- *   currencyCode: 'GBP',
- *   localeCode: 'en-US',
- *   marketCode: 'GB',
- *   originPlaceId: '95565050',
- *   lookAtWeeks: 2,
- *   travelDate: tomorrow,
- * };
- */
+
+// Imaginary request for following data:
+
+export const cheapestFlightsRequest: libFd.CheapestFlightsRequest = {
+  currencyCode: 'GBP',
+  localeCode: 'en-US',
+  marketCode: 'GB',
+  originPlaceId: '95565050',
+  lookAtWeeks: 2,
+  travelDate: tomorrow,
+};
+
 export const cheapestFlights: libFd.CheapestFlights = {
   [String(tomorrow)]: [
     {

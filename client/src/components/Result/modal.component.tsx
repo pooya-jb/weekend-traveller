@@ -84,8 +84,6 @@ export default function Modal({
         <IoCloseSharp id="close-modal" onClick={handleClose} />
         <h3>{convertUnixTimestamp(arrivalTimestamp)}</h3>
         {flightData.segments[1] && <h3>{convertUnixTimestamp(departureTimestamp)}</h3>}
-        <h3>{flightData.segments[0].destinationPlaceId}</h3>
-        <h3>{flightData.segments[0].originPlaceId}</h3>
         <div className='weather'>
           {weather &&
             <Weather weather={weather} arrivalTimestamp={arrivalTimestamp} departureTimestamp={departureTimestamp} />}
