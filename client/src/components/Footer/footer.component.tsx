@@ -19,7 +19,7 @@ function Footer() {
             </a>
           </div>
           {/* The benevolent creator */}
-          <div className="footer-note">Application by Daniel Maczak</div>
+          <div className="footer-note">Application by Daniel Maczak, Pooya Jafariberenji, and Loic Khodarkovsky.</div>
           {/* Background image credit # mandatory */}
           <div className="footer-note">
             <a href="https://www.freepik.com/free-photo/beautiful-paradise-island-with-beach-sea_3531645.htm">

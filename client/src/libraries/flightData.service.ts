@@ -16,6 +16,7 @@ export interface CheapestFlightsRequest {
   travelDate: number;
   returnDate?: number;
 }
+
 export interface FlightInfoRequest {
   currencyCode: string;
   localeCode: string;

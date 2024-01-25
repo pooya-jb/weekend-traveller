@@ -43,7 +43,7 @@ export default function Weather ({
     <div className='weather'>
       {arrivalWeather && (
         <>
-          <h4>Weather for your trip: </h4>
+          <h4>Weather on your arrival date: </h4>
           {arrivalWeather}°C
         </>
       )}
