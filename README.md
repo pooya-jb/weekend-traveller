@@ -5,7 +5,8 @@ Project of choice to graduate the Codeworks.me web developer bootcamp. This app 
 Simple one-page app to see flights from any airport to all other connected reports, sorted by price. 
 Ideal when planning weekend trips or summar vacation abroad and you are not sure when exactly or where.
 
-![image](https://github.com/DanielMaczak/weekend-traveller/assets/145442574/ae2eb114-aed9-4147-93d0-dbcf4ad4c0ff)
+![Weekend Traveller](https://github.com/pooya-jb/weekend-traveller/assets/81810893/bcf8e60d-abb1-4d25-8791-f6065c3e2e76)
+
 
 ### Server features
 
