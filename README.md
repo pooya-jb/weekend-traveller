@@ -1,7 +1,5 @@
 # Weekend Traveller
 
-Project of choice to graduate the Codeworks.me web developer bootcamp. This app was built within one week.
-
 Simple one-page app to see flights from any airport to all other connected reports, sorted by price. 
 Ideal when planning weekend trips or summar vacation abroad and you are not sure when exactly or where.
 
